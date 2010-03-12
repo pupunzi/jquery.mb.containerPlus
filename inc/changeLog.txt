@@ -5,7 +5,6 @@ jquery.mb.containerPlus
   2. consider page scroll in methods.
   3. add a position method
 
-
 2.5.0 minor issue:
   1. added mb_setPosition(top, left) method.
 
