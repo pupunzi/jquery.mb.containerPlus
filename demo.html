@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: info@pupunzi.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>mbContainers</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+  <link rel="stylesheet" type="text/css" href="css/mbContainer.css" title="style"  media="screen"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <!--<script type="text/javascript" src="inc/jquery-ui.min.js"></script>-->
+  <script type="text/javascript" src="inc/jquery.metadata.js"></script>
+  <script type="text/javascript" src="inc/mbContainer.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      if (self.location.href == top.location.href){
+        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>");
+        $("body").prepend(logo);
+        $("#logo").fadeIn();
+      }
+      $(".containerPlus").buildContainers({
+        containment:"document",
+        elementsPath:"elements/",
+        onClose:function(o){},
+        effectDuration:200
+      });
+
+      if (!$("#demoContainer").mb_getState("closed")){
+        $('#close').fadeIn();$('#actions').fadeIn(); $("#open").hide(); $('#open_change').hide();
+      }
+    });
+  </script>
+  <style type="text/css">
+    
+    .wrapper{
+      font-family:Arial, Helvetica, sans-serif;
+      margin-top:100px;
+      margin-left:50px;
+    }
+
+    .wrapper h1{
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:26px;
+    }
+
+    .evidence{
+      color:gray;
+      padding:10px;
+      margin-right:5px;
+      margin-top:5px;
+      -moz-border-radius:10px;
+      -webkit-border-radius:10px;
+    }
+
+    #actions button{
+      padding:4px;
+      display:inline-block;
+      cursor:pointer;
+      font:12px/14px Arial, Helvetica, sans-serif;
+      color:#666;
+      border:1px solid #999;
+      background-color:#eee;
+      -moz-border-radius:10px;
+      -webkit-border-radius:10px;
+      -moz-box-shadow:#999 2px 0px 3px;
+      -webkit-box-shadow:#999 2px 0px 3px;
+      margin-bottom:4px;
+    }
+
+    :focus {
+      outline: 0;
+    }
+
+    #actions button:hover{
+      color:#aaa;
+      background-color:#000;
+    }
+
+    #dock{
+      display:block;
+      padding-top:10px;
+      height:40px;
+    }
+
+    #dock img{
+      padding-right:10px;
+    }
+
+    #desk{
+      width:100%;
+    }
+
+    #desk td{
+      padding:5px;
+      -moz-border-radius:5px;
+      -webkit-border-radius:5px;
+    }
+    
+    #mb_console{
+      padding:5px;
+      background:gainsboro;
+      -moz-border-radius:5px;
+      -webkit-border-radius:5px;
+      font-size:10px;
+      height:400px;
+      overflow:auto;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>mb.containerPlus.demo</h1>
+  <button id="close" onclick="$('#demoContainer').mb_close(); $('#actions').fadeOut(); $('#open').fadeIn(); $(this).hide();" style="display:none;">close container</button>
+  <button id="open" onclick="$('#demoContainer').mb_open(); $('#close').fadeIn();$('#actions').fadeIn(); $(this).hide();" >open container </button>
+  <button onclick="alert(' is iconized? '+$('#demoContainer').mb_getState('iconized')+'\n is collapsed? '+$('#demoContainer').mb_getState('collapsed')+'\n is closed? '+$('#demoContainer').mb_getState('closed'));">get container state</button>
+  <br>
+  <br>
+  <br>
+  <div id="actions" style="display:none;">
+    <button id="change" onclick="$('#demoContainer').mb_changeContainerContent('test.html');" >change content</button><br>
+    <button id="toggle" onclick="$('#demoContainer').mb_toggle();">expand / collapse container</button><br>
+    <button id="iconize" onclick="$('#demoContainer').mb_iconize();">iconize / restore container</button><br>
+    <button id="fullscreen" onclick="$('#demoContainer').mb_fullscreen();">fullscreen</button><br>
+    <button id="center" onclick="$('#demoContainer').mb_centerOnWindow(true);">center on window</button><br>
+    <button id="resize" onclick="$('#demoContainer').mb_resizeTo(600,600);">resize to 600 x 600</button><br>
+    <button id="fixedPos" onclick="$('#demoContainer').mb_switchFixedPosition();">switch fixed position</button><br>
+    <button id="alwaysOnTop" onclick="$('#demoContainer').mb_switchAlwaisOnTop();">switch always on top</button>
+  </div>
+
+  <div class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'white', width:'500',iconized:'true', dock:'dock', grid:100}" style="position:fixed;top:100px;left:400px">
+    <div class="no"><div class="ne"><div class="n">preiconized container</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          <div class="evidence">
+            <h3>And this can be drag with a 100 X 100 grid!</h3>
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+          <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'default', width:'500',iconized:'false', dock:'dock', grid:10}" style="position:fixed;top:100px;left:400px">
+    <div class="no"><div class="ne"><div class="n">preiconized container</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="containerPlus draggable resizable {buttons:'m,i,c', icon:'alert.png', skin:'white', width:'500', content:'test.html',dock:'dock',iconized:'true'}" style="top:100px;left:500px">
+    <div class="no"><div class="ne"><div class="n">Ajax content!</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+
+          <h3>Attenzione!</h3>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+          <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="containerPlus resizable {buttons:'m,i,c', skin:'white', width:'100%',iconized:'true',dock:'dock'}" >
+    <div class="no"><div class="ne"><div class="n">Container width 100% </div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+          <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+        </div>
+
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="containerPlus resizable {buttons:'m,i,c', skin:'default', width:'500', height:'300', handles:'s,e,se', aspectRatio:true, iconized:'true',dock:'dock'}">
+    <div class="no"><div class="ne"><div class="n">resizable container with aspectRatio active</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          <div class="evidence">
+            <h3>This container resizes mantaining the aspectRatio!</h3>
+            <p>This is a contextualized container and can be resized only vertically;</p>
+            <p>it has a width and a height defined;</p>
+            <p>can be collapsed and can be closed;</p>
+            <p>it has the "default" skin;</p>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="containerPlus draggable resizable {buttons:'m', skin:'default', width:'500' }" style="top:300px; left:30%">
+    <div class="no"><div class="ne"><div class="n">Dock</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          <div id="dock"> </div><div style="clear:both;"></div>
+          <hr><br>
+          <b>this container is always on top!</b>
+          <p>by setting the metatag: alwaysOnTop:true, this container stay over the others.</p>
+          <b>You can choose where the iconized containers are stored!</b>
+          <p>this is an example, but you can define whatever DOM element you want as your dock; and each iconizable container can have its one or none (in that case it's iconized at left:0 of its parent)!</p>
+          <b>preminimize a container</b>
+          <p>to preminimize containers just add the param <span style="font-weight: bold;">collapsed:'true'</span></p>
+          <p>You can verify the state of this container by pressing the button at the end of this page.</p>
+          <p>to verify the state of a container you have a metod <span style="font-weight: bold;">$.fn.mb_getState(attr)</span>; you can pass the attribute to verify (ex: collapsed or iconized) and it returns
+            <span style="font-weight: bold;">true</span> or <span style="font-weight: bold;">false</span></p>
+
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="demoContainer" class="containerPlus draggable resizable {buttons:'m', icon:'chart.png', skin:'black', width:'500',dock:'dock',closed:'true', rememberMe:true}" style="position:absolute;top:250px;left:400px; height:50%">
+    <div class="no"><div class="ne"><div class="n">container Demo</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height:2000px; display:block; background-color:#ccc"></div>
+</body>
+</html>

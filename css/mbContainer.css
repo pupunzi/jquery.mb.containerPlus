@@ -1,0 +1,119 @@
+/*
+* UI
+*/
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0px; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0px; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0px; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0px; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+
+
+.mb-resize{
+	display:block;
+	background-color:transparent !important;
+	border:3px solid transparent !important;
+  *border:5px solid transparent !important;
+  margin:0 !important;
+}
+
+.mb-resize-resizable-n { cursor: e-resize; width: 100% !important; height: 50px !important; right: 0 !important; top: -10px !important; z-index:auto !important;}
+.mb-resize-resizable-e { cursor: e-resize; width: 20px !important; height: 100% !important; right: -20px !important; top: 0 !important;z-index:auto !important;}
+.mb-resize-resizable-w { cursor: e-resize; width: 20px !important; height: 100% !important; left: -20px !important; top: 0 !important;z-index:auto !important;}
+.mb-resize-resizable-s { cursor: s-resize; width: 100% !important; height: 10px !important; bottom: -10px !important; left: 0 !important;z-index:auto !important; }
+.mb-resize-resizable-se { cursor: se-resize; width: 30px !important; height: 30px !important; right:0 !important; bottom: -10px !important; z-index:auto !important;}
+
+.mbproxy{border:1px dotted gray;background: url(../elements/proxy.png)}
+
+.containerPlus {font-family:Verdana; font-size:13px; visibility:hidden;};
+.containerPlus .spacer {margin-top:10px}
+.containerPlus .buttonBar { position:relative;top:0;float:right;margin-top:-23px; margin-right:15px}
+.containerPlus .buttonBar img {margin-left:5px}
+.containerPlus .mbcontainercontent {margin-right:-15px; padding-right:10px;overflow:auto;}
+
+/*.iconLabel{font-family:sans-serif;font-size:10px;padding:5px;background:black;color:white;display:block;-moz-border-radius:5px;-webkit-border-radius:5px;}*/
+
+.iconLabel{font-family:sans-serif;font-size:10px;padding:5px;background:#f3f3f3;color:gray;display:block;-moz-border-radius:5px;-webkit-border-radius:5px;border:1px solid #ccc}
+
+/*
+* default
+*/
+.containerPlus .no	{ background: url('../elements/default/no.png') top left no-repeat; }
+.containerPlus .ne	{ background: url('../elements/default/ne.png') top right no-repeat; margin-left: 21px;}
+.containerPlus .ne img	{left:-10px; top:-10px}
+.containerPlus .n	{ background: url('../elements/default/n.png') top center repeat-x; margin-right: 20px; -moz-user-select: none; -khtml-user-select: none}
+.containerPlus .n	{ padding-top:8px;height:26px; font-size:15px; white-space:nowrap;overflow:hidden;}
+.containerPlus .n	a{ text-decoration:none;color:#000; font-size:15px;}
+
+.containerPlus .o	{ background: url('../elements/default/o.png') top left repeat-y;}
+.containerPlus .e	{ background: url('../elements/default/e.png') top right repeat-y; margin-left: 21px;}
+.containerPlus .c { background: url('../elements/default/c.png'); margin-right: 23px; padding-top: 1px; padding-bottom: 1px; }
+
+.containerPlus .so	{ background: url('../elements/default/so.png') bottom left no-repeat;}
+.containerPlus .se	{ background: url('../elements/default/se.png') bottom right no-repeat; margin-left: 21px;}
+.containerPlus .s { background: url('../elements/default/s.png') bottom repeat-x; padding-top: 20px; margin-right: 23px;}
+
+
+/*
+* black
+*/
+.containerPlus.black .no	{ background: url('../elements/black/no.png') top left no-repeat}
+.containerPlus.black .ne	{ background: url('../elements/black/ne.png') top right no-repeat; margin-left: 21px;}
+.containerPlus.black .n	{ background: url('../elements/black/n.png') top center repeat-x; margin-right: 25px;height:26px;}
+.containerPlus.black .n	{ padding-top:8px;font-size:15px; color:white;-moz-user-select: none; -khtml-user-select: none}
+.containerPlus.black .n	a{ text-decoration:none;color:#fff; font-size:15px; white-space:nowrap;overflow:hidden;}
+
+.containerPlus.black .o	{ background: url('../elements/black/o.png') top left repeat-y;}
+.containerPlus.black .e	{ background: url('../elements/black/e.png') top right repeat-y; margin-left: 21px;}
+.containerPlus.black .c { background: url('../elements/black/c.png'); margin-right: 25px; padding-top: 1px; padding-bottom: 1px; }
+.containerPlus.black .c .mbcontainercontent {color:white;}
+.containerPlus.black .c .mbcontainercontent a {color:white;}
+
+.containerPlus.black .so	{ background: url('../elements/black/so.png') bottom left no-repeat;}
+.containerPlus.black .se	{ background: url('../elements/black/se.png') bottom right no-repeat; margin-left: 21px;}
+.containerPlus.black .s { background: url('../elements/black/s.png') bottom repeat-x; padding-top: 20px; margin-right: 25px;}
+
+/*
+* white
+*/
+.containerPlus.white .no	{ background: url('../elements/white/no.png') top left no-repeat;}
+.containerPlus.white .ne	{ background: url('../elements/white/ne.png') top right no-repeat; margin-left: 21px;}
+.containerPlus.white .n	{ background: url('../elements/white/n.png') top center repeat-x; margin-right: 25px;height:26px;}
+.containerPlus.white .n	{ padding-top:8px; font-size:16px;-moz-user-select: none; -khtml-user-select: none}
+
+.containerPlus.white .o	{ background: url('../elements/white/o.png') top left repeat-y;}
+.containerPlus.white .e	{ background: url('../elements/white/e.png') top right repeat-y; margin-left: 21px;}
+.containerPlus.white .c { background: url('../elements/white/c.png'); margin-right: 25px; padding-top: 1px; padding-bottom: 1px; }
+.containerPlus.white .c .mbcontainercontent {color:#000;}
+.containerPlus.white .n	a{}
+.containerPlus.white .n	a:hover{ text-decoration:underline}
+
+.containerPlus.white .so	{ background: url('../elements/white/so.png') bottom left no-repeat;}
+.containerPlus.white .se	{ background: url('../elements/white/se.png') bottom right no-repeat; margin-left: 21px;}
+.containerPlus.white .s { background: url('../elements/white/s.png') bottom repeat-x; padding-top: 20px; margin-right: 25px;}
+
+
+/*
+* alert
+*/
+.containerPlus.alert .no	{ background: url('../elements/alert/no.png') top left no-repeat;}
+.containerPlus.alert .ne	{ background: url('../elements/alert/ne.png') top right no-repeat; margin-left: 21px;}
+.containerPlus.alert .n	{ background: url('../elements/alert/n.png') top center repeat-x; margin-right: 25px;height:26px;}
+.containerPlus.alert .n	{ padding-top:8px; font-size:16px;-moz-user-select: none; -khtml-user-select: none}
+
+.containerPlus.alert .o	{ background: url('../elements/alert/o.png') top left repeat-y;}
+.containerPlus.alert .e	{ background: url('../elements/alert/e.png') top right repeat-y; margin-left: 21px;}
+.containerPlus.alert .c { background: url('../elements/alert/c.png'); margin-right: 25px; padding-top: 1px; padding-bottom: 1px; }
+.containerPlus.alert .c .mbcontainercontent {color:#000;}
+.containerPlus.alert .n	a{}
+.containerPlus.alert .n	a:hover{ text-decoration:underline}
+
+.containerPlus.alert .so	{ background: url('../elements/alert/so.png') bottom left no-repeat;}
+.containerPlus.alert .se	{ background: url('../elements/alert/se.png') bottom right no-repeat; margin-left: 21px;}
+.containerPlus.alert .s { background: url('../elements/alert/s.png') bottom repeat-x; padding-top: 20px; margin-right: 25px;}
+

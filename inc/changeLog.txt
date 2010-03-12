@@ -1,0 +1,119 @@
+jquery.mb.containerPlus
+
+>> to be added:
+  1. alwais preserve docked icon
+  2. consider page scroll in methods.
+  3. add a position method
+
+2.5.0 minor issue:
+  1. added mb_setPosition(top, left) method.
+
+2.4.7 minor issue:
+  1. added minWidth and minHeight to be setted as metadata of the container.
+  2. modified onClose callback to be executed after the transition effect.
+  3. added onBeforeClose callback to be executed before the close transition effect.
+
+2.4.6 minor bugfix:
+  1. now the resize event of a container into a dom element take care of the containment.
+
+2.4.5 minor issue:
+  1. added alwaysOnTop metadata param to mantain the container always on top.
+
+  2.4.2 minor bugfix and issue:
+  1. added mb_setFixedPosition() method to set fixed position on the fly.
+
+2.4.1 minor bugfix and issue:
+  1. fixed a bug in mb_setCookie() with expire date.
+  1. Added a dockedIconDim param to set the dimension of docked icons.
+
+2.4 Major ISSUE:
+  1. added the possibility of manage cookies by setting "rememberMe" as metadata of the container.
+     Setting this propertie to true the container'll have memory of its state, position and dimension once page is reloaded.
+
+2.3.5 minor bugfix:
+  1. if fullScreen once iconized and restored the height wasn't reset correctly.
+  2. if iconized and mb_resizeTo generate a bug; now you simply can't mb_resizeTo if iconized;
+  3. better controll of each state of container;
+
+2.3.4 minor bugfix:
+  added onResize listener for mb_resizeTo().
+  impruved mantainOnWindow behavior.
+
+2.3.3 minor bugfix:
+  added mantainOnWindow:true.
+  if set to false, the containers will not get repositioned once window resized.
+
+2.3.2  minor bugfix:
+  added a "closed" state once containers are initialized.
+
+2.3.1  minor bugfix:
+  fix a namespace bug introduced in the last release with the methods: $.fn.mb_open() and $.mb_close(). (they where become $.fn.mb_closeBox() and $.fn.mb_openBox().
+
+2.2  minor bugfix:
+  Now containers appear just when initialized.
+  If you are updating a previous version you have to overwrite the css file too!!
+
+2.0 Major issue:
+  Now you can iconize container where you whant:
+  just specify the id of your dock element with the new dock attribute.
+  Ex: class="containerPlus draggable resizable {buttons:"m,c,i", icon:"chart.png", skin:"black", collapsed:"true",width:"500?,iconized:"true",dock:"dock"}"
+  (!) changed the css class of the container content: from content to mbcontainercontent to prevent conflict with other generic content css classes.
+  So, if you are upgrading to 2.0 pleas change this on your page!!!
+
+1.8 Minor bugfix:
+  There was a CSS conflict with others jquery UI components. Overwritten the default UI CSS Class for handles with mbContainerPlus own classes, SHOULD BE SOLVED!
+  Minor issue:
+  improved the jQuery.fn.mb_open() function:
+  now you can pass two parameters: url and data to change the content of the container dinamically while opening it from an external link.
+
+1.7.7 Minor bugfix:
+  If you setted an icon to a container not draggable and not resizable the icon was positioned at top left of the window, SOLVED!
+
+1.7.6 Minor bugfix:
+  if a container hadn"t buttons set shut an error that prevent all other containers to work, SOLVED!
+  Minor issue:
+  added two properties for managing handles for resize and to permit resizing with aspectRatio manteined:
+  handles:"n, s, e, w, sw"; if you add this property to a container not draggable, you manage the handle for resizing (default is "s").
+  aspectRatio:"true"; setting this property to tru you enable the resize mantaining the aspect ratio of the container.
+
+1.7.5 Major bugfix:
+  if the container was collapsed than iconized, once restored couldn"t be expanded again, SOLVED!
+  Major issue:
+  added a function to get the container state (collapsed, iconized, closed):
+  jQuery.fn.mb_getState(attr); it returns the state as boolean.
+  added a function to collapse / expand a container:
+  jQuery.fn.mb_toggle(); it toggle between the two states.
+  added a function to close and one to open a container:
+  jQuery.fn.mb_close() and jQuery.fn.mb_open();
+  changed the param name from minimized to collapsed;
+
+1.7.0 Major issue:
+  Now you can load content via ajax!
+  Added a new param "content" where you can store the url to your ajax page content.
+
+1.5.5 Major bugfix for IE7:
+  The resize problem in IE is fixed;
+  the ugly buttons display for IE fixed;
+  the invalid argument error for IE fixed;
+
+1.5.3 Minor issue released:
+  added an extra function:jQuery.fn.iconize().you can iconize your container from enywhere calling this function. It toggle the state from iconize to normal.Example: $("#iconizable").mb_iconize();
+
+1.5.2 Minor issue released:
+  added an extra function:jQuery.fn.resizeTo(h,w).you can resize your container from enywhere calling this function.Example:$("#iconizable").mb_resizeTo(300,200);
+
+1.5.0 Major issue released:
+  Now yo can define containers paramiters without writing custom attributes on the tag, and the component is W3C compliant!: >> before<div class="containerPlus draggable resizable" width= "500" buttons= "m,c,i" style= "top:200px;left:200px" icon= "chart.png" skin= "default"> >> Now<div class="containerPlus resizable {buttons:'m,c,i', skin:'white', width:'500', icon:'chart.png', skin:'default'}" style="top:200px;left:200px">You can still use both sintax, but if you want to be w3c compliant than you nee the second one and you have to include jquery.metadata.js in your page.
+
+1.0.4 Minor bugfix:
+  added a new css class for handlers mb-resize to prevent UI conflict;now you can refer to containers handlers via css prrefixing the UI class with mb-resize (for example: .mb-resize.ui-resizable-se{}).
+
+1.0.3 Major bugfix:
+  iconizing the container once it was minimized, when restored it couldn"t find anymore its original height. (height:0).
+
+1.0.2 Minor bugfix:
+  the iconize icon wasn"t managed by the global image path setted by params.
+
+1.0.1
+  added "iconized" or "minimized" at the start.
+  Just add the attribute "iconized="true" or "minimized="true" to the container.
