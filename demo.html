@@ -29,20 +29,25 @@
         $("body").prepend(logo);
         $("#logo").fadeIn();
       }
-      $(".containerPlus").buildContainers({
-        containment:"document",
-        elementsPath:"elements/",
-        onClose:function(o){},
-        effectDuration:200
-      });
-
-      if (!$("#demoContainer").mb_getState("closed")){
-        $('#close').fadeIn();$('#actions').fadeIn(); $("#open").hide(); $('#open_change').hide();
-      }
     });
+
   </script>
+  <script type="text/javascript">
+  $(function(){
+    $(".containerPlus").buildContainers({
+      containment:"document",
+      elementsPath:"elements/",
+      onClose:function(o){},
+      effectDuration:200
+    });
+
+    if (!$("#demoContainer").mb_getState("closed")){
+      $('#close').fadeIn();$('#actions').fadeIn(); $("#open").hide(); $('#open_change').hide();
+    }
+  });
+</script>
   <style type="text/css">
-    
+
     .wrapper{
       font-family:Arial, Helvetica, sans-serif;
       margin-top:100px;
@@ -106,7 +111,7 @@
       -moz-border-radius:5px;
       -webkit-border-radius:5px;
     }
-    
+
     #mb_console{
       padding:5px;
       background:gainsboro;
@@ -161,7 +166,7 @@
     <div class="no"><div class="ne"><div class="n">preiconized container</div></div>
       <div class="o"><div class="e"><div class="c">
         <div class="mbcontainercontent">
-            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+          <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
         </div>
       </div></div></div>
       <div >
@@ -261,6 +266,6 @@
     </div>
   </div>
 </div>
-<div style="height:2000px; display:block; background-color:#ccc"></div>
+<!--<div style="height:2000px; display:block; background-color:#ccc"></div>-->
 </body>
 </html>
