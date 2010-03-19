@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.4.8
+ * Version: 2.4.9
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -21,32 +21,34 @@
   var winw=$(window).width();
   var winh=$(window).height();
   $.doOnWindowResize=function(el){
-    clearTimeout(this.doRes);
-    this.doRes=setTimeout(function(){
+    clearTimeout(el.doRes);
+    el.doRes=setTimeout(function(){
       $(el).adjastPos();
       winw=$(window).width();	winh=$(window).height();
     },400);
   };
 
   $.fn.adjastPos= function(margin){
-    clearTimeout(this.doRes);
-    var opt=$(this).attr("options");
+    var container=$(this);
+    var opt=container.attr("options");
     if (!opt.mantainOnWindow) return;
     if(!margin) margin=20;
     var nww=$(window).width()+$(window).scrollLeft();
     var nwh=$(window).height()+$(window).scrollTop();
     this.each(function(){
-      if (($(this).offset().left+$(this).outerWidth())>nww || ($(this).offset().top+$(this).outerHeight())>nwh){
-        var l=($(this).offset().left+$(this).outerWidth())>nww ? nww-$(this).outerWidth()-margin: $(this).offset().left;
-        var t= ($(this).offset().top+$(this).outerHeight())>nwh ? nwh-$(this).outerHeight()-margin: $(this).offset().top;
+      if ((container.offset().left+container.outerWidth())>nww || (container.offset().top+container.outerHeight())>nwh){
+        var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left;
+        var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top;
         t=(t>0)?t:0;
-        $(this).animate({left:l, top:t},550);
+        container.animate({left:l, top:t},550,function(){
+          container.setContainment();
+        });
       }
+      container.setContainment();      
     });
   };
 
   jQuery.fn.buildContainers = function (options){
-    var el=this;
     return this.each (function (){
       if ($(this).is("[inited=true]")) return;
       this.options = {
@@ -67,9 +69,14 @@
         effectDuration:300
       };
       $.extend (this.options, options);
-      if (this.options.mantainOnWindow)
-        $(window).resize(function(){$.doOnWindowResize(el);});
+
+      var el=this;
       var container=$(this);
+
+      $(window).resize(function(){
+        if (container.get(0).options.mantainOnWindow)
+          $.doOnWindowResize(el);
+      });
 
       container.attr("inited","true");
       container.attr("iconized","false");
@@ -151,10 +158,14 @@
         container.css({position:pos, margin:0});
         container.find(".n:first").css({cursor:"move"});
         container.mb_bringToFront();
+
         container.draggable({
           handle:".n:first",
           delay:0,
-          containment:this.options.containment,
+          //          containment:container.setContainment(),
+          start:function(){
+            //            container.setContainment();
+          },
           stop:function(){
             var opt=$(this).attr("options");
             if(opt.onDrag) opt.onDrag($(this));
@@ -196,13 +207,29 @@
         }
         container.css("visibility","visible");
         container.adjastPos();
+        container.setContainment();
       },1000);
     });
   };
 
+
+  jQuery.fn.setContainment=function(){
+    var container=$(this);
+    var opt= container.get(0).options;
+    var containment=opt.containment;
+    if(opt.containment == "document"){
+      var dH=($(document).height()-(container.outerHeight()+10));
+      var dW=($(document).width()-(container.outerWidth()+10));
+      containment= [0,0,dW,dH]; //[x1, y1, x2, y2]
+    }
+    if(container.is(".draggable") && opt.containment!=""){
+      container.draggable('option', 'containment', containment);
+    }
+    return containment;
+  };
+
   jQuery.fn.containerResize = function (){
     var container=$(this);
-    var opt= container.attr("options");
     var isDraggable=container.hasClass("draggable");
     var handles= container.attr("handles")?container.attr("handles"):"s";
     var aspectRatio= container.attr("aspectRatio")?container.attr("aspectRatio"):false;
@@ -217,10 +244,12 @@
       iframeFix:true,
       helper: "mbproxy",
       start:function(e,o){
-        var el= container.attr("containment")?container.parents():$(window);
+        var elH= container.attr("containment")?container.parents().height():$(window).height()+$(window).scrollTop();
+        var elW= container.attr("containment")?container.parents().width():$(window).width()+$(window).scrollLeft();
+
         var elPos= container.attr("containment")? container.position():container.offset();
-        $(container).resizable('option', 'maxHeight',el.height()-(elPos.top-5));
-        $(container).resizable('option', 'maxWidth',el.width()-(elPos.left-5));
+        $(container).resizable('option', 'maxHeight',elH-(elPos.top+20));
+        $(container).resizable('option', 'maxWidth',elW-(elPos.left+20));
         o.helper.mb_bringToFront();
       },
       stop:function(){
@@ -237,6 +266,7 @@
           container.mb_setCookie("width",container.outerWidth());
           container.mb_setCookie("height",container.outerHeight());
         }
+        container.setContainment();
       }
     });
     container.resizable('option', 'maxHeight', $("document").outerHeight()-(container.offset().top+container.outerHeight())-10);
