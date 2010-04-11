@@ -392,8 +392,8 @@
       if (container.attr("dock")){
         dockPlace = $("#"+container.attr("dock"));
         var icns= dockPlace.find("img").size();
-        l=$("#"+container.attr("dock")).offset().left+(opt.dockedIconDim*icns);
-        t=$("#"+container.attr("dock")).offset().top;
+        l=$("#"+container.attr("dock")).offset().left+(opt.dockedIconDim*icns)+opt.dockedIconDim;
+        t=$("#"+container.attr("dock")).offset().top+(opt.dockedIconDim/2);
       }
       /*
        ICONIZING CONTAINER
