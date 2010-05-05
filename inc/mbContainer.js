@@ -103,7 +103,7 @@
         if (container.metadata().dock) container.attr("dock",container.metadata().dock);
         if (container.metadata().closed) container.attr("closed",container.metadata().closed);
         if (container.metadata().rememberMe) container.attr("rememberMe",container.metadata().rememberMe);
-        if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal);
+        if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal);             // todo
         if (container.metadata().width) container.attr("width",container.metadata().width);
         if (container.metadata().height) container.attr("height",container.metadata().height);
         if (container.metadata().alwaysOnTop) container.css("z-index",100000).addClass("alwaysOnTop");
