@@ -1,12 +1,9 @@
 jquery.mb.containerPlus
 
->> to be added:
-  1. alwais preserve docked icon
-  2. consider page scroll in methods. (almost done)
-  3. add a position method
 
 2.4.9 minor issue:
   1. better manage of containment.
+  2. added zIndexContext to specify which elements must be considered to increment the zIndex value by mb_bringToFront function.
 
 2.4.8 minor issue:
   1. added mb_setPosition(top, left) method.
