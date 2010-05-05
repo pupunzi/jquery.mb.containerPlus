@@ -15,7 +15,6 @@
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
-
 (function($){
   //manage the container position when windowresize
   var winw=$(window).width();
