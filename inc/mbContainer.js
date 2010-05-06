@@ -99,6 +99,11 @@
         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid
         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid
         if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid
+
+        if (container.metadata().resizeGrid) container.attr("resizeGrid",container.metadata().resizeGrid); //ui.grid RESIZE
+        if (container.metadata().resizeGridx) container.attr("resizeGridx",container.metadata().resizeGridx); //ui.grid RESIZE
+        if (container.metadata().resizeGridy) container.attr("resizeGridy",container.metadata().resizeGridy); //ui.grid RESIZE
+
         if (container.metadata().handles) container.attr("handles",container.metadata().handles); //ui.resize
         if (container.metadata().dock) container.attr("dock",container.metadata().dock);
         if (container.metadata().closed) container.attr("closed",container.metadata().closed);
@@ -269,6 +274,11 @@
         container.setContainment();
       }
     });
+    if (container.attr("resizeGrid") || (container.attr("resizeGridx") && container.attr("resizeGridy"))){
+      var grid= container.attr("resizeGrid")? [container.attr("resizeGrid"),container.attr("resizeGrid")]:[container.attr("resizeGridx"),container.attr("resizeGridy")];
+      container.resizable( "option", "grid", grid);
+    }
+
     container.resizable('option', 'maxHeight', $("document").outerHeight()-(container.offset().top+container.outerHeight())-10);
 
     /*
