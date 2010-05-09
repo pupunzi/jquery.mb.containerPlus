@@ -68,6 +68,7 @@
         effectDuration:300,
         zIndexContext:"auto" // or your selector (ex: ".containerPlus")
       };
+      
       $.extend (this.options, options);
 
       var el=this;
