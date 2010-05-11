@@ -37,6 +37,9 @@
       containment:"document",
       elementsPath:"elements/",
       onClose:function(o){},
+      onIconize:function(o){
+        o.mb_changeContainerContent('test.html',"");
+      },
       effectDuration:200
     });
 

@@ -198,7 +198,7 @@
       }
       if (container.attr("iconized")=="true"){
         container.attr("iconized","false");
-        container.containerIconize(this.options);
+        container.containerIconize(this.options, false);
       }
 
       if (container.mb_getState('closed')){
@@ -384,8 +384,9 @@
     });
   };
 
-  jQuery.fn.containerIconize = function (opt){
+  jQuery.fn.containerIconize = function (opt,runCallback){
     var container=$(this);
+    if (typeof runCallback=="undefined") runCallback=true;
     if (!opt) opt=container.attr("options");
     return this.each (function (){
       if (opt.onBeforeIconize) opt.onBeforeIconize();
@@ -485,6 +486,7 @@
         container.animate({ height:opt.dockedIconDim, width:opt.dockedIconDim,left:l,top:t},opt.effectDuration,function(){
           $(this.dockIcon).show();
           if (container.attr("dock")) container.hide();
+          if (opt.onIconize && runCallback) opt.onIconize(container);
         });
       }else{
         container.find(".no:first").hide();
@@ -492,7 +494,6 @@
         $(this.dockIcon).show();
         if (container.attr("dock")) container.hide();
       }
-      if (opt.onIconize) opt.onIconize(container);
       if (container.attr("rememberMe")) container.mb_setCookie("iconized",container.mb_getState("iconized"));
     });
   };
@@ -538,7 +539,6 @@
           container.mb_bringToFront(opt.zIndexContext);
         }else{
           container.containerIconize();
-          if(el.options.onIconize) el.options.onIconize($(el));
         }
       }
     });
