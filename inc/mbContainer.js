@@ -35,11 +35,12 @@
     var nww=$(window).width()+$(window).scrollLeft();
     var nwh=$(window).height()+$(window).scrollTop();
     this.each(function(){
-      if ((container.offset().left+container.outerWidth())>nww || (container.offset().top+container.outerHeight())>nwh){
-        var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left;
-        var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top;
-        t=(t>0)?t:0;
+      var left=container.offset().left, top=container.offset().top;
+      if ((left+container.outerWidth())>nww || top+container.outerHeight()>nwh || left<0 || top<0){
+        var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
+        var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
         container.animate({left:l, top:t},550,function(){
+
           container.setContainment();
         });
       }
@@ -211,10 +212,12 @@
         if (opt.onLoad) {
           opt.onLoad(container);
         }
+        container.css("opacity",0);
         container.css("visibility","visible");
+        container.fadeTo(opt.effectDuration*2,1);
         container.adjastPos();
         container.setContainment();
-      },1000);
+      },100);
     });
   };
 

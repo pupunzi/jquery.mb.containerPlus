@@ -31,10 +31,6 @@
       }
     });
 
-    String.prototype.asId = function () {
-      return this.replace(/[^a-zA-Z0-9_]+/g, '');
-    };
-
     var containers= new Object();
 
     function insertContainer(url, containerId, data){
@@ -130,7 +126,7 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>mb.containerPlus.demo</h1>
+  <h1>mb.containerPlus.Ajax.demo</h1>
 
   <button class="button" id="ajax1Opener" onclick="insertContainer('ajax1.html','ajax1', '');">open container 1</button><br>
   <button class="button" id="ajax2Opener" onclick="insertContainer('ajax2.html','ajax2', '');">open container 2</button>
