@@ -40,7 +40,6 @@
         var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
         var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
         container.animate({left:l, top:t},550,function(){
-
           container.setContainment();
         });
       }
@@ -217,7 +216,7 @@
         container.fadeTo(opt.effectDuration*2,1);
         container.adjastPos();
         container.setContainment();
-      },100);
+      },10);
     });
   };
 
