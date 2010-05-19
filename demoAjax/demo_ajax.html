@@ -31,17 +31,33 @@
       }
     });
 
-    var containers= new Object();
+
+    document.containers= new Object();
 
     function insertContainer(url, containerId, data){
-      if(containers[containerId]==1) return;
+      if(document.containers[containerId]==1) return;
       if (!url) return;
       if(!data) data="";
       $.ajax({
-        url: url,
+        url: url+"?rnd"+new Date().getMilliseconds(),
         data:data,
         success: function(html){
           $("body").append(html);
+          $("#"+containerId).mb_removeCookie("closed");
+          $("#"+containerId).buildContainers({
+            containment:"document",
+            elementsPath:"../elements/",
+            effectDuration:200,
+            onLoad:function(o){
+              document.containers[o.attr("id")]=1;
+            },
+            onClose:function(o){
+              o.mb_removeCookie("closed");
+              o.remove();
+              document.containers[o.attr("id")]=null;
+            }
+          });
+
         }
       });
     }

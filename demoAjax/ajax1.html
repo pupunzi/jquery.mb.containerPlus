@@ -1,5 +1,3 @@
-
-
 <div id="ajax1" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'black', width:'500',rememberMe:true}" style="top:200px;left:200px">
   <div class="no"><div class="ne"><div class="n">container Ajax 1</div></div>
     <div class="o"><div class="e"><div class="c">
@@ -17,22 +15,3 @@
     </div>
   </div>
 </div>
-
-
-<script type="text/javascript">
-
-  $("#ajax1").buildContainers({
-    containment:"document",
-    elementsPath:"../elements/",
-    effectDuration:200,
-    onLoad:function(o){
-      containers[o.attr("id")]=1;
-    },
-    onClose:function(o){
-      o.mb_setCookie("closed",false);
-      o.remove();
-      containers[o.attr("id")]=null;
-    }
-  });
-
-</script>
