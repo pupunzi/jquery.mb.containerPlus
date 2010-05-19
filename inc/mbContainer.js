@@ -745,7 +745,6 @@
      });
    };
 
-
   //COOKIES
   jQuery.fn.mb_setCookie = function(name,value,days) {
     var id=$(this).attr("id");
