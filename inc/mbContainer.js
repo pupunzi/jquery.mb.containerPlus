@@ -37,7 +37,7 @@
         effectDuration:300,
         zIndexContext:"auto" // or your selector (ex: ".containerPlus")
       };
-      
+
       $.extend (this.options, options);
 
       var el=this;
@@ -54,7 +54,7 @@
       container.attr("closed","false");
 
       container.attr("options",this.options);
-      
+
       if (!container.css("position")=="absolute")
         container.css({position: "relative"});
 
@@ -537,7 +537,7 @@
         container.css("visibility","visible");
         container.fadeTo(opt.effectDuration*2,1);
       } else {
-        container.css("opacity",1);        
+        container.css("opacity",1);
         container.css("visibility","visible");
         container.show();
       }
@@ -613,7 +613,7 @@
 
   jQuery.fn.mb_fullscreen= function(){
     var container=$(this);
-    var opt= container.get(0).options;    
+    var opt= container.get(0).options;
     if (container.mb_getState('iconized') || container.mb_getState('collapsed') || container.mb_getState('closed')){
       container.attr("w",$(window).width()-40);
       container.attr("h",$(window).height()-40);
