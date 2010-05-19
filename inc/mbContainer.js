@@ -16,38 +16,7 @@
  */
 
 (function($){
-  //manage the container position when windowresize
-  var winw=$(window).width();
-  var winh=$(window).height();
-  $.doOnWindowResize=function(el){
-    clearTimeout(el.doRes);
-    el.doRes=setTimeout(function(){
-      $(el).adjastPos();
-      winw=$(window).width();	winh=$(window).height();
-    },400);
-  };
-
-  $.fn.adjastPos= function(margin){
-    var container=$(this);
-    var opt=container.attr("options");
-    if (!opt.mantainOnWindow) return;
-    if(!margin) margin=20;
-    var nww=$(window).width()+$(window).scrollLeft();
-    var nwh=$(window).height()+$(window).scrollTop();
-    this.each(function(){
-      var left=container.offset().left, top=container.offset().top;
-      if ((left+container.outerWidth())>nww || top+container.outerHeight()>nwh || left<0 || top<0){
-        var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
-        var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
-        container.animate({left:l, top:t},550,function(){
-          container.setContainment();
-        });
-      }
-      container.setContainment();      
-    });
-  };
-
-  jQuery.fn.buildContainers = function (options){
+   jQuery.fn.buildContainers = function (options){
     return this.each (function (){
       if ($(this).is("[inited=true]")) return;
       this.options = {
@@ -83,7 +52,9 @@
       container.attr("iconized","false");
       container.attr("collapsed","false");
       container.attr("closed","false");
+
       container.attr("options",this.options);
+      
       if (!container.css("position")=="absolute")
         container.css({position: "relative"});
 
@@ -97,9 +68,10 @@
         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
-        if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid
-        if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid
-        if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid
+
+        if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
+        if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
+        if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid DRAG
 
         if (container.metadata().resizeGrid) container.attr("resizeGrid",container.metadata().resizeGrid); //ui.grid RESIZE
         if (container.metadata().resizeGridx) container.attr("resizeGridx",container.metadata().resizeGridx); //ui.grid RESIZE
@@ -112,10 +84,11 @@
         if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal);             // todo
         if (container.metadata().width) container.attr("width",container.metadata().width);
         if (container.metadata().height) container.attr("height",container.metadata().height);
-        if (container.metadata().alwaysOnTop) container.css("z-index",100000).addClass("alwaysOnTop");
         if (container.metadata().containment) container.attr("containment",container.metadata().containment);
         if (container.metadata().minWidth) container.attr("minWidth",container.metadata().minWidth);
         if (container.metadata().minHeight) container.attr("minHeight",container.metadata().minHeight);
+
+        if (container.metadata().alwaysOnTop) container.css("z-index",100000).addClass("alwaysOnTop");
       }
 
       if (container.attr("rememberMe")=="true"){
@@ -145,7 +118,6 @@
         container.css({width:cw});
       }
 
-      // if (!container.attr("height") && $.browser.safari) container.attr("height",container.outerHeight()+10);
       if (container.attr("height")){
         container.find(".c:first , .mbcontainercontent:first").css("height",container.attr("height")-container.find(".n:first").outerHeight()-(container.find(".s:first").outerHeight()));
         container.attr("height","");
@@ -168,10 +140,7 @@
         container.draggable({
           handle:".n:first",
           delay:0,
-          //          containment:container.setContainment(),
-          start:function(){
-            //            container.setContainment();
-          },
+          start:function(){},
           stop:function(){
             var opt=$(this).attr("options");
             if(opt.onDrag) opt.onDrag($(this));
@@ -210,17 +179,17 @@
         return;
       }
 
-      setTimeout(function(){
+     // setTimeout(function(){
         if(!$.browser.msie){
         container.css("opacity",0);
         container.css("visibility","visible");
-        container.fadeTo(opt.effectDuration*2,1);
+        container.fadeTo(opt.effectDuration,1);
         }else{
           container.css("visibility","visible");
         }
         container.adjastPos();
         container.setContainment();
-      },10);
+    //  },10);
     });
   };
 
@@ -745,9 +714,39 @@
     return zi;
   };
 
+  //MANAGE WINDOWS POSITION ONRESIZE
+   var winw=$(window).width();
+   var winh=$(window).height();
+   $.doOnWindowResize=function(el){
+     clearTimeout(el.doRes);
+     el.doRes=setTimeout(function(){
+       $(el).adjastPos();
+       winw=$(window).width();	winh=$(window).height();
+     },400);
+   };
+
+   $.fn.adjastPos= function(margin){
+     var container=$(this);
+     var opt=container.attr("options");
+     if (!opt.mantainOnWindow) return;
+     if(!margin) margin=20;
+     var nww=$(window).width()+$(window).scrollLeft();
+     var nwh=$(window).height()+$(window).scrollTop();
+     this.each(function(){
+       var left=container.offset().left, top=container.offset().top;
+       if ((left+container.outerWidth())>nww || top+container.outerHeight()>nwh || left<0 || top<0){
+         var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
+         var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
+         container.animate({left:l, top:t},550,function(){
+           container.setContainment();
+         });
+       }
+       container.setContainment();
+     });
+   };
+
 
   //COOKIES
-
   jQuery.fn.mb_setCookie = function(name,value,days) {
     var id=$(this).attr("id");
     if(!id) id="";

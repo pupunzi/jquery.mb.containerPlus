@@ -35,11 +35,11 @@
     document.containers= new Object();
 
     function insertContainer(url, containerId, data){
-      if(document.containers[containerId]==1) return;
-      if (!url) return;
+      if(document.containers[containerId]==1 || !url) return;
       if(!data) data="";
       $.ajax({
-        url: url+"?rnd"+new Date().getMilliseconds(),
+        url: url,
+        cache:false,
         data:data,
         success: function(html){
           $("body").append(html);
