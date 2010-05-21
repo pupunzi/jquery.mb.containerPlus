@@ -34,7 +34,7 @@
 
     document.containers= new Object();
 
-    function insertContainer(url, containerId, data){
+    function insertMbContainerPlus(url, containerId, data){
       if(document.containers[containerId]==1 || !url) return;
       if(!data) data="";
       $.ajax({
@@ -43,7 +43,6 @@
         data:data,
         success: function(html){
           $("body").append(html);
-          $("#"+containerId).mb_removeCookie("closed");
           $("#"+containerId).buildContainers({
             containment:"document",
             elementsPath:"../elements/",
@@ -144,9 +143,9 @@
 <div class="wrapper">
   <h1>mb.containerPlus.Ajax.demo</h1>
   Here is a demo page that shows how to load mb.containerPlus via ajax into the page.<br>
-  I made a little function that add hte HTML fragments and initialize them once on the page:
+  I've made a little function that add an mb.containerPlus via ajax and initialize it once on the page:
   <code><pre>
-    function insertContainer(url, containerId, data){
+    function insertMbContainerPlus(url, containerId, data){
       if(document.containers[containerId]==1 || !url) return;
       if(!data) data="";
       $.ajax({
@@ -176,8 +175,8 @@
     }
   </pre></code>
 Try now by clicking those two buttons:<br><br>
-  <button class="button" id="ajax1Opener" onclick="insertContainer('ajax1.html','ajax1', '');">open container 1</button>
-  <button class="button" id="ajax2Opener" onclick="insertContainer('ajax2.html','ajax2', '');">open container 2</button>
+  <button class="button" id="ajax1Opener" onclick="insertMbContainerPlus('ajax1.html','ajax1', '');">open container 1</button>
+  <button class="button" id="ajax2Opener" onclick="insertMbContainerPlus('ajax2.html','ajax2', '');">open container 2</button>
 
 
 </div>
