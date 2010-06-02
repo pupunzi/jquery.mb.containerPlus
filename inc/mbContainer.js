@@ -600,6 +600,17 @@
       }
     });
   };
+  
+  jQuery.fn.mb_expand=function(path){
+    if($(this).mb_getState('closed'))
+      $(this).mb_open();
+    if(!$(this).mb_getState('iconized')) return;
+    if(path)
+      $(this).mb_changeContainerContent(path);
+
+    $(this).mb_iconize();
+  };
+
 
   jQuery.fn.mb_changeContainerContent=function(url, data){
     $(this).find(".mbcontainercontent:first").mb_changeContent(url,data);
