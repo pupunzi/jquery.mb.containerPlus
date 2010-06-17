@@ -1,7 +1,7 @@
 /*******************************************************************************
  jquery.mb.components
  Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
- email: info@pupunzi.com
+ email: mbicocchi@open-lab.com
  site: http://pupunzi.com
 
  Licences: MIT, GPL
@@ -16,7 +16,7 @@
  */
 
 (function($){
-   jQuery.fn.buildContainers = function (options){
+  jQuery.fn.buildContainers = function (options){
     return this.each (function (){
       if ($(this).is("[inited=true]")) return;
       this.options = {
@@ -68,6 +68,7 @@
         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
+        if (container.metadata().title) container.attr("containerTitle",container.metadata().title); //ui.resize
 
         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
@@ -100,6 +101,21 @@
         container.css("left", container.mb_getCookie("x")!=null? container.mb_getCookie("x"):container.css("left") );
         container.css("top", container.mb_getCookie("y")!=null? container.mb_getCookie("y"):container.css("top") );
       }
+
+      var isStructured= container.find(".mbcontainercontent").size()>0;
+      if(!isStructured){
+        var content= container.html();
+        container.empty();
+        var structure=''+
+                '<div class="no"><div class="ne"><div class="n"></div></div>'+
+                '<div class="o"><div class="e"><div class="c">'+
+                '<div class="mbcontainercontent">'+content+'</div></div>' +
+                '</div></div>'+
+                '<div><div class="so"><div class="se"><div class="s"> </div></div></div>'+
+                '</div></div>';
+        container.html(structure);
+      }
+      if(container.attr("containerTitle")) container.find(".n:first").html(container.attr("containerTitle"));
 
       if (container.attr("content")){
         var data= container.attr("data")?container.attr("data"):"";
@@ -179,17 +195,17 @@
         return;
       }
 
-     // setTimeout(function(){
-        if(!$.browser.msie){
+      // setTimeout(function(){
+      if(!$.browser.msie){
         container.css("opacity",0);
         container.css("visibility","visible");
         container.fadeTo(opt.effectDuration,1);
-        }else{
-          container.css("visibility","visible");
-        }
-        container.adjastPos();
-        container.setContainment();
-    //  },10);
+      }else{
+        container.css("visibility","visible");
+      }
+      container.adjastPos();
+      container.setContainment();
+      //  },10);
     });
   };
 
@@ -600,7 +616,7 @@
       }
     });
   };
-  
+
   jQuery.fn.mb_expand=function(path){
     if($(this).mb_getState('closed'))
       $(this).mb_open();
@@ -726,35 +742,35 @@
   };
 
   //MANAGE WINDOWS POSITION ONRESIZE
-   var winw=$(window).width();
-   var winh=$(window).height();
-   $.doOnWindowResize=function(el){
-     clearTimeout(el.doRes);
-     el.doRes=setTimeout(function(){
-       $(el).adjastPos();
-       winw=$(window).width();	winh=$(window).height();
-     },400);
-   };
+  var winw=$(window).width();
+  var winh=$(window).height();
+  $.doOnWindowResize=function(el){
+    clearTimeout(el.doRes);
+    el.doRes=setTimeout(function(){
+      $(el).adjastPos();
+      winw=$(window).width();	winh=$(window).height();
+    },400);
+  };
 
-   $.fn.adjastPos= function(margin){
-     var container=$(this);
-     var opt=container.attr("options");
-     if (!opt.mantainOnWindow) return;
-     if(!margin) margin=20;
-     var nww=$(window).width()+$(window).scrollLeft();
-     var nwh=$(window).height()+$(window).scrollTop();
-     this.each(function(){
-       var left=container.offset().left, top=container.offset().top;
-       if ((left+container.outerWidth())>nww || top+container.outerHeight()>nwh || left<0 || top<0){
-         var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
-         var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
-         container.animate({left:l, top:t},550,function(){
-           container.setContainment();
-         });
-       }
-       container.setContainment();
-     });
-   };
+  $.fn.adjastPos= function(margin){
+    var container=$(this);
+    var opt=container.attr("options");
+    if (!opt.mantainOnWindow) return;
+    if(!margin) margin=20;
+    var nww=$(window).width()+$(window).scrollLeft();
+    var nwh=$(window).height()+$(window).scrollTop();
+    this.each(function(){
+      var left=container.offset().left, top=container.offset().top;
+      if ((left+container.outerWidth())>nww || top+container.outerHeight()>nwh || left<0 || top<0){
+        var l=(container.offset().left+container.outerWidth())>nww ? nww-container.outerWidth()-margin: container.offset().left<0? margin: container.offset().left;
+        var t= (container.offset().top+container.outerHeight())>nwh ? nwh-container.outerHeight()-margin: container.offset().top<0 ?margin: container.offset().top;
+        container.animate({left:l, top:t},550,function(){
+          container.setContainment();
+        });
+      }
+      container.setContainment();
+    });
+  };
 
   //COOKIES
   jQuery.fn.mb_setCookie = function(name,value,days) {
