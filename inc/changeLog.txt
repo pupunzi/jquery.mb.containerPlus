@@ -1,7 +1,7 @@
 jquery.mb.containerPlus
 
 
-2.5.0 minor issue:
+2.5.0 major issue:
   1. new callback onCreate.
   2. simplified the HTML definition of the container.
   3. added new demo dock_placeholder.
