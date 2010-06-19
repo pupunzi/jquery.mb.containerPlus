@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.0rc1
+ * Version: 2.5.0
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -23,15 +23,16 @@
         containment:"document",
         elementsPath:"elements/",
         dockedIconDim:35,
-        onCollapse:function(){},
-        onBeforeIconize:function(){},
-        onIconize:function(){},
-        onClose: function(){},
-        onBeforeClose: function(){},
-        onResize: function(){},
-        onDrag: function(){},
-        onRestore:function(){},
-        onLoad:function(){},
+        onCreate:function(o){},
+        onCollapse:function(o){},
+        onBeforeIconize:function(o){},
+        onIconize:function(o){},
+        onClose: function(o){},
+        onBeforeClose: function(o){},
+        onResize: function(o){},
+        onDrag: function(o){},
+        onRestore:function(o){},
+        onLoad:function(o){},
         mantainOnWindow:true,
         collapseEffect:"slide", //or "fade"
         effectDuration:300,
@@ -41,6 +42,7 @@
       $.extend (this.options, options);
 
       var el=this;
+      if(!el.id) el.id= new Date().getMilliseconds();
       var container=$(this);
 
       $(window).resize(function(){
@@ -91,6 +93,10 @@
 
         if (container.metadata().alwaysOnTop) container.css("z-index",100000).addClass("alwaysOnTop");
       }
+
+      if(this.options.onCreate)
+        this.options.onCreate(container);
+
 
       if (container.attr("rememberMe")=="true"){
         container.attr("width" , container.mb_getCookie("width")!=null? container.mb_getCookie("width"):container.attr("width") );
@@ -187,7 +193,7 @@
       }
       if (container.attr("iconized")=="true"){
         container.attr("iconized","false");
-        container.containerIconize(this.options, false);
+        container.containerIconize(this.options, true);
       }
       if (container.mb_getState('closed')){
         container.attr("closed","false");
@@ -380,7 +386,7 @@
     if (typeof runCallback=="undefined") runCallback=true;
     if (!opt) opt=container.attr("options");
     return this.each (function (){
-      if (opt.onBeforeIconize) opt.onBeforeIconize();
+      if (opt.onBeforeIconize) opt.onBeforeIconize(container);
       container.attr("iconized","true");
       if(container.attr("collapsed")=="false"){
         container.attr("h",container.outerHeight());
@@ -395,8 +401,8 @@
       var dockPlace= container;
       if (container.attr("dock")){
         dockPlace = $("#"+container.attr("dock"));
-        var icns= dockPlace.find("img").size();
-        l=$("#"+container.attr("dock")).offset().left+(opt.dockedIconDim*icns)+opt.dockedIconDim;
+        var icns= dockPlace.find("img:visible").size();
+        l=$("#"+container.attr("dock")).offset().left+(opt.dockedIconDim*icns);
         t=$("#"+container.attr("dock")).offset().top+(opt.dockedIconDim/2);
       }
       /*
@@ -431,8 +437,7 @@
               container.css({height:""});
             });
             //            container.find(".c:first , .mbcontainercontent:first").css("height",container.attr("h")-container.find(".n:first").outerHeight()-(container.find(".s:first").outerHeight()));
-          }
-          else
+          }else
             container.animate({height:"60px", width:container.attr("w"), left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
         } else {
           container.find(".no:first").show();
@@ -536,42 +541,44 @@
   };
 
   jQuery.fn.mb_open = function (url,data){
-    var container=$(this);
-    var opt= container.get(0).options;
-    var t=Math.floor(container.attr("t"));
-    var l=Math.floor(container.attr("l"));
-    container.css("top",t).css("left",l);
-    var el=container.get(0);
-    if (container.mb_getState('closed')){
-      if (url){
-        if (!data) data="";
-        container.mb_changeContainerContent(url,data);
-      }
+    this.each(function(){
+      var container=$(this);
+      var opt= container.get(0).options;
+      var t=Math.floor(container.attr("t"));
+      var l=Math.floor(container.attr("l"));
+      container.css("top",t).css("left",l);
+      var el=container.get(0);
+      if (container.mb_getState('closed')){
+        if (url){
+          if (!data) data="";
+          container.mb_changeContainerContent(url,data);
+        }
 
-      if (!$.browser.msie){
-        container.css("opacity",0);
-        container.css("visibility","visible");
-        container.fadeTo(opt.effectDuration*2,1);
-      } else {
-        container.css("visibility","visible");
-        container.show();
-      }
+        if (!$.browser.msie){
+          container.css("opacity",0);
+          container.css("visibility","visible");
+          container.fadeTo(opt.effectDuration*2,1);
+        } else {
+          container.css("visibility","visible");
+          container.show();
+        }
 
-      container.attr("closed","false");
-      if (container.attr("rememberMe")){
-        container.mb_setCookie("closed",false);
-        container.mb_setCookie("restored",true);
-      }
+        container.attr("closed","false");
+        if (container.attr("rememberMe")){
+          container.mb_setCookie("closed",false);
+          container.mb_setCookie("restored",true);
+        }
 
-      container.mb_bringToFront(opt.zIndexContext);
-      container.attr("restored", true);
+        container.mb_bringToFront(opt.zIndexContext);
+        container.attr("restored", true);
 
-      if(!container.mb_getState("collapsed")){
-        container.mb_resizeTo(container.attr("h"),container.attr("w"),false);
+        if(!container.mb_getState("collapsed")){
+          container.mb_resizeTo(container.attr("h"),container.attr("w"),false);
+        }
+        if(el.options.onRestore) el.options.onRestore($(el));
       }
-      if(el.options.onRestore) el.options.onRestore($(el));
-    }
-    return container;
+      return container;
+    })
   };
 
   jQuery.fn.mb_close = function (){
