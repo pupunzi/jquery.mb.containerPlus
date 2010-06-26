@@ -37,7 +37,7 @@
       function initDock(o,docID){
         var opt= o.get(0).options;
         var docEl=$("<span>").attr("id",o.attr("id")+"_dock").css({width:opt.dockedIconDim+5,display:"inline-block"});
-        var icon= $("<img>").attr("src",opt.elementsPath+"icons/"+(o.attr("icon")?o.attr("icon"):"restore.png")).css({opacity:.4,width:opt.dockedIconDim, cursor:"pointer"});
+        var icon= $("<img>").attr("src",opt.elementsPath+"icons/"+(o.attr("icon")?o.attr("icon"):"restore.png")).css({opacity:.4,width:opt.dockedIconDim,height:opt.dockedIconDim, cursor:"pointer"});
         icon.click(function(){o.mb_iconize()});
         docEl.append(icon);
         $("#"+docID).append(docEl);

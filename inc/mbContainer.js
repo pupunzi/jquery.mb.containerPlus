@@ -436,7 +436,6 @@
               }
               container.css({height:""});
             });
-            //            container.find(".c:first , .mbcontainercontent:first").css("height",container.attr("h")-container.find(".n:first").outerHeight()-(container.find(".s:first").outerHeight()));
           }else
             container.animate({height:"60px", width:container.attr("w"), left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
         } else {
@@ -489,6 +488,7 @@
         container.css({ height:opt.dockedIconDim, width:opt.dockedIconDim,left:l,top:t});
         $(this.dockIcon).show();
         if (container.attr("dock")) container.hide();
+        if (opt.onIconize && runCallback) opt.onIconize(container);
       }
       if (container.attr("rememberMe")) container.mb_setCookie("iconized",container.mb_getState("iconized"));
     });
@@ -543,12 +543,12 @@
   jQuery.fn.mb_open = function (url,data){
     this.each(function(){
       var container=$(this);
-      var opt= container.get(0).options;
-      var t=Math.floor(container.attr("t"));
-      var l=Math.floor(container.attr("l"));
-      container.css("top",t).css("left",l);
-      var el=container.get(0);
       if (container.mb_getState('closed')){
+        var opt= container.get(0).options;
+        var t=Math.floor(container.attr("t"));
+        var l=Math.floor(container.attr("l"));
+        container.css({top:t+"px", left:l+"px"});
+        var el=container.get(0);
         if (url){
           if (!data) data="";
           container.mb_changeContainerContent(url,data);
