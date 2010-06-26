@@ -1,6 +1,9 @@
 jquery.mb.containerPlus
 
 
+2.5.1 bugfix for IE:
+  1. onIconize didn't fire.
+
 2.5.0 major issue:
   1. new callback onCreate.
   2. simplified the HTML definition of the container.

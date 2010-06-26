@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.0
+ * Version: 2.5.1
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
