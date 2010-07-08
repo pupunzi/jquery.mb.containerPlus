@@ -20,7 +20,6 @@
   <script type="text/javascript" src="../inc/jquery.metadata.js"></script>
   <script type="text/javascript" src="../inc/mbContainer.js"></script>
   <script type="text/javascript">
-
     $(function(){
       if (self.location.href == top.location.href){
         $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
@@ -35,6 +34,7 @@
     $(function(){
 
       function initDock(o,docID){
+        if(o.hasClass("dock")) return;
         var opt= o.get(0).options;
         var docEl=$("<span>").attr("id",o.attr("id")+"_dock").css({width:opt.dockedIconDim+5,display:"inline-block"});
         var icon= $("<img>").attr("src",opt.elementsPath+"icons/"+(o.attr("icon")?o.attr("icon"):"restore.png")).css({opacity:.4,width:opt.dockedIconDim,height:opt.dockedIconDim, cursor:"pointer"});

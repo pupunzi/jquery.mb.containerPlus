@@ -38,7 +38,8 @@
         elementsPath:"elements/",
         onClose:function(o){},
         onIconize:function(o){},
-        effectDuration:200
+        effectDuration:200,
+        mantainOnWindow:true        
       });
 
       if (!$("#demoContainer").mb_getState("closed")){
@@ -158,7 +159,7 @@
     <b>preminimize a container</b>
     <p>to preminimize containers just add the param <span style="font-weight: bold;">collapsed:'true'</span></p>
     <p>You can verify the state of this container by pressing the button at the end of this page.</p>
-    <p>to verify the state of a container you have a metod <span style="font-weight: bold;">$.fn.mb_getState(attr)</span>; you can pass the attribute to verify (ex: collapsed or iconized) and it returns
+    <p>to verify the state of a container you have a method <span style="font-weight: bold;">$.fn.mb_getState(attr)</span>; you can pass the attribute to verify (ex: collapsed or iconized) and it returns
       <span style="font-weight: bold;">true</span> or <span style="font-weight: bold;">false</span></p>
   </div>
 

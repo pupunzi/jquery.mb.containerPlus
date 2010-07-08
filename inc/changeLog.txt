@@ -1,6 +1,12 @@
 jquery.mb.containerPlus
 
 
+2.5.2 bugfix for FF4:
+  1. wrapped:
+    var winw=$(window).width();
+    var winh=$(window).height();
+    into document.load otherwise there was an exception.
+
 2.5.1 bugfix for IE:
   1. onIconize didn't fire.
 

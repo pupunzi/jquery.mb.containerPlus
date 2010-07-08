@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.1
+ * Version: 2.5.2
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -46,8 +46,9 @@
       var container=$(this);
 
       $(window).resize(function(){
-        if (container.get(0).options.mantainOnWindow)
+        if (container.get(0).options.mantainOnWindow){
           $.doOnWindowResize(el);
+        }
       });
 
       container.attr("inited","true");
@@ -228,6 +229,8 @@
     if(container.is(".draggable") && opt.containment!=""){
       container.draggable('option', 'containment', containment);
     }
+    //alert(containment)
+    
     return containment;
   };
 
@@ -749,13 +752,16 @@
   };
 
   //MANAGE WINDOWS POSITION ONRESIZE
-  var winw=$(window).width();
-  var winh=$(window).height();
+  $(function(){
+    var winw=$(window).width();
+    var winh=$(window).height();
+  });
+
   $.doOnWindowResize=function(el){
     clearTimeout(el.doRes);
     el.doRes=setTimeout(function(){
-      $(el).adjastPos();
       winw=$(window).width();	winh=$(window).height();
+      $(el).adjastPos();
     },400);
   };
 
