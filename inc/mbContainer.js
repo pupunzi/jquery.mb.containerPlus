@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.2
+ * Version: 2.5.3
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -63,6 +63,10 @@
 
       if ($.metadata){
         $.metadata.setType("class");
+        $.each(container.metadata(), function(key, data){
+          container.attr(key,data)
+        });
+/*
         if (container.metadata().skin) container.attr("skin",container.metadata().skin);
         if (container.metadata().collapsed) container.attr("collapsed",container.metadata().collapsed);
         if (container.metadata().iconized) container.attr("iconized",container.metadata().iconized);
@@ -71,7 +75,7 @@
         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
-        if (container.metadata().title) container.attr("containerTitle",container.metadata().title); //ui.resize
+        if (container.metadata().title) container.attr("title",container.metadata().title); //ui.resize
 
         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
@@ -85,14 +89,15 @@
         if (container.metadata().dock) container.attr("dock",container.metadata().dock);
         if (container.metadata().closed) container.attr("closed",container.metadata().closed);
         if (container.metadata().rememberMe) container.attr("rememberMe",container.metadata().rememberMe);
-        if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal);             // todo
+        if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal)
         if (container.metadata().width) container.attr("width",container.metadata().width);
         if (container.metadata().height) container.attr("height",container.metadata().height);
         if (container.metadata().containment) container.attr("containment",container.metadata().containment);
         if (container.metadata().minWidth) container.attr("minWidth",container.metadata().minWidth);
         if (container.metadata().minHeight) container.attr("minHeight",container.metadata().minHeight);
 
-        if (container.metadata().alwaysOnTop) container.css("z-index",100000).addClass("alwaysOnTop");
+*/
+        if (container.attr("alwaysOnTop")) container.css("z-index",100000).addClass("alwaysOnTop");
       }
 
       if(this.options.onCreate)
@@ -122,7 +127,7 @@
                 '</div></div>';
         container.html(structure);
       }
-      if(container.attr("containerTitle")) container.find(".n:first").html(container.attr("containerTitle"));
+      if(container.attr("title")) container.find(".n:first").html(container.attr("title"));
 
       if (container.attr("content")){
         var data= container.attr("data")?container.attr("data"):"";
@@ -230,7 +235,7 @@
       container.draggable('option', 'containment', containment);
     }
     //alert(containment)
-    
+
     return containment;
   };
 
