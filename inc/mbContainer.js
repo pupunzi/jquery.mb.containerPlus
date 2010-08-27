@@ -75,7 +75,7 @@
         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
-        if (container.metadata().title) container.attr("title",container.metadata().title); //ui.resize
+        if (container.metadata().title) container.attr("title",container.metadata().title); 
 
         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
