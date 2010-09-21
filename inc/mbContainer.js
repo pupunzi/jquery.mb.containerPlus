@@ -363,7 +363,7 @@
         }
         container.attr("collapsed","true");
         container.find(".collapsedContainer:first").attr("src",opt.elementsPath+container.attr('skin')+"/max.png");
-        container.resizable("disable");
+        if(container.hasClass("resizable")) container.resizable("disable");
         if (opt.onCollapse) opt.onCollapse(container);
 
       }else{
@@ -403,7 +403,7 @@
       container.attr("w",container.attr("width") && container.attr("width")>0 ? (!container.hasClass("resizable")? container.attr("width"):container.width()):!container.attr("handles")?"99.9%":container.width());
       container.attr("t",container.css("top"));
       container.attr("l",container.css("left"));
-      container.resizable("disable");
+      if(container.hasClass("resizable")) container.resizable("disable");
       var l=0;
       var t= container.css("top");
       var dockPlace= container;
