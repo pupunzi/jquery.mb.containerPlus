@@ -62,8 +62,10 @@
         dockedIconDim:45,
         onCreate:function(o){initDock(o,"dock")},
         onClose:function(o){close(o)},
-        onRestore:function(o){restore(o)},
+        onRestore:function(o){restore(o); o.mb_centerOnWindow(false);},
         onIconize:function(o){iconize(o)},
+        onLoad:function(o){o.mb_centerOnWindow(false);},
+
         effectDuration:300
       });
     });

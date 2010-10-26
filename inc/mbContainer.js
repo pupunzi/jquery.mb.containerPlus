@@ -66,37 +66,37 @@
         $.each(container.metadata(), function(key, data){
           container.attr(key,data)
         });
-/*
-        if (container.metadata().skin) container.attr("skin",container.metadata().skin);
-        if (container.metadata().collapsed) container.attr("collapsed",container.metadata().collapsed);
-        if (container.metadata().iconized) container.attr("iconized",container.metadata().iconized);
-        if (container.metadata().icon) container.attr("icon",container.metadata().icon);
-        if (container.metadata().buttons) container.attr("buttons",container.metadata().buttons);
-        if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
-        if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
-        if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
-        if (container.metadata().title) container.attr("title",container.metadata().title); 
+        /*
+         if (container.metadata().skin) container.attr("skin",container.metadata().skin);
+         if (container.metadata().collapsed) container.attr("collapsed",container.metadata().collapsed);
+         if (container.metadata().iconized) container.attr("iconized",container.metadata().iconized);
+         if (container.metadata().icon) container.attr("icon",container.metadata().icon);
+         if (container.metadata().buttons) container.attr("buttons",container.metadata().buttons);
+         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
+         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
+         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
+         if (container.metadata().title) container.attr("title",container.metadata().title);
 
-        if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
-        if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
-        if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid DRAG
+         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
+         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
+         if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid DRAG
 
-        if (container.metadata().resizeGrid) container.attr("resizeGrid",container.metadata().resizeGrid); //ui.grid RESIZE
-        if (container.metadata().resizeGridx) container.attr("resizeGridx",container.metadata().resizeGridx); //ui.grid RESIZE
-        if (container.metadata().resizeGridy) container.attr("resizeGridy",container.metadata().resizeGridy); //ui.grid RESIZE
+         if (container.metadata().resizeGrid) container.attr("resizeGrid",container.metadata().resizeGrid); //ui.grid RESIZE
+         if (container.metadata().resizeGridx) container.attr("resizeGridx",container.metadata().resizeGridx); //ui.grid RESIZE
+         if (container.metadata().resizeGridy) container.attr("resizeGridy",container.metadata().resizeGridy); //ui.grid RESIZE
 
-        if (container.metadata().handles) container.attr("handles",container.metadata().handles); //ui.resize
-        if (container.metadata().dock) container.attr("dock",container.metadata().dock);
-        if (container.metadata().closed) container.attr("closed",container.metadata().closed);
-        if (container.metadata().rememberMe) container.attr("rememberMe",container.metadata().rememberMe);
-        if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal)
-        if (container.metadata().width) container.attr("width",container.metadata().width);
-        if (container.metadata().height) container.attr("height",container.metadata().height);
-        if (container.metadata().containment) container.attr("containment",container.metadata().containment);
-        if (container.metadata().minWidth) container.attr("minWidth",container.metadata().minWidth);
-        if (container.metadata().minHeight) container.attr("minHeight",container.metadata().minHeight);
+         if (container.metadata().handles) container.attr("handles",container.metadata().handles); //ui.resize
+         if (container.metadata().dock) container.attr("dock",container.metadata().dock);
+         if (container.metadata().closed) container.attr("closed",container.metadata().closed);
+         if (container.metadata().rememberMe) container.attr("rememberMe",container.metadata().rememberMe);
+         if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal)
+         if (container.metadata().width) container.attr("width",container.metadata().width);
+         if (container.metadata().height) container.attr("height",container.metadata().height);
+         if (container.metadata().containment) container.attr("containment",container.metadata().containment);
+         if (container.metadata().minWidth) container.attr("minWidth",container.metadata().minWidth);
+         if (container.metadata().minHeight) container.attr("minHeight",container.metadata().minHeight);
 
-*/
+         */
         if (container.attr("alwaysOnTop")) container.css("z-index",100000).addClass("alwaysOnTop");
       }
 
@@ -355,11 +355,11 @@
         container.attr("w" , container.outerWidth());
         container.attr("h" , container.outerHeight());
         if (opt.collapseEffect=="fade")
-          container.find(".o:first").fadeOut(opt.effectDuration,function(){});
+          container.find(".o:first").fadeOut(opt.effectDuration,function(){container.setContainment();});
         else{
           container.find(".icon:first").hide();
           container.find(".o:first").slideUp(opt.effectDuration,function(){});
-          container.animate({height:container.find(".n:first").outerHeight()+container.find(".s:first").outerHeight()},opt.effectDuration,function(){container.find(".icon:first").show();});
+          container.animate({height:container.find(".n:first").outerHeight()+container.find(".s:first").outerHeight()},opt.effectDuration,function(){container.find(".icon:first").show();container.setContainment();});
         }
         container.attr("collapsed","true");
         container.find(".collapsedContainer:first").attr("src",opt.elementsPath+container.attr('skin')+"/max.png");
@@ -368,7 +368,7 @@
 
       }else{
         if (opt.collapseEffect=="fade")
-          container.find(".o:first").fadeIn(opt.effectDuration,function(){});
+          container.find(".o:first").fadeIn(opt.effectDuration,function(){container.setContainment();});
         else{
           container.find(".o:first").slideDown(opt.effectDuration,function(){});
           container.find(".icon:first").hide();
@@ -378,6 +378,7 @@
                   opt.effectDuration,function(){
             container.find(".icon:first").show();
             container.css({height:""});
+            container.setContainment();
           });
         }
         if (container.hasClass("resizable")) container.resizable("enable");
@@ -428,7 +429,6 @@
         else
           container.css({left:"auto",top:"auto"});
         container.show();
-
         if (!$.browser.msie) {
           container.find(".no:first").fadeIn("fast");
           if(container.attr("collapsed")=="false"){
@@ -443,6 +443,7 @@
                 container.mb_bringToFront(opt.zIndexContext);
               }
               container.css({height:""});
+              if(opt.onRestore) opt.onRestore(container);
             });
           }else
             container.animate({height:"60px", width:container.attr("w"), left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
@@ -454,13 +455,13 @@
           }
           else
             container.css({height:"60px", width:container.attr("w"),left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
+          if(opt.onRestore) opt.onRestore(container);
         }
         if (container.hasClass("resizable") && container.attr("collapsed")=="false") container.resizable("enable");
         $(this).remove();
         if(container.hasClass("draggable")) container.mb_bringToFront(opt.zIndexContext);
         $(".iconLabel").remove();
         container.attr("restored", true);
-        if(opt.onRestore) opt.onRestore(container);
         if (container.attr("rememberMe")){
           container.mb_setCookie("restored",container.mb_getState("restored"));
           container.mb_setCookie("closed", false);
@@ -685,11 +686,12 @@
     var container=$(this);
     var nww=$(window).width();
     var nwh=$(window).height();
-    var ow=container.outerWidth();
-    var oh= container.outerHeight();
+    var ow=container.attr("w")?container.attr("w"):container.outerWidth();
+    var oh= container.attr("h")?container.attr("h"):container.outerHeight();
     var l= (nww-ow)/2;
     var t= ((nwh-oh)/2)>0?(nwh-oh)/2:10;
     if (container.css("position")!="fixed"){
+      $(this).css("position","absolute");
       l=l+$(window).scrollLeft();
       t=t+$(window).scrollTop();
     }
@@ -707,6 +709,8 @@
         container.mb_setCookie("y",$(this).css("top"));
       }
     }
+    container.attr("t",t);
+    container.attr("l",l);
     return container;
   };
 
