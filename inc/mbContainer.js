@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.4
+ * Version: 2.5.5
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -178,6 +178,7 @@
             }
           }
         });
+        if($.iPhone) container.find(".n:first").addTouch();
         if (container.attr("grid") || (container.attr("gridx") && container.attr("gridy"))){
           var grid= container.attr("grid")? [container.attr("grid"),container.attr("grid")]:[container.attr("gridx"),container.attr("gridy")];
           container.draggable('option', 'grid', grid);

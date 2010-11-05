@@ -1,6 +1,9 @@
 jquery.mb.containerPlus
 
 
+2.5.5 feature:
+  1. added .addTouch() from jason kuhn (http://jasonkuhn.net) jQueryUI touch events implementation;
+
 2.5.4 bugfix:
   1. from: container.resizable("disable");
      to: if(container.hasClass("resizable")) container.resizable("disable");
