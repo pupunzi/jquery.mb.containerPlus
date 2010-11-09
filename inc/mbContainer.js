@@ -55,7 +55,6 @@
       container.attr("iconized","false");
       container.attr("collapsed","false");
       container.attr("closed","false");
-
       container.attr("options",this.options);
 
       if (!container.css("position")=="absolute")
