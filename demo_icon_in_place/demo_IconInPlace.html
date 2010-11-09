@@ -62,8 +62,9 @@
         dockedIconDim:45,
         onCreate:function(o){initDock(o,"dock")},
         onClose:function(o){close(o)},
-        onRestore:function(o){restore(o)},
+        onRestore:function(o){restore(o);},
         onIconize:function(o){iconize(o)},
+        onLoad:function(o){},//o.mb_centerOnWindow(false);
         effectDuration:300
       });
     });
@@ -164,12 +165,12 @@
 <body>
 <div class="wrapper">
   <h1>mb.containerPlus.dock_placeHolder.demo</h1>
-  <p><a target="_blank" href="http://pupunzi.open-lab.com/2010/06/19/how-to-add-a-f…-containerplus/">go to the tutorial</a></p>
+  <p><a target="_blank" href="http://pupunzi.open-lab.com/2010/06/19/how-to-add-a-functional-dock-to-jquery-mb-containerplus/">go to the tutorial</a></p>
   <br>
   <br>
   <br>
   
-  <div id="c1" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'black', width:'500',iconized:'true', dock:'dock', title:'container 1'}" style="position:fixed;top:130px;left:400px">
+  <div id="c1" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'black', width:'500',iconized:'true', dock:'dock', title:'container 1', rememberMe:true}" style="position:fixed;top:130px;left:400px">
     <div class="evidence">
       <h3>Container 1 with dock placeholder!</h3>
       <p>Loock at the code to see how to make a dock placeholder</p>
@@ -196,7 +197,7 @@
     <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
   </div>
 
-  <div class="containerPlus draggable resizable {buttons:'m,i,c', skin:'default', width:'500',iconized:'true', dock:'dock', title:'container 4'}" style="position:fixed;top:100px;left:600px">
+  <div class="containerPlus draggable resizable {buttons:'m,i,c', skin:'default', width:'500', dock:'dock', title:'container 4'}" style="position:fixed;top:100px;left:600px">
     <div class="evidence">
       <h3>Container 4 with dock placeholder!</h3>
       <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
