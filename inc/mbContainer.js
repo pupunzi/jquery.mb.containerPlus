@@ -55,7 +55,6 @@
       container.attr("iconized","false");
       container.attr("collapsed","false");
       container.attr("closed","false");
-
       container.attr("options",this.options);
 
       if (!container.css("position")=="absolute")
@@ -66,37 +65,6 @@
         $.each(container.metadata(), function(key, data){
           container.attr(key,data)
         });
-        /*
-         if (container.metadata().skin) container.attr("skin",container.metadata().skin);
-         if (container.metadata().collapsed) container.attr("collapsed",container.metadata().collapsed);
-         if (container.metadata().iconized) container.attr("iconized",container.metadata().iconized);
-         if (container.metadata().icon) container.attr("icon",container.metadata().icon);
-         if (container.metadata().buttons) container.attr("buttons",container.metadata().buttons);
-         if (container.metadata().content) container.attr("content",container.metadata().content); //ajax
-         if (container.metadata().data) container.attr("data",container.metadata().data); //ajax
-         if (container.metadata().aspectRatio) container.attr("aspectRatio",container.metadata().aspectRatio); //ui.resize
-         if (container.metadata().title) container.attr("title",container.metadata().title);
-
-         if (container.metadata().grid) container.attr("grid",container.metadata().grid); //ui.grid DRAG
-         if (container.metadata().gridx) container.attr("gridx",container.metadata().gridx); //ui.grid DRAG
-         if (container.metadata().gridy) container.attr("gridy",container.metadata().gridy); //ui.grid DRAG
-
-         if (container.metadata().resizeGrid) container.attr("resizeGrid",container.metadata().resizeGrid); //ui.grid RESIZE
-         if (container.metadata().resizeGridx) container.attr("resizeGridx",container.metadata().resizeGridx); //ui.grid RESIZE
-         if (container.metadata().resizeGridy) container.attr("resizeGridy",container.metadata().resizeGridy); //ui.grid RESIZE
-
-         if (container.metadata().handles) container.attr("handles",container.metadata().handles); //ui.resize
-         if (container.metadata().dock) container.attr("dock",container.metadata().dock);
-         if (container.metadata().closed) container.attr("closed",container.metadata().closed);
-         if (container.metadata().rememberMe) container.attr("rememberMe",container.metadata().rememberMe);
-         if (container.metadata().isModal) container.attr("isModal",container.metadata().isModal)
-         if (container.metadata().width) container.attr("width",container.metadata().width);
-         if (container.metadata().height) container.attr("height",container.metadata().height);
-         if (container.metadata().containment) container.attr("containment",container.metadata().containment);
-         if (container.metadata().minWidth) container.attr("minWidth",container.metadata().minWidth);
-         if (container.metadata().minHeight) container.attr("minHeight",container.metadata().minHeight);
-
-         */
         if (container.attr("alwaysOnTop")) container.css("z-index",100000).addClass("alwaysOnTop");
       }
 
