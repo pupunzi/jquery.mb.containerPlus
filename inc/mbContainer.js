@@ -156,7 +156,7 @@
         container.bind("mousedown",function(){
           $(this).mb_bringToFront(this.options.zIndexContext);
           if(opt.onClick) {
-              opt.onClick(this);
+              opt.onClick(container);
             }
         });
       }
