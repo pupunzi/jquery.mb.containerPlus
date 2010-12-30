@@ -33,6 +33,7 @@
         onDrag: function(o){},
         onRestore:function(o){},
         onLoad:function(o){},
+        onClick:function(o){},
         mantainOnWindow:true,
         collapseEffect:"slide", //or "fade"
         effectDuration:300,
@@ -151,11 +152,14 @@
           var grid= container.attr("grid")? [container.attr("grid"),container.attr("grid")]:[container.attr("gridx"),container.attr("gridy")];
           container.draggable('option', 'grid', grid);
         }
+        var opt= container.attr("options");
         container.bind("mousedown",function(){
           $(this).mb_bringToFront(this.options.zIndexContext);
+          if(opt.onClick) {
+              opt.onClick(this);
+            }
         });
       }
-      var opt= container.attr("options");
       if (opt.onLoad) {
         opt.onLoad(container);
       }
