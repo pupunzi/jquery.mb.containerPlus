@@ -41,6 +41,7 @@
         url: url,
         cache:false,
         data:data,
+				dataType:"html",
         success: function(html){
           $("body").append(html);
           $("#"+containerId).buildContainers({
