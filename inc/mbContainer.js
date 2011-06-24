@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.containerPlus
- * Version: 2.5.5
+ * Version: 2.5.8
  * dependencies: UI.core.js, UI.draggable.js, UI.resizable.js
  */
 
@@ -70,6 +70,8 @@
 				if (container.attr("alwaysOnTop")) container.css("z-index",100000).addClass("alwaysOnTop");
 			}
 
+			this.options.skin=container.attr("skin");
+
 			if(this.options.onCreate)
 				this.options.onCreate(container);
 
@@ -89,22 +91,22 @@
 				var content= container.html();
 				container.empty();
 				var structure=''+
-						'<div class="no"><div class="ne"><div class="n"></div></div>'+
-						'<div class="o"><div class="e"><div class="c">'+
-						'<div class="mbcontainercontent">'+content+'</div></div>' +
+						'<div class="no '+this.options.skin+'"><div class="ne '+this.options.skin+'"><div class="n '+this.options.skin+'"></div></div>'+
+						'<div class="o '+this.options.skin+'"><div class="e '+this.options.skin+'"><div class="c '+this.options.skin+'">'+
+						'<div class="mbcontainercontent '+this.options.skin+'">'+content+'</div></div>' +
 						'</div></div>'+
-						'<div><div class="so"><div class="se"><div class="s"> </div></div></div>'+
+						'<div><div class="so '+this.options.skin+'"><div class="se '+this.options.skin+'"><div class="s '+this.options.skin+'"> </div></div></div>'+
 						'</div></div>';
 				container.html(structure);
 			}
-			if(container.attr("title")) container.find(".n:first").html(container.attr("title"));
+			if(container.attr("title")) container.find(".n:first").html("<span>"+container.attr("title")+"</span>");
 
 			if (container.attr("content")){
 				var data= container.attr("data")?container.attr("data"):"";
 				container.mb_changeContainerContent(container.attr("content"),data);
 			}
 
-			container.addClass(container.attr("skin"));
+			container.addClass(this.options.skin);
 			container.find(".n:first").attr("unselectable","on");
 			if (!container.find(".n:first").html()) container.find(".n:first").html("&nbsp;");
 			container.containerSetIcon(container.attr("icon"), this.options.elementsPath);
@@ -206,7 +208,6 @@
 		if(container.is(".draggable") && opt.containment!=""){
 			container.draggable('option', 'containment', containment);
 		}
-		//alert(containment)
 
 		return containment;
 	};
@@ -290,23 +291,23 @@
 			container.find(".ne:first").append("<div class='buttonBar'></div>");
 			for (var i in btn){
 				if (btn[i]=="c"){
-					container.find(".buttonBar:first").append("<img src='"+path+container.attr('skin')+"/close.png' class='close'/>");
+					container.find(".buttonBar:first").append("<img src='"+path+opt.skin+"/close.png' class='close'/>");
 					container.find(".close:first").bind("click",function(){
 						container.mb_close();
 					});
 				}
 				if (btn[i]=="m"){
-					container.find(".buttonBar:first").append("<img src='"+path+container.attr('skin')+"/min.png' class='collapsedContainer'/>");
+					container.find(".buttonBar:first").append("<img src='"+path+opt.skin+"/min.png' class='collapsedContainer'/>");
 					container.find(".collapsedContainer:first").bind("click",function(){container.containerCollapse(opt);});
 					container.find(".n:first").bind("dblclick",function(){container.containerCollapse(opt);});
 				}
 				//todo : introduce print container content
 				if (btn[i]=="p"){
-					container.find(".buttonBar:first").append("<img src='"+path+container.attr('skin')+"/print.png' class='printContainer'/>");
+					container.find(".buttonBar:first").append("<img src='"+path+opt.skin+"/print.png' class='printContainer'/>");
 					container.find(".printContainer:first").bind("click",function(){});
 				}
 				if (btn[i]=="i"){
-					container.find(".buttonBar:first").append("<img src='"+path+container.attr('skin')+"/iconize.png' class='iconizeContainer'/>");
+					container.find(".buttonBar:first").append("<img src='"+path+opt.skin+"/iconize.png' class='iconizeContainer'/>");
 					container.find(".iconizeContainer:first").bind("click",function(){container.containerIconize(opt);});
 				}
 			}
@@ -334,7 +335,7 @@
 					container.animate({height:container.find(".n:first").outerHeight()+container.find(".s:first").outerHeight()},opt.effectDuration,function(){container.find(".icon:first").show();container.setContainment();});
 				}
 				container.attr("collapsed","true");
-				container.find(".collapsedContainer:first").attr("src",opt.elementsPath+container.attr('skin')+"/max.png");
+				container.find(".collapsedContainer:first").attr("src",opt.elementsPath+opt.skin+"/max.png");
 				if(container.hasClass("resizable")) container.resizable("disable");
 				if (opt.onCollapse) opt.onCollapse(container);
 
@@ -345,8 +346,8 @@
 					container.find(".o:first").slideDown(opt.effectDuration,function(){});
 					container.find(".icon:first").hide();
 					container.animate({
-						height:container.attr("h")
-					},
+								height:container.attr("h")
+							},
 							opt.effectDuration,function(){
 								container.find(".icon:first").show();
 								container.css({height:""});
@@ -355,7 +356,7 @@
 				}
 				if (container.hasClass("resizable")) container.resizable("enable");
 				container.attr("collapsed","false");
-				container.find(".collapsedContainer:first").attr("src",opt.elementsPath+container.attr('skin')+"/min.png");
+				container.find(".collapsedContainer:first").attr("src",opt.elementsPath+opt.skin+"/min.png");
 				container.find(".mbcontainercontent:first").css("overflow","auto");
 			}
 			if (container.attr("rememberMe")) container.mb_setCookie("collapsed",container.mb_getState("collapsed"));
@@ -395,66 +396,66 @@
 					.attr("contTitle",container.find(".n:first").text())
 					.bind("click",function(){
 
-				container.attr("iconized","false");
-				if (container.is(".draggable"))
-					container.css({top:$(this).offset().top, left:$(this).offset().left});
-				else
-					container.css({left:"auto",top:"auto"});
-				container.show();
-				if (!$.browser.msie) {
-					container.find(".no:first").fadeIn("fast");
-					if(container.attr("collapsed")=="false"){
-						container.animate({
-							height:container.attr("h"),
-							width:container.attr("w"),
-							left:container.attr("l"),
-							top:container.attr("t")},
-								opt.effectDuration,function(){
-									container.find(".mbcontainercontent:first").css("overflow","auto");
-									if(container.hasClass("draggable")) {
-										container.mb_bringToFront(opt.zIndexContext);
-									}
-									container.css({height:""});
-									if(opt.onRestore) opt.onRestore(container);
-								});
-					}else
-						container.animate({height:"60px", width:container.attr("w"), left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
-				} else {
-					container.find(".no:first").show();
-					if(container.attr("collapsed")=="false"){
-						container.css({height:container.attr("h"), width:container.attr("w"),left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
-						container.find(".c:first , .mbcontainercontent:first").css("height",container.attr("h")-container.find(".n:first").outerHeight()-(container.find(".s:first").outerHeight()));
-					}
-					else
-						container.css({height:"60px", width:container.attr("w"),left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
-					if(opt.onRestore) opt.onRestore(container);
-				}
-				if (container.hasClass("resizable") && container.attr("collapsed")=="false") container.resizable("enable");
-				$(this).remove();
-				if(container.hasClass("draggable")) container.mb_bringToFront(opt.zIndexContext);
-				$(".iconLabel").remove();
-				container.attr("restored", true);
-				if (container.attr("rememberMe")){
-					container.mb_setCookie("restored",container.mb_getState("restored"));
-					container.mb_setCookie("closed", false);
-					container.mb_setCookie("iconized", false);
-					container.mb_setCookie("collapsed", false);
-				}
-				if (opt.mantainOnWindow) $.doOnWindowResize(container);
-			})
+						container.attr("iconized","false");
+						if (container.is(".draggable"))
+							container.css({top:$(this).offset().top, left:$(this).offset().left});
+						else
+							container.css({left:"auto",top:"auto"});
+						container.show();
+						if (!$.browser.msie) {
+							container.find(".no:first").fadeIn("fast");
+							if(container.attr("collapsed")=="false"){
+								container.animate({
+											height:container.attr("h"),
+											width:container.attr("w"),
+											left:container.attr("l"),
+											top:container.attr("t")},
+										opt.effectDuration,function(){
+											container.find(".mbcontainercontent:first").css("overflow","auto");
+											if(container.hasClass("draggable")) {
+												container.mb_bringToFront(opt.zIndexContext);
+											}
+											container.css({height:""});
+											if(opt.onRestore) opt.onRestore(container);
+										});
+							}else
+								container.animate({height:"60px", width:container.attr("w"), left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
+						} else {
+							container.find(".no:first").show();
+							if(container.attr("collapsed")=="false"){
+								container.css({height:container.attr("h"), width:container.attr("w"),left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
+								container.find(".c:first , .mbcontainercontent:first").css("height",container.attr("h")-container.find(".n:first").outerHeight()-(container.find(".s:first").outerHeight()));
+							}
+							else
+								container.css({height:"60px", width:container.attr("w"),left:container.attr("l"),top:container.attr("t")},opt.effectDuration);
+							if(opt.onRestore) opt.onRestore(container);
+						}
+						if (container.hasClass("resizable") && container.attr("collapsed")=="false") container.resizable("enable");
+						$(this).remove();
+						if(container.hasClass("draggable")) container.mb_bringToFront(opt.zIndexContext);
+						$(".iconLabel").remove();
+						container.attr("restored", true);
+						if (container.attr("rememberMe")){
+							container.mb_setCookie("restored",container.mb_getState("restored"));
+							container.mb_setCookie("closed", false);
+							container.mb_setCookie("iconized", false);
+							container.mb_setCookie("collapsed", false);
+						}
+						if (opt.mantainOnWindow) $.doOnWindowResize(container);
+					})
 					.bind("mouseenter",function(){
-				var label="<div class='iconLabel'>"+$(this).attr("contTitle")+"</div>";
-				$("body").append(label);
-				$(".iconLabel").hide().css({
-					position:"absolute",
-					top:$(this).offset().top-20,
-					left:$(this).offset().left+15,
-					opacity:.9
-				}).fadeIn("slow").mb_bringToFront(opt.zIndexContext);
-			})
+						var label="<div class='iconLabel'>"+$(this).attr("contTitle")+"</div>";
+						$("body").append(label);
+						$(".iconLabel").hide().css({
+							position:"absolute",
+							top:$(this).offset().top-20,
+							left:$(this).offset().left+15,
+							opacity:.9
+						}).fadeIn("slow").mb_bringToFront(opt.zIndexContext);
+					})
 					.bind("mouseleave",function(){
-				$(".iconLabel").fadeOut("fast",function(){$(this).remove();});
-			});
+						$(".iconLabel").fadeOut("fast",function(){$(this).remove();});
+					});
 
 			if (!$.browser.msie) {
 				container.find(".mbcontainercontent:first").css("overflow","hidden");
@@ -734,10 +735,9 @@
 	};
 
 	//MANAGE WINDOWS POSITION ONRESIZE
-	$(function(){
-		var winw=$(window).width();
-		var winh=$(window).height();
-	});
+	var winw=$(window).width();
+	var winh=$(window).height();
+
 
 	$.doOnWindowResize=function(el){
 		clearTimeout(el.doRes);
