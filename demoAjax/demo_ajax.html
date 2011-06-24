@@ -41,6 +41,7 @@
       $.ajax({
         url: url+"?rnd"+new Date().getMilliseconds(),
         data:data,
+				dataType:"html",
         success: function(html){
           $("body").append(html);
           $("#"+containerId).mb_removeCookie("closed");
