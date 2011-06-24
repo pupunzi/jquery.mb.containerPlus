@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>mbContainers div layout</title>
+
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+  <link rel="stylesheet" type="text/css" href="../css/mbContainer.css" title="style"  media="screen"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="../inc/mbContainer.js"></script>
+  <script type="text/javascript" src="../inc/jquery.metadata.js"></script>
+  <script type="text/javascript">
+
+    $(function(){
+      $(".containerPlus").buildContainers({
+        containment:"document",
+        elementsPath:"../elements/",
+        mantainOnWindow:false
+      });
+    });
+    
+  </script>
+  <style type="text/css">
+
+
+    body{
+      background: #009999 url("../elements/bgnds/body_light.png");
+
+    }
+
+    #maincontainer{	min-width:1200px;}
+
+    #topsection{
+      height: 120px; /*Height of top section*/
+    }
+
+    #contentwrapper{
+      float: left;
+      width: 99%;
+    }
+
+    #contentcolumn{
+      margin: 0 250px 0 28%; /*Margins for content column. Should be "0 right-column-width 0 left-column-width*/
+    }
+
+    #leftcolumn{
+      float: left;
+      width: 28%; /*Width of left column in percentage*/
+      margin-left: -99%;
+    }
+
+    #rightcolumn{
+      float: left;
+      width: 250px; /*Width of right column in pixels*/
+      margin-left: -250px; /*Set margin to -(RightColumnWidth)*/
+    }
+
+    #footer{
+      clear: left;
+      width: 99%;
+      color: #FFF;
+      text-align: center;
+      padding: 4px 0;
+    }
+
+
+    .innertube{
+      margin: 5px; /*Margins for inner DIV inside each column (to provide padding)*/
+      margin-top: 0;
+    }
+    table td{white-space:nowrap;}
+  </style>
+
+</head>
+<body bgcolor="darkkhaki">
+<div id="maincontainer">
+  <div id="topsection"><div class="innertube"><h1>header</h1>
+    <span onclick="$('#iconizable').mb_iconize();" style="cursor:pointer">iconize right container!</span><br/>
+    <span onclick="$('#iconizable').mb_resizeTo(26+Math.floor(Math.random()*600));" style="cursor:pointer">resize right container!</span>
+  </div></div>
+
+  <div id="contentwrapper">
+    <div id="contentcolumn">
+      <div class="innertube" style="position:relative;">
+
+        <div class="containerPlus resizable  {buttons:'m,c', skin:'white'}" style="position:absolute;">
+          <div class="no"><div class="ne"><div class="n">main content</div></div>
+            <div class="o"><div class="e"><div class="c">
+              <div class="mbcontainercontent">
+
+                <div class="containerPlus resizable draggable {containment:'parent',width:'250', height:200, buttons:'m,c,i', skin:'white', icon:'alert.png'}" style="position:absolute;">
+                  <div class="no"><div class="ne"><div class="n">left content</div></div>
+                    <div class="o"><div class="e"><div class="c">
+                      <div class="mbcontainercontent">
+
+                        <h3>E qui va il contenuto!</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+                        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+                      </div>
+                    </div></div></div>
+                    <div >
+                      <div class="so"><div class="se"><div class="s"></div></div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3>E qui va il contenuto!</h3>
+                <table width="100%" bgcolor="azure">
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                  <tr><td>prova table</td><td>prova table</td><td>prova table jkokjlokj okjokjokjo kjo okjo okjo o</td><td>prova table</td></tr>
+                </table>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+                <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+              </div>
+            </div></div></div>
+            <div >
+              <div class="so"><div class="se"><div class="s"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="leftcolumn" >
+    <div class="innertube">
+
+
+      <div class="containerPlus   {width:'100%', height:200, buttons:'m,c', skin:'white', icon:'alert.png'}" style="position:relative;">
+        <div class="no"><div class="ne"><div class="n">left content</div></div>
+          <div class="o"><div class="e"><div class="c">
+            <div class="mbcontainercontent">
+
+              <h3>E qui va il contenuto!</h3>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+              <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+            </div>
+          </div></div></div>
+          <div >
+            <div class="so"><div class="se"><div class="s"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="containerPlus  {buttons:'m,c', skin:'white', icon:'chart.png'}" style="position:relative;">>
+        <div class="no"><div class="ne"><div class="n">left content</div></div>
+          <div class="o"><div class="e"><div class="c">
+            <div class="mbcontainercontent">
+
+              <h3>E qui va il contenuto!</h3>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+              <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+            </div>
+          </div></div></div>
+          <div >
+            <div class="so"><div class="se"><div class="s"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="rightcolumn">
+    <div class="innertube">
+
+      <div id="iconizable" class="containerPlus resizable  {buttons:'m,c', skin:'white'}" style="position:relative;">
+        <div class="no"><div class="ne"><div class="n">right content</div></div>
+          <div class="o"><div class="e"><div class="c">
+            <div class="mbcontainercontent">
+
+              <h3>E qui va il contenuto!</h3>
+              <span onclick="$('#iconizable').containerIconize();" style="cursor:pointer">iconize this!</span><br/>
+              <span onclick="$('#iconizable').mb_resizeTo(300);" style="cursor:pointer">resize this!</span>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+              <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+
+            </div>
+          </div></div></div>
+          <div >
+            <div class="so"><div class="se"><div class="s"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div id="footer">footer</div>
+</div>
+<img src="../valid-xhtml10.png" alt="vaildW3c">
+</body>
+</html>

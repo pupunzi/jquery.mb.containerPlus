@@ -12,16 +12,16 @@
 
 <html>
 <head>
-  <title>mbContainers ajax</title>
+  <title>mbContainers</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
   <link rel="stylesheet" type="text/css" href="../css/mbContainer.css" title="style"  media="screen"/>
-
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script type="text/javascript" src="../inc/jquery.metadata.js"></script>
   <script type="text/javascript" src="../inc/mbContainer.js"></script>
   <script type="text/javascript">
+
     $(function(){
       if (self.location.href == top.location.href){
         $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
@@ -31,38 +31,38 @@
       }
     });
 
-
-    document.containers= new Object();
-
-    function insertMbContainerPlus(url, containerId, data){
-      if(document.containers[containerId]==1 || !url) return;
-      if(!data) data="";
-      $.ajax({
-        url: url,
-        cache:false,
-        data:data,
-				dataType:"html",
-        success: function(html){
-          $("body").append(html);
-          $("#"+containerId).buildContainers({
-            containment:"document",
-            elementsPath:"../elements/",
-            effectDuration:200,
-            onLoad:function(o){
-              document.containers[o.attr("id")]=1;
-            },
-            onClose:function(o){
-              o.mb_removeCookie("closed");
-              o.remove();
-              document.containers[o.attr("id")]=null;
-            }
-          });
-        }
-      });
-    }
   </script>
+  <script type="text/javascript">
+    $(function(){
+      $(".containerPlus").buildContainers({
+        containment:"document",
+        elementsPath:"../elements/",
+        onClose:function(o){},
+        onRestore:function(o){},
+        onIconize:function(o){},
+        effectDuration:200
+      });
+    });
 
+    $.fn.mb_expand=function(path){
+      if($(this).mb_getState('closed'))
+        $(this).mb_open();
+      if(path)
+        $(this).mb_changeContainerContent(path);
+
+      if(!$(this).mb_getState('iconized')) return;
+      $(this).mb_iconize();
+    }
+
+  </script>
   <style type="text/css">
+
+
+    body{
+      background: #990099 url("../elements/bgnds/body_light.png");
+
+    }
+
 
     .wrapper{
       font-family:Arial, Helvetica, sans-serif;
@@ -84,7 +84,7 @@
       -webkit-border-radius:10px;
     }
 
-    button{
+    #actions button{
       padding:4px;
       display:inline-block;
       cursor:pointer;
@@ -103,7 +103,7 @@
       outline: 0;
     }
 
-    button:hover{
+    #actions button:hover{
       color:#aaa;
       background-color:#000;
     }
@@ -141,44 +141,32 @@
 </head>
 <body>
 <div class="wrapper">
-  <h1>mb.containerPlus.Ajax.demo</h1>
-  Here is a demo page that shows how to load mb.containerPlus via ajax into the page.<br>
-  I've made a little function that add an mb.containerPlus via ajax and initialize it once on the page:
-  <code><pre>
-    function insertMbContainerPlus(url, containerId, data){
-      if(document.containers[containerId]==1 || !url) return;
-      if(!data) data="";
-      $.ajax({
-        url: url,
-        cache:false,
-        data:data,
-        success: function(html){
-          $("body").append(html);
-          //to prevent that the opened container is flagged as "closed" on the cookie
-          $("#"+containerId).mb_removeCookie("closed");
-          $("#"+containerId).buildContainers({
-            containment:"document",
-            elementsPath:"../elements/",
-            effectDuration:200,
-            onLoad:function(o){
-              document.containers[o.attr("id")]=1;
-            },
-            onClose:function(o){
-              o.mb_removeCookie("closed");
-              o.remove();
-              document.containers[o.attr("id")]=null;
-            }
-          });
+  <h1>mb.containerPlus.changeContent.demo</h1>
+  <br>
+  <br>
+  <br>
+  <div id="actions">
 
-        }
-      });
-    }
-  </pre></code>
-Try now by clicking those two buttons:<br><br>
-  <button class="button" id="ajax1Opener" onclick="insertMbContainerPlus('ajax1.html','ajax1', '');">open container 1</button>
-  <button class="button" id="ajax2Opener" onclick="insertMbContainerPlus('ajax2.html','ajax2', '');">open container 2</button>
+    <button id="change" onclick="$('#demoContainer').mb_expand('test_1.html');" >change content 1</button><br>
+    <button id="change1" onclick="$('#demoContainer').mb_expand('test_2.html');" >change content 2</button><br>
+    <button id="change2" onclick="$('#demoContainer').mb_expand('test_3.html');" >change content 3</button><br>
 
+  </div>
+
+  <div id="demoContainer" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'default',content:'test_1.html', width:'500',iconized:'true', grid:1}" style="top:100px;right:100px">
+    <div class="no"><div class="ne"><div class="n">containerPlus</div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+          [content loaded via ajax]
+        </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
 
 </div>
 </body>
 </html>
+ 

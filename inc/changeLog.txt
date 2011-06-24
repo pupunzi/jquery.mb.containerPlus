@@ -1,6 +1,27 @@
 jquery.mb.containerPlus
 
 
+2.5.5 feature:
+  1. added .addTouch() from jason kuhn (http://jasonkuhn.net) jQueryUI touch events implementation;
+
+2.5.4 bugfix:
+  1. from: container.resizable("disable");
+     to: if(container.hasClass("resizable")) container.resizable("disable");
+
+2.5.2 bugfix for FF4:
+  1. wrapped:
+    var winw=$(window).width();
+    var winh=$(window).height();
+    into document.load otherwise there was an exception.
+
+2.5.1 bugfix for IE:
+  1. onIconize didn't fire.
+
+2.5.0 major issue:
+  1. new callback onCreate.
+  2. simplified the HTML definition of the container.
+  3. added new demo dock_placeholder.
+
 2.4.9 minor issue:
   1. better manage of containment.
   2. added zIndexContext to specify which elements must be considered to increment the zIndex value by mb_bringToFront function.

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html>
+<head>
+    <title>mbContainers</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../css/mbContainer.css" title="style"  media="screen"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../inc/jquery.metadata.js"></script>
+    <script type="text/javascript" src="../inc/mbContainer.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            if (self.location.href == top.location.href){
+                $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+                var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>");
+                $("body").prepend(logo);
+                $("#logo").fadeIn();
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function(){
+
+            function openModal(o){
+                var $overlay=$("<div/>").attr("id","mb_overlay").css({position:"fixed",width:"100%", height:"100%", top:0, left:0, background:"#000", opacity:.7}).hide();
+                $("body").prepend($overlay);
+                $overlay.mb_bringToFront();
+                o.mb_bringToFront();
+                o.mb_centerOnWindow(false);
+                $overlay.fadeIn(500);
+            }
+            function closeModal(o){
+                $("#mb_overlay").fadeOut(500,function(){$(this).remove();})
+            }
+
+
+            function initDock(o,docID){
+                if(o.hasClass("dock")) return;
+                var opt= o.get(0).options;
+                var docEl=$("<span>").attr("id",o.attr("id")+"_dock").css({width:opt.dockedIconDim+5,display:"inline-block"});
+                var icon= $("<img>").attr("src",opt.elementsPath+"icons/"+(o.attr("icon")?o.attr("icon"):"restore.png")).css({opacity:.4,width:opt.dockedIconDim,height:opt.dockedIconDim, cursor:"pointer"});
+                icon.click(function(){o.mb_iconize()});
+                docEl.append(icon);
+                $("#"+docID).append(docEl);
+                o.attr("dock",o.attr("id")+"_dock");
+            }
+
+            function iconize(o){
+                $("#"+o.attr("dock")).find("img:first").hide();
+            }
+            function restore(o){
+                $("#"+o.attr("dock")).find("img:first").show();
+            }
+            function close(o){
+                $("#"+o.attr("dock")).find("img:first").hide();
+                $("#open").fadeIn();
+            }
+
+
+            $(".containerPlus").not("#modalContainer").buildContainers({
+                containment:"document",
+                elementsPath:"../elements/",
+                dockedIconDim:45,
+                onCreate:function(o){initDock(o,"dock")},
+                onClose:function(o){close(o)},
+                onRestore:function(o){restore(o);},
+                onIconize:function(o){iconize(o)},
+                onLoad:function(o){},//o.mb_centerOnWindow(false);
+                effectDuration:300
+            });
+
+            $("#modalContainer").buildContainers({
+                containment:"document",
+                elementsPath:"../elements/",
+                dockedIconDim:45,
+                onCreate:function(o){},
+                onClose:function(o){closeModal(o)},
+                onRestore:function(o){openModal(o)},
+                onIconize:function(o){},
+                effectDuration:300
+            });
+        });
+
+    </script>
+    <style type="text/css">
+
+        body{
+            background:#ff9900 url("../elements/bgnds/body_light.png");
+        }
+
+        a{
+            color:white;
+            text-decoration:none;
+            font-style:italic;
+        }
+        a:hover{
+            color:black;
+            text-decoration:underline;
+            font-style:italic;
+        }
+
+        .wrapper{
+            font-family:Arial, Helvetica, sans-serif;
+            margin-top:100px;
+            margin-left:50px;
+        }
+
+        .wrapper h1{
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:26px;
+        }
+
+        .evidence{
+            color:gray;
+            padding:10px;
+            margin-right:5px;
+            margin-top:5px;
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+        }
+
+        #actions button{
+            padding:4px;
+            display:inline-block;
+            cursor:pointer;
+            font:12px/14px Arial, Helvetica, sans-serif;
+            color:#666;
+            border:1px solid #999;
+            background-color:#eee;
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+            -moz-box-shadow:#999 2px 0px 3px;
+            -webkit-box-shadow:#999 2px 0px 3px;
+            margin-bottom:4px;
+        }
+
+        :focus {
+            outline: 0;
+        }
+
+        #actions button:hover{
+            color:#aaa;
+            background-color:#000;
+        }
+
+        #clickHere{
+            position:absolute;
+            bottom:160px;
+            left:250px;
+        }
+
+        #dock{
+            left:0;
+            position:absolute;
+            bottom:0;
+            display:block;
+            width:100%;
+            height:100px;
+            background: #333333 url("../elements/bgnds/screenBgnd.gif");
+            padding-left:200px;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            box-sizing:border-box;
+        }
+
+        #dock span{
+            margin-top:-30px;
+        }
+
+        #dock img{
+            padding-right:10px;
+        }
+        #open{position:absolute; bottom:40px;left:100px;}
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>mb.containerPlus.dock_placeHolder.demo</h1>
+    <p><a target="_blank" href="http://pupunzi.open-lab.com/2010/06/19/how-to-add-a-functional-dock-to-jquery-mb-containerplus/">go to the tutorial</a></p>
+    <br>
+    <br>
+    <br>
+
+    <div id="c1" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'browser.png', skin:'black', width:'500',iconized:'true', dock:'dock', title:'container 1', rememberMe:true}" style="position:fixed;top:130px;left:400px">
+        <div class="evidence">
+            <h3>Container 1 with dock placeholder!</h3>
+            <p>Loock at the code to see how to make a dock placeholder</p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+    </div>
+
+    <div id="c2" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'alert.png', skin:'white', width:'500',iconized:'true', dock:'dock', title:'container 2'}" style="position:fixed;top:181px;left:54px">
+        <div class="evidence">
+            <h3>Container 2 with dock placeholder!</h3>
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+    </div>
+
+    <div id="c3" class="containerPlus draggable resizable {buttons:'m,i,c', icon:'chart.png', skin:'default', width:'500',iconized:'true', dock:'dock', title:'container 3'}" style="position:fixed;top:500px;left:700px">
+        <div class="evidence">
+            <h3>Container 3 with dock placeholder!</h3>
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+    </div>
+
+    <div class="containerPlus draggable resizable {buttons:'m,i,c', skin:'default', width:'500', dock:'dock', title:'container 4'}" style="position:fixed;top:100px;left:600px">
+        <div class="evidence">
+            <h3>Container 4 with dock placeholder!</h3>
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+    </div>
+
+    <div id="modalContainer" class="containerPlus {buttons:'c', skin:'white', width:'500', height:'450', closed:'true', title:'container 4'}" style="position:fixed;top:100px;left:600px">
+        <div class="evidence">
+            <h3>Container 4 with dock placeholder!</h3>
+            <p>to preiconize containers just add the param <span style="font-weight: bold;">iconized:'true'</span></p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras metus. Maecenas justo elit, lacinia sit amet, cursus ut, sagittis sed, eros. Suspendisse potenti. Maecenas nec nisi. Donec vestibulum sollicitudin tellus. Sed consequat pellentesque ante. Vestibulum turpis quam, vulputate nec, nonummy convallis, ultrices congue, ligula. Ut rutrum leo et orci. Proin pharetra. Nam non sem ut eros fringilla ornare. In ullamcorper lorem eget ipsum. Suspendisse semper enim in arcu cursus consectetuer. Suspendisse potenti. Proin libero eros, adipiscing quis, volutpat in, ultrices ut, lacus.</p>
+        <p>Nulla facilisi. Vestibulum vel magna in ante lobortis semper. Integer posuere justo et urna. Vestibulum sit amet sapien ut quam tempor fringilla. Fusce a neque a enim mattis dapibus. Ends with a paragraph element!</p>
+        <div style="text-align:right; width:100%; margin-top:20px;"><button id="close" onclick="$('#modalContainer').mb_close();">close</button></div>
+        <br>
+    </div>
+
+    <img id="clickHere" src="../elements/bgnds/clickHere.png" alt="">
+    <div id="dock"></div>
+    <button id="open" onclick="$('.containerPlus').mb_open(); $(this).fadeOut();" style="display:none;">open closed containers </button><br>
+    <button id="openModal" onclick="$('.containerPlus').mb_open();">open modal </button>
+</div>
+</body>
+</html>
+ 
