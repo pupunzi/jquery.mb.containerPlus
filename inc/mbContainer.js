@@ -324,6 +324,9 @@
 		this.each (function () {
 			var container=$(this);
 			if (!opt) opt=this.options;
+
+			//console.debug(opt);
+
 			if (!container.mb_getState("collapsed")){
 				container.attr("w" , container.outerWidth());
 				container.attr("h" , container.outerHeight());
