@@ -29,9 +29,10 @@
 				onIconize:function(o){},
 				onClose: function(o){},
 				onBeforeClose: function(o){},
-				onResize: function(o){},
-				onDrag: function(o){},
+				onResize: function(o,w,h){},
+				onDrag: function(o,x,y){},
 				onRestore:function(o){},
+				onMaximize:function(o){},
 				onLoad:function(o){},
 				onClick:function(o){},
 				mantainOnWindow:true,
@@ -142,8 +143,7 @@
 					delay:0,
 					start:function(){},
 					stop:function(){
-						var opt=container.get(0).options;
-						if(opt.onDrag) opt.onDrag($(this));
+						if(this.options.onDrag) this.options.onDrag($(this),container.css("left"),container.css("top"));
 						if (container.attr("rememberMe")){
 							container.mb_setCookie("x",container.css("left"));
 							container.mb_setCookie("y",container.css("top"));
@@ -244,8 +244,7 @@
 					var elWidth=container.attr("width") && container.attr("width")>0 ?container.attr("width"):"99.9%";
 					container.css({width: elWidth});
 				}
-				var opt= container.get(0).options;
-				if(opt.onResize) opt.onResize(container);
+				if(this.options.onResize) this.options.onResize(container,container.css('width'),container.css('height'));
 				if (container.attr("rememberMe")){
 					container.mb_setCookie("width",container.outerWidth());
 					container.mb_setCookie("height",container.outerHeight());
@@ -361,6 +360,7 @@
 				container.attr("collapsed","false");
 				container.find(".collapsedContainer:first").attr("src",opt.elementsPath+opt.skin+"/min.png");
 				container.find(".mbcontainercontent:first").css("overflow","auto");
+				if (opt.onMaximize) opt.onMaximize(container);
 			}
 			if (container.attr("rememberMe")) container.mb_setCookie("collapsed",container.mb_getState("collapsed"));
 		});
