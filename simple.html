@@ -57,9 +57,6 @@ table {
   border-spacing: 0;
 }
 
-
-
-
 .ui-resizable {
   position: relative;
 }
@@ -155,9 +152,14 @@ body{}
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+.container{
+  visibility: hidden;
+}
+
   /*CONTAINER SKIN DEFAULT*/
 
 .mbc_container{
+  visibility: hidden;
   position: absolute;
   width: 450px;
   height: 300px;
@@ -178,6 +180,11 @@ body{}
   min-height: 100px;
   min-width: 100px;
   border-radius: 10px;
+}
+
+.mbc_container *{
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .mbc_container.dragging{
@@ -217,17 +224,6 @@ body{}
   cursor: move
 }
 
-.mbc_container > .mbc_header > .toolbar{
-  width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin: 0;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: normal;
-  cursor: move
-}
-
 .mbc_container > .mbc_controls{
   position: absolute;
   top:8px;
@@ -243,6 +239,32 @@ body{}
   box-sizing: border-box;
   background: #d4d4d4;
 }
+
+
+.mbc_container > .mbc_header > .mbc_toolBar{
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: normal;
+  cursor: move;
+  border-top:1px solid #d4d4d4;
+  text-align: right;
+}
+
+.mbc_container > .mbc_header > .mbc_toolBar > button.mbc_button{
+  position: relative;
+  color: #000;
+  border:none;
+  border-left:1px solid rgba(0,0,0,.1);
+  border-right:1px solid rgba(0,0,0,.2);
+  padding: 3px;
+  margin: 0;
+  -moz-border-radius: 0;
+}
+.mbc_container > .mbc_header > .mbc_toolBar > button.mbc_button:hover{
+  background: rgba(0,0,0,.1);
+}
+
 
 .mbc_container > .mbc_content {
   position: relative;
@@ -313,19 +335,6 @@ body{}
   color:white;
   font-weight: normal;
   cursor: move;
-
-
-}
-
-.mbc_container.black > .mbc_header > .toolbar{
-  width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin: 0;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: normal;
-  cursor: move
 }
 
 .mbc_container.black > .mbc_controls{
@@ -357,6 +366,11 @@ body{}
   overflow: auto;
 
   color: white
+}
+
+.mbc_container.black .mbc_toolBar button.mbc_button{
+  color: white;
+  background:rgba(255,255,255,.1);
 }
 
 .mbc_container.black > .mbc_footer {
@@ -413,12 +427,14 @@ body{}
 
         var method=opt;
         delete arguments[0];
-        var params = [this.get(0)];
+        var params = [];
         for (var i in arguments){
           if(arguments[i])
             params.push(arguments[i]);
         }
-        $.containerize.methods[method].apply(this, params);
+        this.each(function(){
+          $.containerize.methods[method].apply(this, params);
+        });
         return false;
       }
 
@@ -435,6 +451,7 @@ body{}
         el.opt = {};
         $.extend (el.opt, $.containerize.defaults, opt);
         $.containerize.build(el);
+        el.$.css("visibility","visible");
       });
     },
 
@@ -451,7 +468,7 @@ body{}
       var header = $("<div/>").addClass("mbc_header");
       var title = $("<div/>").addClass("mbc_title").html(titleText);
       var controls = $("<div/>").addClass("mbc_controls");
-      var buttonBar = $("<div/>").addClass("mbc_buttonBar");
+      var buttonBar = $("<div/>").addClass("mbc_toolBar");
 
       var content = $("<div/>").addClass("mbc_content").html(HTML);
       var footer = $("<div/>").addClass("mbc_footer").unselectable();
@@ -460,6 +477,7 @@ body{}
       el.$.append(content).append(header).append(footer);
 
       el.header = header;
+      el.containerTitle = title;
       el.footer = footer;
       el.content = content;
       el.controls = controls;
@@ -474,7 +492,7 @@ body{}
       setTimeout(function(){
         el.$.containerize("adjust");
         el.$.fadeTo(300,1);
-      },1000);
+      },500);
     },
 
     applyMethods:function(el, data){
@@ -484,10 +502,10 @@ body{}
 
       for (var els in properties){
         if(typeof $.containerize.methods[els] == "function" && properties[els]){
-          var params=[el];
+          var params=[];
           if(typeof properties[els] != "boolean")
             params.push(properties[els]);
-          $.containerize.methods[els].apply(this,params);
+          $.containerize.methods[els].apply(el,params);
         }
       }
       return el.$;
@@ -495,9 +513,8 @@ body{}
 
     methods:{
 
-      drag:function(el){
-
-        el = el ? el : this;
+      drag:function(){
+        var el = this;
 
         if(!el.isDraggable){
           el.$.draggable({
@@ -508,16 +525,16 @@ body{}
             stop:function(e,ui){
               ui.helper.removeClass("dragging");
             },
-            containment: $.containerize.methods.setContainment(el),
-            grid: el.$.data("grid") ? [parseFloat(el.$.data("grid").split(",")[0]), parseFloat(el.$.data("grid").split(",")[1])]: ""
+            containment: el.$.containerize("setContainment") //,
+            //grid: el.$.data("grid") ? [parseFloat(el.$.data("grid").split(",")[0]), parseFloat(el.$.data("grid").split(",")[1])]: ""
           });
           el.isDraggable=true;
           return el.$;
         }
       },
 
-      resize:function(el){
-        el = el ? el : this;
+      resize:function(){
+        var el = this;
 
         if(!el.isResizable)
           el.$.resizable({
@@ -541,9 +558,8 @@ body{}
         return el.$;
       },
 
-      setContainment:function(el,containment){
-
-        el = el ? el : this;
+      setContainment:function(containment){
+        var el = this;
 
         containment = !containment ? el.$.data("containment") : containment;
 
@@ -562,9 +578,8 @@ body{}
         return containment;
       },
 
-      close:function(el, animate){
-
-        el = el ? el : this;
+      close:function(animate){
+        var el = this;
 
         var time= animate ? animate : 0;
         if(!el.isClosed)
@@ -573,8 +588,10 @@ body{}
         return el.$;
       },
 
-      collapse:function(el){
-        el.header.bind("dblclick",function(){
+      collapse:function(){
+        var el = this;
+
+        el.containerTitle.bind("dblclick",function(){
           if(!el.isCollapsed){
             el.h= el.$.outerHeight();
             el.minH = el.$.css("min-height");
@@ -582,8 +599,10 @@ body{}
             el.$.css("min-height",0);
 
             el.content.hide();
-            var height = parseFloat(el.header.outerHeight());
+            el.buttonBar.hide();
             el.footer.hide();
+
+            var height = parseFloat(el.header.outerHeight());
             el.$.animate({height:height},el.opt.effectDuration,function(){
               el.$.containerize("setContainment");
             });
@@ -593,6 +612,7 @@ body{}
             el.$.animate({height:el.h},el.opt.effectDuration,function(){
               el.$.css("min-height",el.minH);
               el.content.show();
+              el.buttonBar.show();
               el.footer.show();
               el.$.resizable("enable");
               el.$.containerize("setContainment");
@@ -602,8 +622,8 @@ body{}
         })
       },
 
-      skin:function(el, skin){
-
+      skin:function(skin){
+        var el = this;
         if(!skin){
           el.$.removeClass(el.$.data("skin"));
           return;
@@ -617,14 +637,18 @@ body{}
         return el.$;
       },
 
-      adjust:function(el){
+      adjust:function(){
+        var el = this;
+
         var h= parseFloat(el.$.outerHeight()) - parseFloat(el.$.find(".mbc_header").outerHeight()) - parseFloat(el.$.find(".mbc_footer").outerHeight());
         el.$.find(".mbc_content").css({height:h});
         el.$.find(".mbc_content").css({marginTop:parseFloat(el.$.find(".mbc_header").outerHeight())});
         return el.$;
       },
 
-      windowResize:function(el){
+      windowResize:function(){
+        var el = this;
+
         el.$.containerize("setContainment", el.$.data("containment"))
       },
 
@@ -633,16 +657,44 @@ body{}
         el.$.css("z-index",100000).addClass("alwaysOnTop");
       },
 
-      setGrid:function(el,xy){
+      draggrid:function(xy){
+        var el = this;
 
         if(!xy)
           return;
+
         var split = xy.split(",");
         var grid = [parseFloat(split[0]),parseFloat(split[1])];
-        el.$.draggable('option', 'grid', grid);
 
+        if(el.$.data("drag"))
+          setTimeout(function(){
+            el.$.draggable('option', 'grid', grid);
+          },1);
+        return grid;
+      },
+
+      resizegrid:function(xy){
+        var el = this;
+
+        if(!xy)
+          return;
+
+        var split = xy.split(",");
+        var grid = [parseFloat(split[0]),parseFloat(split[1])];
+
+        if(el.$.data("drag"))
+          setTimeout(function(){
+            el.$.resizable('option', 'grid', grid);
+          },1);
         return grid;
       }
+    },
+
+    addtotoolbar:function(label,fn){
+      var el = this;
+
+
+
     },
 
     addMethod:function(name, fn){
@@ -741,13 +793,12 @@ body{}
 
   <div id="cont1" class="container" style=" top:130px; left: 300px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document" data-adddata=true>
     <h2>Container Title 1</h2>
-    <button onclick="if(!$('#cont1').hasClass('black')) $('#cont1').containerize('skin','black'); else $('#cont1').containerize('skin');">change skin</button>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
   </div>
 
-  <div id="cont2" class="container" style=" top:180px; left: 400px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document" >
+  <div id="cont2" class="container" style=" top:180px; left: 400px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document"  data-resizegrid="100,100">
     <h2>Container Title 3</h2>
     <button onclick="$('#cont2').containerize('adddata');">add metadata list</button>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -755,7 +806,7 @@ body{}
     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
   </div>
 
-  <div class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-adddata=true data-grid="100,100">
+  <div class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-adddata=true data-draggrid="100,100">
     <h2>Container Title 2</h2>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -769,7 +820,8 @@ body{}
 <script>
   $(function(){
 
-    $.containerize.addMethod("adddata",function(el){
+    $.containerize.addMethod("adddata",function(){
+      var el = this;
       var txt = "container properties:<br><br>";
       var data = el.$.data();
       for (var i in data){
@@ -779,10 +831,29 @@ body{}
       el.content.prepend(txt);
     });
 
-    $.containerize.addMethod("addtoolbar",function(el, ){
+    $.containerize.addMethod("addtobuttonBar",function(btn){
+      var el = this;
+      var button = btn.clone(true);
+      el.buttonBar.append(button);
     });
 
     $(".container").containerize();
+
+    var changeSkinBtn = $("<button/>").addClass("mbc_button").html("change skin").click(function(e){
+
+      var el = $(this).parents(".mbc_container");
+
+      if(!el.hasClass('black'))
+        el.containerize('skin','black');
+      else
+        el.containerize('skin');
+
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    $(".container").containerize("addtobuttonBar", changeSkinBtn);
+    $(".#cont2").containerize("addtobuttonBar", changeSkinBtn);
 
   })
 
