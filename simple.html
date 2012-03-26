@@ -791,7 +791,7 @@ body{}
 <div id="wrapper">
 
 
-  <div id="cont1" class="container" style=" top:130px; left: 300px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document" data-adddata=true>
+  <div id="cont1" class="container" style=" top:130px; left: 300px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document" data-showdata=true>
     <h2>Container Title 1</h2>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -800,13 +800,13 @@ body{}
 
   <div id="cont2" class="container" style=" top:180px; left: 400px;" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document"  data-resizegrid="100,100">
     <h2>Container Title 3</h2>
-    <button onclick="$('#cont2').containerize('adddata');">add metadata list</button>
+    <button onclick="$('#cont2').containerize('showdata');">show metadata</button>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
   </div>
 
-  <div class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-adddata=true data-draggrid="100,100">
+  <div class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-draggrid="100,100">
     <h2>Container Title 2</h2>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
     <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -820,7 +820,7 @@ body{}
 <script>
   $(function(){
 
-    $.containerize.addMethod("adddata",function(){
+    $.containerize.addMethod("showdata",function(){
       var el = this;
       var txt = "container properties:<br><br>";
       var data = el.$.data();
@@ -840,20 +840,17 @@ body{}
     $(".container").containerize();
 
     var changeSkinBtn = $("<button/>").addClass("mbc_button").html("change skin").click(function(e){
-
       var el = $(this).parents(".mbc_container");
-
       if(!el.hasClass('black'))
         el.containerize('skin','black');
       else
         el.containerize('skin');
-
       e.stopPropagation();
       e.preventDefault();
     });
 
-    $(".container").containerize("addtobuttonBar", changeSkinBtn);
-    $(".#cont2").containerize("addtobuttonBar", changeSkinBtn);
+    //$(".container").containerize("addtobuttonBar", changeSkinBtn);
+    $("#cont2").containerize("addtobuttonBar", changeSkinBtn);
 
   })
 
