@@ -271,6 +271,9 @@
           });
 
         el.isClosed=true;
+
+        el.$.trigger("closed");
+
         return el.$;
       },
 
@@ -289,6 +292,8 @@
           el.opt.onRestore(el);
 
         el.$.mb_bringToFront();
+
+        el.$.trigger("opened");
 
         return el.$;
       },
@@ -520,10 +525,12 @@
       rememberme:function(){
         $.cMethods.rememberme = "rememberme";
         var el = this;
+
         el.$.bind("resized",function(){
           $.mbCookie.set(el.id+"_w", el.$.outerWidth(),7);
           $.mbCookie.set(el.id+"_h", el.$.outerHeight(),7);
         });
+
         el.$.bind("dragged",function(){
           $.mbCookie.set(el.id+"_t", el.$.css("top"),7);
           $.mbCookie.set(el.id+"_l", el.$.css("left"),7);
@@ -533,8 +540,25 @@
           $.mbCookie.set(el.id+"_iconized", true,7);
         });
 
+        el.$.bind("closed",function(){
+          $.mbCookie.set(el.id+"_closed", true,7);
+          $.mbCookie.remove(el.id+"_opened");
+        });
+
+        el.$.bind("opened",function(){
+          $.mbCookie.set(el.id+"_opened", true,7);
+          $.mbCookie.remove(el.id+"_closed");
+
+        });
+
+        el.$.bind("centeredOnWindow",function(){
+          $.mbCookie.set(el.id+"_t", el.$.css("top"),7);
+          $.mbCookie.set(el.id+"_l", el.$.css("left"),7);
+        });
+
         el.$.bind("restored",function(){
           $.mbCookie.remove(el.id+"_iconized");
+          $.mbCookie.remove(el.id+"_closed");
         });
 
         var w = $.mbCookie.get(el.id+"_w") ? $.mbCookie.get(el.id+"_w") : el.$.css("width");
@@ -547,6 +571,15 @@
           el.$.containerize("close");
           el.$.containerize("iconize");
         }
+
+        if($.mbCookie.get(el.id+"_opened")){
+          el.$.containerize("open");
+        }
+
+        if($.mbCookie.get(el.id+"_closed")){
+          el.$.containerize("close");
+        }
+
       },
       centeronwindow:function(anim){
         $.cMethods.centeronwindow = "centeronwindow";
@@ -565,18 +598,13 @@
         }
         if (anim)
           el.$.animate({top:t,left:l},300,function(){
-            if (el.$.attr("rememberMe")){
-              el.$.mb_setCookie("x",$(this).css("left"));
-              el.$.mb_setCookie("y",$(this).css("top"));
-            }
+            el.$.trigger("centeredOnWindow")
           });
         else{
           el.$.css({top:t,left:l});
-          if (el.$.attr("rememberMe")){
-            el.$.mb_setCookie("x",$(this).css("left"));
-            el.$.mb_setCookie("y",$(this).css("top"));
-          }
+          el.$.trigger("centeredOnWindow")
         }
+
         el.$.attr("t",t);
         el.$.attr("l",l);
         return el;
