@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2012. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html>
+<head>
+  <title>simple container</title>
+  <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
+  <link href='css/mb.container+.css' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
+  <script type="text/javascript" src="inc/jquery.mb.container+.js"></script>
+  <!--<script type="text/javascript" src="inc/mb.container+.plugins.js"></script>-->
+
+  <style>
+
+
+    body{
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    #wrapper{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      background: #444e57;
+    }
+
+    .container{
+      visibility: hidden;
+      width: 450px;
+      height: auto;
+    }
+
+    .container .mbc_content button{
+      border: 1px solid gray;
+      border-radius: 8px;
+      background: #3a3a3a;
+      color:white;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+
+    .black.containerIcon{
+      padding: 10px;
+      height: 20px;
+      background: #000;
+      box-shadow: 0 0 3px rgba(255,255,255,0.4);
+      color: white;
+    }
+    .containerIcon:hover .mbc_title{
+      display: block;
+      cursor: pointer;
+    }
+    .containerIcon .mbc_title{
+      display: none;
+    }
+
+    #dock{
+      position: fixed;
+      top: 0;
+      width: 100%;
+       background: rgba(0,0,0,0.5);
+    }
+    .containerDocked{
+      display: inline-block;
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+}
+
+    /*ICONS*/
+
+    .container .icon{
+      position: absolute;
+      left:-20px;
+      top:-20px;
+    }
+    .mbc_container{
+      overflow: inherit;
+    }
+    .mbc_container > .mbc_header h2{
+      margin-left: 20px;
+    }
+  </style>
+
+</head>
+<body>
+
+<div id="wrapper">
+
+
+  <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document">
+    <h2><img class="icon" src="css/browser.png"> Container Title 1</h2>
+    <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
+    <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  </div>
+
+  <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document"  data-resizegrid="100,100" data-showdata=true>
+    <h2>Container Title 2</h2>
+    <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  </div>
+
+  <div id="cont3" class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-draggrid="100,100" data-rememberme=true>
+    <h2>Container Title 3</h2>
+    <button onclick="$('#cont3').containerize('showdata');$(this).hide();">show properties</button>
+    <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  </div>
+
+  <div id="dock"></div>
+
+  <button onclick='$("#cont1").containerize("open",500);'>open container 1</button>
+
+</div>
+
+<script>
+  $(function(){
+
+    if (self.location.href == top.location.href){
+      var logo=$("<a href='http://pupunzi.com' style='position:absolute;top:40px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+      $("body").prepend(logo);
+      $("#logo").fadeIn();
+    }
+
+    /*
+    * Example of custom method added to the component
+    *
+    * */
+    $.containerize.addMethod("showdata",function(){
+      var el = this;
+      var txt = "container properties:<br><br>";
+      var data = el.$.data();
+      for (var i in data){
+        txt += i+"= "+ data[i]+"<br>";
+      }
+      txt += "<hr><br>"
+      el.content.prepend(txt);
+    });
+
+    $(".container").containerize();
+
+    var changeSkinBtn = $("<button/>").addClass("mbc_button").html("change skin").click(function(e){
+      var el = $(this).parents(".mbc_container");
+      if(!el.hasClass('black'))
+        el.containerize('skin','black');
+      else
+        el.containerize('skin');
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    var fullScreenBtn = $("<button/>").addClass("mbc_button").html("full screen").click(function(e){
+      var el = $(this).parents(".mbc_container");
+      el.containerize("fullScreen");
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    var iconizeBtn = $("<button/>").addClass("mbc_button").html("iconize").click(function(e){
+      var el = $(this).parents(".mbc_container");
+      el.containerize("iconize");
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    var dockBtn = $("<button/>").addClass("mbc_button").html("dock").click(function(e){
+      var el = $(this).parents(".mbc_container");
+      el.containerize("iconize","dock");
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    $("#cont1").containerize("addtotoolbar", dockBtn);
+    $("#cont2").containerize("addtotoolbar", changeSkinBtn);
+    $("#cont3").containerize("addtotoolbar", [fullScreenBtn,iconizeBtn, changeSkinBtn,dockBtn]);
+
+  })
+
+</script>
+</body>
+</html>
