@@ -683,6 +683,7 @@
         handleTouch(event);
       });
     });
+
     var handleTouch = function(event){
       var touches = event.changedTouches,
               first = touches[0],
