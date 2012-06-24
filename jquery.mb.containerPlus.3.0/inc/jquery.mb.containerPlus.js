@@ -277,7 +277,7 @@
         return el.$;
       },
 
-      open:function(animate){
+      open:function(animate,btf){
         $.cMethods.open = "open";
         var el = this;
 
@@ -291,7 +291,8 @@
         if(typeof el.opt.onRestore === "function")
           el.opt.onRestore(el);
 
-        el.$.mb_bringToFront();
+        if(btf)
+          el.$.mb_bringToFront();
 
         el.$.trigger("opened");
 
@@ -477,7 +478,11 @@
             el.iconElement = $("<span/>").addClass("containerDocked").html(el.containerTitle.html());
             $("#"+dockId).append(el.iconElement);
           }
-          el.$.trigger("iconized");
+
+          var event = jQuery.Event("iconized");
+          event.dock = dockId;
+
+          el.$.trigger(event);
 
           if(typeof el.opt.onIconize === "function")
             el.opt.onIconize(el);
@@ -536,8 +541,8 @@
           $.mbCookie.set(el.id+"_l", el.$.css("left"),7);
         });
 
-        el.$.bind("iconized",function(){
-          $.mbCookie.set(el.id+"_iconized", true,7);
+        el.$.bind("iconized",function(e){
+          $.mbCookie.set(el.id+"_iconized", e.dock,7);
         });
 
         el.$.bind("closed",function(){
@@ -567,13 +572,14 @@
         var l = $.mbCookie.get(el.id+"_l") ? $.mbCookie.get(el.id+"_l") : el.$.css("left");
         el.$.css({width:w, height:h, left:l, top:t});
 
+        el.$.containerize("adjust");
+
         if($.mbCookie.get(el.id+"_iconized")){
-          el.$.containerize("close");
-          el.$.containerize("iconize");
+          el.$.containerize("iconize",$.mbCookie.get(el.id+"_iconized"));
         }
 
         if($.mbCookie.get(el.id+"_opened")){
-          el.$.containerize("open");
+          el.$.containerize("open",false);
         }
 
         if($.mbCookie.get(el.id+"_closed")){
