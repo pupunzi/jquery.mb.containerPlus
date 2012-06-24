@@ -14,7 +14,7 @@
 <head>
   <title>simple container</title>
   <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
-  <link href='css/mb.container+.css' rel='stylesheet' type='text/css'>
+  <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
@@ -70,16 +70,34 @@
       position: fixed;
       top: 0;
       width: 100%;
-       background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.5);
     }
     .containerDocked{
       display: inline-block;
       color: white;
       cursor: pointer;
       padding: 15px;
-}
+    }
 
-    /*ICONS*/
+    #actions{
+      position: absolute;
+      top:100px;
+      left:100px;
+    }
+
+    #actions button{
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 7px;
+      display: inline-block;
+      margin: 3px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      background: #d4d4d4;
+    }
+
+      /*ICONS*/
 
     .container .icon{
       position: absolute;
@@ -92,6 +110,8 @@
     .mbc_container > .mbc_header h2{
       margin-left: 20px;
     }
+
+
   </style>
 
 </head>
@@ -99,8 +119,13 @@
 
 <div id="wrapper">
 
+  <div id="actions">
+    <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open/close container 1</button>
+  </div>
 
-  <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document">
+
+
+  <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document" data-modal=true>
     <h2><img class="icon" src="css/browser.png"> Container Title 1</h2>
     <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -125,8 +150,6 @@
 
   <div id="dock"></div>
 
-  <button onclick='$("#cont1").containerize("open",500);'>open container 1</button>
-
 </div>
 
 <script>
@@ -139,11 +162,11 @@
     }
 
     /*
-    * Example of custom method added to the component
-    *
-    * */
+     * Example of custom method added to the component
+     *
+     * */
 
-     $.containerize.addMethod("showdata",function(){
+    $.containerize.addMethod("showdata",function(){
       var el = this;
       var txt = "container properties:<br><br>";
       var data = el.$.data();
@@ -152,6 +175,35 @@
       }
       txt += "<hr><br>"
       el.content.prepend(txt);
+    });
+
+    $.containerize.addMethod("modal",function(){
+      var el = this;
+
+      function openModal(o){
+        var $overlay=$("<div/>").attr("id","mb_overlay").css({position:"fixed",width:"100%", height:"100%", top:0, left:0, background:"#000", opacity:.7}).hide();
+
+        if($("#mb_overlay").length)
+          return;
+
+        $("body").prepend($overlay);
+        $overlay.mb_bringToFront();
+        o.mb_bringToFront();
+
+        o.containerize("centeronwindow",false);
+        $overlay.fadeIn(500);
+      }
+
+      function closeModal(o){
+        $("#mb_overlay").fadeOut(500,function(){$(this).remove();})
+      }
+
+      var opt = {
+        onRestore:function(o){openModal(o.$)},
+        onClose: function(o){closeModal(o.$)}
+      };
+
+      $.extend (el.opt,opt);
     });
 
     /***********************************************/
@@ -189,7 +241,14 @@
       e.preventDefault();
     });
 
-    $("#cont1").containerize("addtotoolbar", dockBtn);
+    var closeBtn = $("<button/>").addClass("mbc_button").html("close").click(function(e){
+      var el = $(this).parents(".mbc_container");
+      el.containerize("close");
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    $("#cont1").containerize("addtotoolbar", [dockBtn,closeBtn]);
     $("#cont2").containerize("addtotoolbar", changeSkinBtn);
     $("#cont3").containerize("addtotoolbar", [fullScreenBtn,iconizeBtn, changeSkinBtn,dockBtn]);
 

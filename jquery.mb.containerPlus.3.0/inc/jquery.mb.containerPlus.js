@@ -44,7 +44,7 @@
 
     init:function(opt){
       if(typeof opt === "string"){
-        
+
         var method=opt;
         delete arguments[0];
         var params = [];
@@ -279,9 +279,14 @@
         var el = this;
 
         var time= animate ? animate : 0;
+        
         if(el.isClosed)
-          el.$.fadeIn(time);
+          el.$.fadeIn(time, function(){});
+        
         el.isClosed=false;
+
+        if(typeof el.opt.onRestore === "function")
+          el.opt.onRestore(el);
 
         el.$.mb_bringToFront();
 
@@ -542,8 +547,43 @@
           el.$.containerize("close");
           el.$.containerize("iconize");
         }
+      },
+      centeronwindow:function(anim){
+        $.cMethods.centeronwindow = "centeronwindow";
+
+        var el=this;
+        var nww=$(window).width();
+        var nwh=$(window).height();
+        var ow=el.$.attr("w")?el.$.attr("w"):el.$.outerWidth();
+        var oh= el.$.attr("h")?el.$.attr("h"):el.$.outerHeight();
+        var l= (nww-ow)/2;
+        var t= ((nwh-oh)/2)>0?(nwh-oh)/2:10;
+        if (el.$.css("position")!="fixed"){
+          el.$.css("position","absolute");
+          l=l+$(window).scrollLeft();
+          t=t+$(window).scrollTop();
+        }
+        if (anim)
+          el.$.animate({top:t,left:l},300,function(){
+            if (el.$.attr("rememberMe")){
+              el.$.mb_setCookie("x",$(this).css("left"));
+              el.$.mb_setCookie("y",$(this).css("top"));
+            }
+          });
+        else{
+          el.$.css({top:t,left:l});
+          if (el.$.attr("rememberMe")){
+            el.$.mb_setCookie("x",$(this).css("left"));
+            el.$.mb_setCookie("y",$(this).css("top"));
+          }
+        }
+        el.$.attr("t",t);
+        el.$.attr("l",l);
+        return el;
       }
+
     },
+
 
     addMethod:function(name, fn){
       $.containerize.methods[name]=fn;
