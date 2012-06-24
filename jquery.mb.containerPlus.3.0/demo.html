@@ -142,7 +142,8 @@
     * Example of custom method added to the component
     *
     * */
-    $.containerize.addMethod("showdata",function(){
+
+     $.containerize.addMethod("showdata",function(){
       var el = this;
       var txt = "container properties:<br><br>";
       var data = el.$.data();
@@ -152,6 +153,8 @@
       txt += "<hr><br>"
       el.content.prepend(txt);
     });
+
+    /***********************************************/
 
     $(".container").containerize();
 
