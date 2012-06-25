@@ -189,11 +189,11 @@
         o.mb_bringToFront();
 
         o.containerize("centeronwindow",false);
-        $overlay.fadeIn(500);
+        $overlay.fadeIn(300);
       }
 
       function closeModal(o){
-        $("#mb_overlay").fadeOut(500,function(){$(this).remove();})
+        $("#mb_overlay").fadeOut(300,function(){$(this).remove();})
       }
 
       var opt = {
@@ -208,6 +208,11 @@
 
     $(".container").containerize();
 
+
+    /*
+     * Example of custom Buttons for the toolbar
+     *
+     * */
     var changeSkinBtn = $("<button/>").addClass("mbc_button").html("change skin").click(function(e){
       var el = $(this).parents(".mbc_container");
       if(!el.hasClass('black'))
