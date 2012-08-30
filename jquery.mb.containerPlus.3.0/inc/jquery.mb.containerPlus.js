@@ -110,7 +110,7 @@
       el.buttonBar = buttonBar;
 
       el.$.bind("mousedown",function(){
-        $(this).mb_bringToFront();
+        $(this).mb_bringToFront(el.opt.zIndexContext);
       });
 
       el.content.bind("touchmove",function(e){
@@ -292,7 +292,7 @@
           el.opt.onRestore(el);
 
         if(btf)
-          el.$.mb_bringToFront();
+          el.$.mb_bringToFront(el.opt.zIndexContext);
 
         el.$.trigger("opened");
 
@@ -490,7 +490,7 @@
           el.iconElement.bind("click",function(){
             $(this).remove();
             el.$.containerize("restoreView",true);
-            el.$.mb_bringToFront();
+            el.$.mb_bringToFront(el.opt.zIndexContext);
             el.$.trigger("restored");
 
             if(typeof el.opt.onRestore === "function")
