@@ -12,11 +12,12 @@
 
 <html>
 <head>
-  <title>simple container</title>
+	<meta charset="utf-8" />
+	<title>simple container</title>
   <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
   <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
   <script type="text/javascript" src="inc/jquery.mb.containerPlus.js"></script>
   <!--<script type="text/javascript" src="inc/mb.containerPlus.plugins.js"></script>-->
@@ -125,7 +126,7 @@
     <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open/close container 1</button>
   </div>
 
-  <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document" data-modal=true data-rememberme=true>
+  <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag= data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document" data-modal=true data-rememberme=true>
     <h2><img class="icon" src="css/browser.png"> Container Title 1</h2>
     <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
     <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
