@@ -15,11 +15,9 @@
  * © 2001 - 2012 Matteo Bicocchi (pupunzi), Open Lab
  */
 
-
 (function($){
 
 	$.cMethods={};
-
 	$.containerize={
 		author:"Matteo Bicocchi",
 		version:"3.0",
