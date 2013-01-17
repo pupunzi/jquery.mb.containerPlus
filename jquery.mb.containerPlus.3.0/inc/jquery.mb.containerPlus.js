@@ -14,10 +14,9 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 16/01/13 22.55
+ *  last modified: 18/01/13 0.26
  *  *****************************************************************************
  */
-
 /*
  * jQuery.mb.components: mb.container+
  * version: - 3.0
