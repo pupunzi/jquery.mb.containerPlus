@@ -14,13 +14,8 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 18/01/13 0.42
+ *  last modified: 03/02/13 21.59
  *  *****************************************************************************
- */
-
-/*
- * jQuery.mb.components: mb.container+
- * version: - 3.0
  */
 
 (function($){
@@ -28,7 +23,7 @@
 	$.cMethods={};
 	$.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.1",
+		version:"3.2",
 		defaults:{
 			containment:"document",
 			elementsPath:"elements/",
