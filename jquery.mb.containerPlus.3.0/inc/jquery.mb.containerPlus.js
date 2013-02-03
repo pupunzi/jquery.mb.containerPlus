@@ -497,7 +497,8 @@
 				if(!el.fullscreen){
 					if(el.$.data("resize"))
 						el.$.resizable("disable");
-					el.$.draggable("disable");
+					if(el.$.data("drag"))
+						el.$.draggable("disable");
 					el.oWidth= el.$.outerWidth();
 					el.oHeight= el.$.outerHeight();
 					el.oTop= el.$.position().top;
