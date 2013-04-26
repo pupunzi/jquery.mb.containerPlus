@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 03/02/13 22.10
+ *  last modified: 26/04/13 14.24
  *  *****************************************************************************
  */
 
@@ -22,6 +22,7 @@
 (function($){
 
 	$.cMethods={};
+
 	$.containerize={
 		author:"Matteo Bicocchi",
 		version:"3.2",
@@ -426,6 +427,7 @@
 			addtobuttonbar:function(btn){
 				$.cMethods.addtobuttonbar = "addtobuttonbar";
 				var el = this;
+
 				for (var i=0; i<= btn.length; i++){
 					if(btn[i]!=undefined){
 						var button = $(btn[i]).clone(true);
@@ -487,6 +489,7 @@
 					})
 				});
 			},
+
 			fullScreen:function(){
 				$.cMethods.fullScreen = "fullScreen";
 				var el = this;
@@ -517,6 +520,7 @@
 					el.fullscreen=false;
 				}
 			},
+
 			rememberme:function(){
 				$.cMethods.rememberme = "rememberme";
 				var el = this;
@@ -575,8 +579,8 @@
 				if($.mbCookie.get(el.id+"_closed")){
 					el.$.containerize("close");
 				}
-
 			},
+
 			centeronwindow:function(anim){
 				$.cMethods.centeronwindow = "centeronwindow";
 
@@ -606,6 +610,7 @@
 			}
 
 		},
+
 		addMethod:function(name, fn){
 			$.containerize.methods[name]=fn;
 		}

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/01/13 17.13
+ *  last modified: 26/04/13 14.31
  *  *****************************************************************************
  */
 
@@ -194,7 +194,7 @@ table {
   background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
   background: linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);
+  /*box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);*/
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 
@@ -283,9 +283,19 @@ table {
   height: 20px;
   width: 100%;
   background: #fff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+  background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+  background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+  background: linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+
   bottom: 0;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  border-radius: 0 0 9px 9px;
+
   border-top: 1px solid #c2c2bd;
 }
 
