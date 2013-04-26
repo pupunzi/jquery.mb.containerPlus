@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/04/13 14.24
+ *  last modified: 26/04/13 18.05
  *  *****************************************************************************
  */
 
@@ -309,7 +309,10 @@
 						el.$.animate({height:height},el.opt.effectDuration,function(){
 							el.$.containerize("setContainment");
 						});
-						el.$.resizable("disable");
+
+						if(el.isResizable)
+							el.$.resizable("disable");
+
 						el.isCollapsed = true;
 
 						if(typeof el.opt.onCollapse === "function")
@@ -321,12 +324,13 @@
 							el.content.show();
 							el.buttonBar.show();
 							el.footer.show();
-							el.$.resizable("enable");
+
+							if(el.isResizable)
+								el.$.resizable("enable");
 							el.$.containerize("setContainment");
 
 							if(typeof el.opt.onRestore === "function")
 								el.opt.onRestore(el);
-
 						});
 						el.isCollapsed = false;
 					}
@@ -494,7 +498,7 @@
 				$.cMethods.fullScreen = "fullScreen";
 				var el = this;
 				if(!el.fullscreen){
-					if(el.$.data("resize"))
+					if(el.isResizable)
 						el.$.resizable("disable");
 					if(el.$.data("drag"))
 						el.$.draggable("disable");
@@ -511,7 +515,7 @@
 						el.opt.onFullScreen(el);
 
 				}else{
-					if(el.$.data("resize"))
+					if(el.isResizable)
 						el.$.resizable("enable");
 					if(el.$.data("drag"))
 						el.$.draggable("enable");
