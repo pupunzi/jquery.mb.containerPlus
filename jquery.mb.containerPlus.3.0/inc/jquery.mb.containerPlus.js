@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/04/13 18.29
+ *  last modified: 26/04/13 18.35
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	$.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.3.1",
+		version:"3.3.2",
 		defaults:{
 			containment:"document",
 			elementsPath:"elements/",
