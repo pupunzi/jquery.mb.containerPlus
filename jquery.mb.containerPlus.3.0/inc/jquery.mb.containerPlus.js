@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/04/13 15.28
+ *  last modified: 27/04/13 19.38
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	$.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.3.3",
+		version:"3.5.0",
 		defaults:{
 			containment:"document",
 			mantainOnWindow:true,
@@ -42,33 +42,37 @@
 			onRestore:function(o){},
 			onFullScreen:function(o){}
 		},
-
 		defaultButtons: {
-			close : $("<button/>").addClass("mbc_button").html("&#10008;").click(function(e){
-				var el = $(this).parents(".mbc_container");
-				el.containerize("close");
-				e.stopPropagation();
-				e.preventDefault();
-			}),
-			fullscreen : $("<button/>").addClass("mbc_button").html("&#57422;").on("click",function(e){
+			close : {
+				idx:"close",
+				label:"&#x2714;",
+				className:"",
+				action: function(el, btn){$(el).containerize("close")}
+			},
 
-				var el = $(this).parents(".mbc_container");
-				el.containerize("fullScreen");
-				e.stopPropagation();
-				e.preventDefault();
-				if(!el.get(0).fullscreen)
-					$(this).html("&#57422;")
-				else
-					$(this).html("&#57424;")
+			fullscreen :{
+				idx: "fullscreen",
+				label: "&#xe04e;",
+				className:"",
+				action: function(el, btn){
+					$(el).containerize("fullScreen");
 
-			}),
-			dock : $("<button/>").addClass("mbc_button").html("&#57346;").click(function(e){
-				var el = $(this).parents(".mbc_container");
-				var dock = el.data("dock");
-				el.containerize("iconize", dock);
-				e.stopPropagation();
-				e.preventDefault();
-			})
+					if(!el.fullscreen)
+						$(btn).html("&#xe04e;")
+					else
+						$(btn).html("&#xe050;")
+				}
+			},
+
+			dock : {
+				idx: "dock",
+				label: "&#xe002;",
+				className:"",
+				action: function(el, btn){
+					var dock = $(el).data("dock");
+					$(el).containerize("iconize", dock);
+				}
+			}
 		},
 
 		init:function(opt){
@@ -121,7 +125,6 @@
 				titleText.prepend(imgIco);
 				titleText.css({paddingLeft:45})
 			}
-
 
 			var header = $("<div/>").addClass("mbc_header");
 			var title = $("<div/>").addClass("mbc_title").html(titleText);
@@ -199,6 +202,15 @@
 			return el.$;
 		},
 
+		createButton:function(idx, label, action, className){
+			return $("<button/>").addClass("mbc_button"+ (className ? " "+ className : "") ).attr("idx", idx).html(label).click(function(e){
+				var el = $(this).parents(".mbc_container");
+				action(el.get(0), this);
+				e.stopPropagation();
+				e.preventDefault();
+			})
+		},
+
 		methods:{
 			drag:function(){
 				$.cMethods.drag = {name: "drag", author:"pupunzi", type:"built-in"};
@@ -227,6 +239,7 @@
 					return el.$;
 				}
 			},
+
 			resize:function(){
 				$.cMethods.resize = {name: "resize", author:"pupunzi", type:"built-in"};
 				var el = this;
@@ -263,6 +276,7 @@
 				}
 				return el.$;
 			},
+
 			setContainment:function(containment){
 				$.cMethods.setContainment = {name: "setContainment", author:"pupunzi", type:"built-in"};
 				var el = this;
@@ -376,8 +390,6 @@
 						el.$.trigger("restored");
 					});
 					el.isCollapsed = false;
-
-
 				}
 			},
 
@@ -422,6 +434,7 @@
 				el.oHeight= el.$.css("height");
 				el.oTop= el.$.css("top");
 				el.oLeft= el.$.css("left");
+				return el.$;
 			},
 
 			restoreView:function(animate){
@@ -433,6 +446,7 @@
 					el.content.css({overflow:"auto"});
 					el.$.containerize("adjust");
 				})
+				return el.$;
 			},
 
 			windowResize:function(){
@@ -440,11 +454,20 @@
 				var el = this;
 
 				el.$.containerize("setContainment", el.$.data("containment"))
+				return el.$;
 			},
 
-			alwaisontop:function(el){
+			alwaisontop:function(){
 				$.cMethods.alwaisontop = {name: "alwaisontop", author:"pupunzi", type:"built-in"};
-				el.zi=el.$.css("z-index");
+				var el = this;
+
+				if(el.$.hasClass("alwaysOnTop")){
+					el.$.removeClass("alwaysOnTop");
+					el.$.mb_bringToFront();
+					return;
+				}
+
+				el.zi = el.$.css("z-index");
 				el.$.css("z-index",100000).addClass("alwaysOnTop");
 			},
 
@@ -480,27 +503,53 @@
 				return grid;
 			},
 
-			addtobuttonbar:function(btn){
+			addtobuttonbar:function(btn, prepend){
 				$.cMethods.addtobuttonbar = {name: "addtobuttonbar", author:"pupunzi", type:"built-in"};
 				var el = this;
 
-				for (var i=0; i<= btn.length; i++){
-					if(btn[i]!=undefined){
+				if(!btn.length){
+					var arr = [];
+					arr.push(btn);
+					btn = arr;
+				}
 
-						var button = $(btn[i]).clone(true);
-						el.buttonBar.append(button);
+				for (var i=0; i<= btn.length; i++){
+
+					if(btn[i]!=undefined){
+						var button = $.containerize.createButton(btn[i].idx, btn[i].label, btn[i].action, btn[i].className);
+
+						if(!prepend)
+							el.buttonBar.append(button);
+						else
+							el.buttonBar.prepend(button);
+
 					}
 				}
+				return el.$;
 			},
-			addtotoolbar:function(btn){
+
+			addtotoolbar:function(btn, prepend){
 				$.cMethods.addtotoolbar = {name: "addtotoolbar", author:"pupunzi", type:"built-in"};
 				var el = this;
+
+				if(!btn.length){
+					var arr = [];
+					arr.push(btn);
+					btn = arr;
+				}
+
 				for (var i=0; i<= btn.length; i++){
+
 					if(btn[i]!=undefined){
-						var button = $(btn[i]).clone(true);
-						el.toolBar.append(button);
+						var button = $.containerize.createButton(btn[i].idx, btn[i].label, btn[i].action, btn[i].className);
+
+						if(!prepend)
+							el.toolBar.append(button);
+						else
+							el.toolBar.prepend(button);
 					}
 				}
+				return el.$;
 			},
 
 			iconize:function(dockId){
@@ -560,6 +609,7 @@
 							el.opt.onRestore(el);
 					})
 				});
+				return el.$;
 			},
 
 			fullScreen:function(){
@@ -591,6 +641,7 @@
 					el.$.containerize("adjust");
 					el.fullscreen=false;
 				}
+				return el.$;
 			},
 
 			rememberme:function(){
@@ -654,6 +705,7 @@
 				if($.mbCookie.get(el.id+"_closed")){
 					el.$.containerize("close");
 				}
+				return el.$;
 			},
 
 			centeronwindow:function(anim){
@@ -687,14 +739,14 @@
 				}
 				el.$.attr("t",t);
 				el.$.attr("l",l);
-				return el;
+				return el.$;
 			}
-
 		},
 
 		addMethod:function(name, fn){
 			$.containerize.methods[name]=fn;
 		}
+
 	};
 
 	$.fn.containerize = $.containerize.init;

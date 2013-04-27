@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/04/13 14.28
+  ~  last modified: 27/04/13 18.50
   ~  ******************************************************************************/
   -->
 
@@ -126,7 +126,7 @@
        <br> <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
     </div>
 
-    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-icon="css/icons/browser.png" data-drag=true  data-resize=true  data-dock="dock" data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
+    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-icon="css/icons/browser.png" data-drag=true  data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
         <h2>Container 1</h2>
         <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -134,7 +134,7 @@
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="fullscreen,dock,close">
+    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
         <h2>Container 2</h2>
         <button onclick="$('#cont2').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
@@ -181,6 +181,22 @@
         });
 
 
+        /*
+         * Example of how to add a new button for the button bar:
+         *
+         * */
+
+        var newBtns = {
+            changecontent: {
+                idx:"changecontent",
+                label:"&#xe044;",
+                className:"",
+                action: function(container,btn){$(container).containerize("changecontent","/newContent.php",{id:01, temp:'simple'})}
+            }
+        }
+        $.extend($.containerize.defaultButtons, newBtns);
+
+
         /***********************************************/
 
         $(".container").containerize();
@@ -189,39 +205,46 @@
          * Example of custom Buttons for the toolbar
          *
          * */
-        var changeSkinBtn = $("<button/>").addClass("mbc_button").html("change skin").click(function(e){
-            var el = $(this).parents(".mbc_container");
-            if(!el.hasClass('black'))
-                el.containerize('skin','black');
-            else
-                el.containerize('skin');
-            e.stopPropagation();
-            e.preventDefault();
-        });
+        var changeSkinBtn = {
+            idx: "changeSkinBtn",
+            label: "change skin",
+            className:"",
+            action: function(el, btn){
+                if(!$(el).hasClass('black'))
+                    $(el).containerize('skin','black');
+                else
+                    $(el).containerize('skin');
+            }
+        }
 
-        var iconizeBtn = $("<button/>").addClass("mbc_button").html("iconize").click(function(e){
-            var el = $(this).parents(".mbc_container");
-            el.containerize("iconize");
-            e.stopPropagation();
-            e.preventDefault();
-        });
+        var iconizeBtn = {
+            idx: "iconizeBtn",
+            label: "iconize",
+            className:"",
+            action: function(el, btn){
+                $(el).containerize("iconize");
+            }
+        }
 
-        var dockBtn = $("<button/>").addClass("mbc_button").html("dock").click(function(e){
-            var el = $(this).parents(".mbc_container");
-            el.containerize("iconize","dock");
-            e.stopPropagation();
-            e.preventDefault();
-        });
+        var dockBtn = {
+            idx: "dockBtn",
+            label: "dock",
+            className:"",
+            action: function(el, btn){
+                $(el).containerize("iconize","dock");
+            }
+        }
 
-        var closeBtn = $("<button/>").addClass("mbc_button").html("close").click(function(e){
-            var el = $(this).parents(".mbc_container");
-            el.containerize("close");
-            e.stopPropagation();
-            e.preventDefault();
-        });
+        var closeBtn = {
+            idx: "closeBtn",
+            label: "close",
+            className:"",
+            action: function(el, btn){
+                $(el).containerize("close");
+            }
+        }
 
         $("#cont1").containerize("addtotoolbar", [closeBtn]);
-//        $("#cont2").containerize("addtobuttonbar", [closeBtn]);
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
         $("#cont3").containerize("addtotoolbar", [iconizeBtn,changeSkinBtn,dockBtn]);
 

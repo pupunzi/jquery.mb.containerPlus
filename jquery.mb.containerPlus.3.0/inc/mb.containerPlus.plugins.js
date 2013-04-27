@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/04/13 15.28
+ *  last modified: 27/04/13 19.06
  *  *****************************************************************************
  */
 
@@ -48,6 +48,9 @@ $.containerize.addMethod("modal",function(){
 	};
 
 	$.extend (el.opt,opt);
+
+	return el.$;
+
 });
 
 $.containerize.addMethod("changecontent", function(ajaxURL, data){
@@ -71,6 +74,8 @@ $.containerize.addMethod("changecontent", function(ajaxURL, data){
 	request.fail(function (jqXHR, textStatus) {
 		contentPlaceHolder.html("error: "+textStatus);
 	});
+
+	return el.$;
 
 })
 
