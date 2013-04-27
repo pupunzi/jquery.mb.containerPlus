@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 26/04/13 15.54
+  ~  last modified: 27/04/13 14.28
   ~  ******************************************************************************/
   -->
 
@@ -29,10 +29,13 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.containerPlus.js"></script>
+    <script type="text/javascript" src="inc/mb.containerPlus.plugins.js"></script>
 
     <style>
 
         body{
+            margin: 0;
+            padding: 0;
             font-family: Helvetica, Arial, sans-serif;
             background: #ffc000;
         }
@@ -54,7 +57,7 @@
 
         .container{
             visibility: hidden;
-            width: 450px;
+            width: 500px;
             height: auto;
         }
 
@@ -74,10 +77,12 @@
             box-shadow: 0 0 3px rgba(255,255,255,0.4);
             color: white;
         }
+
         .containerIcon:hover .mbc_title{
             display: block;
             cursor: pointer;
         }
+
         .containerIcon .mbc_title{
             display: none;
         }
@@ -88,12 +93,6 @@
             left:0;
             width: 100%;
             background: rgba(0,0,0,0.5);
-        }
-        .containerDocked{
-            display: inline-block;
-            color: white;
-            cursor: pointer;
-            padding: 15px;
         }
 
         #actions{
@@ -114,20 +113,6 @@
             background: #d4d4d4;
         }
 
-            /*ICONS*/
-
-        .container .icon{
-            position: absolute;
-            left:-20px;
-            top:-20px;
-        }
-        .mbc_container{
-            overflow: inherit;
-        }
-        .mbc_container > .mbc_header h2{
-            margin-left: 20px;
-        }
-
 
     </style>
 
@@ -137,26 +122,28 @@
 <div id="wrapper">
 
     <div id="actions">
-        <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open/close container 1</button>
+        <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
+       <br> <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
     </div>
 
-    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-drag= data-resize=true  data-dock="dock" data-collapse=true data-close=true data-containment="document" data-modal=true data-rememberme=true>
-        <h2><img class="icon" src="css/browser.png"> Container Title 1</h2>
+    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-icon="css/icons/browser.png" data-drag=true  data-resize=true  data-dock="dock" data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
+        <h2>Container 1</h2>
         <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-drag=true data-resize=true  data-dock="dock" data-collapse=true data-containment="document"  data-resizegrid="100,100" data-showdata=true>
-        <h2>Container Title 2</h2>
+    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="fullscreen,dock,close">
+        <h2>Container 2</h2>
+        <button onclick="$('#cont2').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont3" class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapse=true data-containment="document" data-draggrid="100,100" data-rememberme=true>
-        <h2>Container Title 3</h2>
+    <div id="cont3" class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close">
+        <h2>Container 3</h2>
         <button onclick="$('#cont3').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -193,34 +180,6 @@
             el.content.prepend(txt);
         });
 
-        $.containerize.addMethod("modal",function(){
-            var el = this;
-
-            function openModal(o){
-                var $overlay=$("<div/>").attr("id","mb_overlay").css({position:"fixed",width:"100%", height:"100%", top:0, left:0, background:"#000", opacity:.7}).hide();
-
-                if($("#mb_overlay").length)
-                    return;
-
-                $("body").prepend($overlay);
-                $overlay.mb_bringToFront();
-                o.mb_bringToFront();
-
-                o.containerize("centeronwindow",false);
-                $overlay.fadeIn(300);
-            }
-
-            function closeModal(o){
-                $("#mb_overlay").fadeOut(300,function(){$(this).remove();})
-            }
-
-            var opt = {
-                onRestore:function(o){openModal(o.$)},
-                onClose: function(o){closeModal(o.$)}
-            };
-
-            $.extend (el.opt,opt);
-        });
 
         /***********************************************/
 
@@ -236,13 +195,6 @@
                 el.containerize('skin','black');
             else
                 el.containerize('skin');
-            e.stopPropagation();
-            e.preventDefault();
-        });
-
-        var fullScreenBtn = $("<button/>").addClass("mbc_button").html("full screen").click(function(e){
-            var el = $(this).parents(".mbc_container");
-            el.containerize("fullScreen");
             e.stopPropagation();
             e.preventDefault();
         });
@@ -269,8 +221,9 @@
         });
 
         $("#cont1").containerize("addtotoolbar", [closeBtn]);
+//        $("#cont2").containerize("addtobuttonbar", [closeBtn]);
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
-        $("#cont3").containerize("addtotoolbar", [fullScreenBtn,iconizeBtn,changeSkinBtn,dockBtn]);
+        $("#cont3").containerize("addtotoolbar", [iconizeBtn,changeSkinBtn,dockBtn]);
 
     })
 

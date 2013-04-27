@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 26/04/13 18.45
+ *  last modified: 27/04/13 15.28
  *  *****************************************************************************
  */
 
@@ -28,8 +28,9 @@
 		version:"3.3.3",
 		defaults:{
 			containment:"document",
-			elementsPath:"elements/",
-			dockedIconDim:35,
+			mantainOnWindow:true,
+			effectDuration:100,
+			zIndexContext:"auto", // or your selector (ex: ".containerPlus")
 			onLoad:function(o){},
 			onCollapse:function(o){},
 			onBeforeIconize:function(o){},
@@ -39,10 +40,35 @@
 			onResize: function(o,w,h){},
 			onDrag: function(o,x,y){},
 			onRestore:function(o){},
-			onFullScreen:function(o){},
-			mantainOnWindow:true,
-			effectDuration:100,
-			zIndexContext:"auto" // or your selector (ex: ".containerPlus")
+			onFullScreen:function(o){}
+		},
+
+		defaultButtons: {
+			close : $("<button/>").addClass("mbc_button").html("&#10008;").click(function(e){
+				var el = $(this).parents(".mbc_container");
+				el.containerize("close");
+				e.stopPropagation();
+				e.preventDefault();
+			}),
+			fullscreen : $("<button/>").addClass("mbc_button").html("&#57422;").on("click",function(e){
+
+				var el = $(this).parents(".mbc_container");
+				el.containerize("fullScreen");
+				e.stopPropagation();
+				e.preventDefault();
+				if(!el.get(0).fullscreen)
+					$(this).html("&#57422;")
+				else
+					$(this).html("&#57424;")
+
+			}),
+			dock : $("<button/>").addClass("mbc_button").html("&#57346;").click(function(e){
+				var el = $(this).parents(".mbc_container");
+				var dock = el.data("dock");
+				el.containerize("iconize", dock);
+				e.stopPropagation();
+				e.preventDefault();
+			})
 		},
 
 		init:function(opt){
@@ -90,6 +116,13 @@
 			el.$.empty();
 			el.$.addClass("mbc_container");
 
+			if(el.$.data("icon")){
+				var imgIco = $("<img/>").attr("src", el.$.data("icon")).addClass("icon");
+				titleText.prepend(imgIco);
+				titleText.css({paddingLeft:45})
+			}
+
+
 			var header = $("<div/>").addClass("mbc_header");
 			var title = $("<div/>").addClass("mbc_title").html(titleText);
 			var buttonBar = $("<div/>").addClass("mbc_buttonBar");
@@ -121,6 +154,13 @@
 			if(el.$.data("resize"))
 				el.$.addClass("resizable");
 
+			if(el.$.data("buttons")){
+				var buttons = el.$.data("buttons").split(",");
+				for(var i in buttons){
+					el.$.containerize("addtobuttonbar", $.containerize.defaultButtons[buttons[i]]);
+				}
+			}
+
 			if(el.$.css("position") == "static"){
 				el.$.css("position","relative");
 			}
@@ -135,6 +175,7 @@
 					el.$.css({opacity:1});
 
 				el.$.trigger("ready");
+
 				$(window).trigger("resize");
 			},500);
 
@@ -150,7 +191,8 @@
 				if(typeof $.containerize.methods[els] == "function" && properties[els]){
 					var params=[];
 					if(typeof properties[els] != "boolean")
-						params.push(properties[els]);
+						params = properties[els].split(",");
+
 					$.containerize.methods[els].apply(el,params);
 				}
 			}
@@ -159,7 +201,7 @@
 
 		methods:{
 			drag:function(){
-				$.cMethods.drag = "drag";
+				$.cMethods.drag = {name: "drag", author:"pupunzi", type:"built-in"};
 				var el = this;
 				if(el.$.css("position") == "relative" || el.$.css("position") == "static"){
 					el.$.css("position","absolute");
@@ -186,7 +228,7 @@
 				}
 			},
 			resize:function(){
-				$.cMethods.resize = "resize";
+				$.cMethods.resize = {name: "resize", author:"pupunzi", type:"built-in"};
 				var el = this;
 				el.position = el.$.data("drag") ?
 						(el.$.css("position") == "relative" || el.$.css("position") == "static") ? el.$.css("position","absolute")
@@ -222,7 +264,7 @@
 				return el.$;
 			},
 			setContainment:function(containment){
-				$.cMethods.setContainment = "setContainment";
+				$.cMethods.setContainment = {name: "setContainment", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				containment = !containment ? el.$.data("containment") : containment;
@@ -243,7 +285,7 @@
 			},
 
 			close:function(animate){
-				$.cMethods.close = "close";
+				$.cMethods.close = {name: "close", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				if(el.isClosed)
@@ -268,7 +310,7 @@
 			},
 
 			open:function(animate,btf){
-				$.cMethods.open = "open";
+				$.cMethods.open = {name: "open", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				var time= animate ? animate : 0;
@@ -290,55 +332,66 @@
 			},
 
 			collapse:function(){
-				$.cMethods.collapse = "collapse";
+				$.cMethods.collapse = {name: "collapse", author:"pupunzi", type:"built-in"};
+				var el = this;
+
+				if(!el.isCollapsed){
+					el.h= el.$.outerHeight();
+					el.minH = el.$.css("min-height");
+
+					el.$.css("min-height",0);
+
+					el.content.hide();
+					el.buttonBar.hide();
+					el.footer.hide();
+
+					var height = parseFloat(el.header.outerHeight());
+					el.$.animate({height:height},el.opt.effectDuration,function(){
+						el.$.containerize("setContainment");
+					});
+
+					if(el.isResizable)
+						el.$.resizable("disable");
+
+					el.isCollapsed = true;
+
+					if(typeof el.opt.onCollapse === "function")
+						el.opt.onCollapse(el);
+
+					el.$.trigger("collapsed");
+				}else{
+					el.$.animate({height:el.h},el.opt.effectDuration,function(){
+						el.$.css("min-height",el.minH);
+						el.content.show();
+						el.buttonBar.show();
+						el.footer.show();
+
+						if(el.isResizable)
+							el.$.resizable("enable");
+						el.$.containerize("setContainment");
+
+						if(typeof el.opt.onRestore === "function")
+							el.opt.onRestore(el);
+
+						el.$.trigger("restored");
+					});
+					el.isCollapsed = false;
+
+
+				}
+			},
+
+			collapsable: function(){
+				$.cMethods.collapsable = {name: "collapsable", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				el.containerTitle.on("dblclick",function(){
-
-					if(!el.isCollapsed){
-						el.h= el.$.outerHeight();
-						el.minH = el.$.css("min-height");
-
-						el.$.css("min-height",0);
-
-						el.content.hide();
-						el.buttonBar.hide();
-						el.footer.hide();
-
-						var height = parseFloat(el.header.outerHeight());
-						el.$.animate({height:height},el.opt.effectDuration,function(){
-							el.$.containerize("setContainment");
-						});
-
-						if(el.isResizable)
-							el.$.resizable("disable");
-
-						el.isCollapsed = true;
-
-						if(typeof el.opt.onCollapse === "function")
-							el.opt.onCollapse(el);
-
-					}else{
-						el.$.animate({height:el.h},el.opt.effectDuration,function(){
-							el.$.css("min-height",el.minH);
-							el.content.show();
-							el.buttonBar.show();
-							el.footer.show();
-
-							if(el.isResizable)
-								el.$.resizable("enable");
-							el.$.containerize("setContainment");
-
-							if(typeof el.opt.onRestore === "function")
-								el.opt.onRestore(el);
-						});
-						el.isCollapsed = false;
-					}
+					el.$.containerize("collapse");
 				})
 			},
 
 			skin:function(skin){
-				$.cMethods.skin = "skin";
+				$.cMethods.skin = {name: "skin", author:"pupunzi", type:"built-in"};
 				var el = this;
 				if(!skin){
 					el.$.removeClass(el.$.data("skin"));
@@ -354,7 +407,7 @@
 			},
 
 			adjust:function(){
-				$.cMethods.adjust = "adjust";
+				$.cMethods.adjust = {name: "adjust", author:"pupunzi", type:"built-in"};
 				var el = this;
 				var h= parseFloat(el.$.outerHeight()) - parseFloat(el.$.find(".mbc_header").outerHeight()) - parseFloat(el.$.find(".mbc_footer").outerHeight());
 				el.$.find(".mbc_content").css({height:h});
@@ -363,7 +416,7 @@
 			},
 
 			storeView:function(){
-				$.cMethods.storeView = "storeView";
+				$.cMethods.storeView = {name: "storeView", author:"pupunzi", type:"built-in"};
 				var el = this;
 				el.oWidth= el.$.css("width");
 				el.oHeight= el.$.css("height");
@@ -372,7 +425,7 @@
 			},
 
 			restoreView:function(animate){
-				$.cMethods.restoreView = "restoreView";
+				$.cMethods.restoreView = {name: "restoreView", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				el.$.containerize("open");
@@ -383,27 +436,26 @@
 			},
 
 			windowResize:function(){
-				$.cMethods.windowResize = "windowResize";
+				$.cMethods.windowResize = {name: "windowResize", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				el.$.containerize("setContainment", el.$.data("containment"))
 			},
 
 			alwaisontop:function(el){
-				$.cMethods.alwaisontop = "alwaisontop";
+				$.cMethods.alwaisontop = {name: "alwaisontop", author:"pupunzi", type:"built-in"};
 				el.zi=el.$.css("z-index");
 				el.$.css("z-index",100000).addClass("alwaysOnTop");
 			},
 
-			draggrid:function(xy){
-				$.cMethods.draggrid = "draggrid";
+			draggrid:function(x,y){
+				$.cMethods.draggrid = {name: "draggrid", author:"pupunzi", type:"built-in"};
 				var el = this;
 
-				if(!xy)
+				if(!x && !y)
 					return;
 
-				var split = xy.split(",");
-				var grid = [parseFloat(split[0]),parseFloat(split[1])];
+				var grid = [parseFloat(x),parseFloat(y)];
 
 				if(el.$.data("drag"))
 					setTimeout(function(){
@@ -412,15 +464,14 @@
 				return grid;
 			},
 
-			resizegrid:function(xy){
-				$.cMethods.resizegrid = "resizegrid";
+			resizegrid:function(x,y){
+				$.cMethods.resizegrid = {name: "resizegrid", author:"pupunzi", type:"built-in"};
 				var el = this;
 
-				if(!xy)
+				if(!x && !y)
 					return;
 
-				var split = xy.split(",");
-				var grid = [parseFloat(split[0]),parseFloat(split[1])];
+				var grid = [parseFloat(x),parseFloat(y)];
 
 				if(el.$.data("drag"))
 					setTimeout(function(){
@@ -428,19 +479,21 @@
 					},1);
 				return grid;
 			},
+
 			addtobuttonbar:function(btn){
-				$.cMethods.addtobuttonbar = "addtobuttonbar";
+				$.cMethods.addtobuttonbar = {name: "addtobuttonbar", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				for (var i=0; i<= btn.length; i++){
 					if(btn[i]!=undefined){
+
 						var button = $(btn[i]).clone(true);
 						el.buttonBar.append(button);
 					}
 				}
 			},
 			addtotoolbar:function(btn){
-				$.cMethods.addtotoolbar = "addtotoolbar";
+				$.cMethods.addtotoolbar = {name: "addtotoolbar", author:"pupunzi", type:"built-in"};
 				var el = this;
 				for (var i=0; i<= btn.length; i++){
 					if(btn[i]!=undefined){
@@ -449,33 +502,48 @@
 					}
 				}
 			},
+
 			iconize:function(dockId){
-				$.cMethods.iconize = "iconize";
+				$.cMethods.iconize = {name: "iconize", author:"pupunzi", type:"built-in"};
 				var el = this;
+
 				if(el.fullscreen)
 					return;
+
 				el.$.containerize("storeView");
 
 				if(typeof el.opt.onBeforeIconize === "function")
 					el.opt.onBeforeIconize(el);
 
-				var t = dockId ? $("#"+dockId).offset().top : el.$.css("top");
-				var l = dockId ? $("#"+dockId).offset().left : 0;
+				var existDock = $("#"+dockId).length>0;
+
+
+				var t = existDock ? $("#"+dockId).offset().top : el.$.css("top");
+				var l = existDock ? $("#"+dockId).offset().left : 0;
+
 				el.content.css({overflow:"hidden"});
 				el.$.animate({top:t,left:l,width:0,height:0,opacity:0},el.opt.effectDuration, function(){
 					$(this).containerize("close");
-					if(!dockId){
+
+					var text = el.containerTitle.html();
+					if(el.$.data("icon")){
+						var imgIco = $("<img/>").attr("src", el.$.data("icon")).addClass("icon");
+						text = imgIco;
+					}
+
+					if(!existDock){
 						el.iconElement = $("<div/>").addClass("containerIcon "+ el.$.data("skin")).css({position:"absolute", top:t, left:l});
-						var title = $("<span/>").addClass("mbc_title").html(el.containerTitle.html());
+						var title = $("<span/>").addClass("mbc_title").html(text);
 						el.iconElement.append(title);
 						$("body").append(el.iconElement);
 					}else{
-						el.iconElement = $("<span/>").addClass("containerDocked").html(el.containerTitle.html());
+
+						el.iconElement = $("<span/>").addClass("containerDocked").html(text);
 						$("#"+dockId).append(el.iconElement);
 					}
 
 					var event = jQuery.Event("iconized");
-					event.dock = dockId;
+					event.dock = existDock ? dockId : 0;
 
 					el.$.trigger(event);
 
@@ -495,7 +563,7 @@
 			},
 
 			fullScreen:function(){
-				$.cMethods.fullScreen = "fullScreen";
+				$.cMethods.fullScreen = {name: "fullScreen", author:"pupunzi", type:"built-in"};
 				var el = this;
 				if(!el.fullscreen){
 					if(el.isResizable)
@@ -526,7 +594,7 @@
 			},
 
 			rememberme:function(){
-				$.cMethods.rememberme = "rememberme";
+				$.cMethods.rememberme = {name: "rememberme", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				el.$.on("resized",function(){
@@ -540,7 +608,10 @@
 				});
 
 				el.$.on("iconized",function(e){
-					$.mbCookie.set(el.id+"_iconized", e.dock,7);
+
+					var dock = e.dock ? e.dock : 0;
+					$.mbCookie.set(el.id+"_iconized", dock,7);
+
 				});
 
 				el.$.on("closed",function(){
@@ -586,20 +657,26 @@
 			},
 
 			centeronwindow:function(anim){
-				$.cMethods.centeronwindow = "centeronwindow";
+				$.cMethods.centeronwindow = {name: "centeronwindow", author:"pupunzi", type:"built-in"};
 
 				var el=this;
 				var nww=$(window).width();
 				var nwh=$(window).height();
-				var ow=el.$.attr("w")?el.$.attr("w"):el.$.outerWidth();
-				var oh= el.$.attr("h")?el.$.attr("h"):el.$.outerHeight();
+				var ow=el.$.attr("w") ? el.$.attr("w") : el.$.outerWidth();
+				var oh= el.$.attr("h") ? el.$.attr("h") : el.$.outerHeight();
 				var l= (nww-ow)/2;
-				var t= ((nwh-oh)/2)>0?(nwh-oh)/2:10;
+				var t= ((nwh-oh)/2) > 0 ? (nwh-oh) / 2 : 10;
+
 				if (el.$.css("position")!="fixed"){
 					el.$.css("position","absolute");
-					l=l+$(window).scrollLeft();
-					t=t+$(window).scrollTop();
+
+					var lDiff = el.$.offset().left - el.$.position().left;
+					var tDiff = el.$.offset().top - el.$.position().top;
+					l=l + $(window).scrollLeft()-lDiff;
+					t=t + $(window).scrollTop()-tDiff;
+
 				}
+
 				if (anim)
 					el.$.animate({top:t,left:l},300,function(){
 						el.$.trigger("centeredOnWindow")
