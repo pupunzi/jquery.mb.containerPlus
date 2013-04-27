@@ -15,14 +15,14 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 27/04/13 18.50
+  ~  last modified: 28/04/13 0.28
   ~  ******************************************************************************/
   -->
 
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>simple container</title>
+    <title>jquery.mb.containerPlus 3.x - demo page</title>
     <link href='http://fonts.googleapis.com/css?family=Lekton' rel='stylesheet' type='text/css'>
     <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
@@ -56,35 +56,8 @@
         }
 
         .container{
-            visibility: hidden;
             width: 500px;
             height: auto;
-        }
-
-        .container .mbc_content button{
-            border: 1px solid gray;
-            border-radius: 8px;
-            background: #3a3a3a;
-            color:white;
-            padding: 8px;
-            margin-bottom: 15px;
-        }
-
-        .black.containerIcon{
-            padding: 10px;
-            height: 20px;
-            background: #000;
-            box-shadow: 0 0 3px rgba(255,255,255,0.4);
-            color: white;
-        }
-
-        .containerIcon:hover .mbc_title{
-            display: block;
-            cursor: pointer;
-        }
-
-        .containerIcon .mbc_title{
-            display: none;
         }
 
         #dock{
@@ -104,13 +77,18 @@
         #actions button{
             border: none;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 5px;
+            border: 1px solid white;
             padding: 7px;
             display: inline-block;
             margin: 3px;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
             background: #d4d4d4;
+        }
+
+        #actions button:hover{
+            background: #ffc000;
         }
 
 
@@ -121,13 +99,29 @@
 
 <div id="wrapper">
 
+
     <div id="actions">
+
+        <div style="margin-bottom: 80px">
+
+            <h2>jquery.mb.containerPlus 3.x</h2>
+
+            <p>If you were looking for an easy to use jquery plug and play plug-in to create overlayed windows on your HTML pages you are in the right place!</p>
+            <p>The new release of this plugin introduces new useful features to let you easily customize both behaviors and design.</p>
+            <p>The code has been completely rewritten to accomplish these needs.</p>
+            <hr>
+            <p>You can read more <a href="https://github.com/pupunzi/jquery.mb.containerPlus/wiki/jquery.mb.containerPlus-3.x" target="_blank">here</a>.</p>
+
+        </div>
+
         <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
-       <br> <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
+       <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
     </div>
 
     <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-icon="css/icons/browser.png" data-drag=true  data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
         <h2>Container 1</h2>
+        <p>This is a modal window and it is created adding data-modal=true to the element constructor. It can't be resized, it's centered on window, it's white skinned.</p>
+        <br>
         <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -136,6 +130,8 @@
 
     <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
         <h2>Container 2</h2>
+        <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
+        <br>
         <button onclick="$('#cont2').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
@@ -144,6 +140,8 @@
 
     <div id="cont3" class="container" style=" top:230px; left: 500px;" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close">
         <h2>Container 3</h2>
+        <p>This can be dragged but only on a grid of 100x100, it's centered on window, it's black skinned, it has some tool bar buttons.</p>
+        <br>
         <button onclick="$('#cont3').containerize('showdata');$(this).hide();">show properties</button>
         <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>

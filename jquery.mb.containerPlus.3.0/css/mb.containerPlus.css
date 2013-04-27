@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/04/13 16.48
+ *  last modified: 28/04/13 0.26
  *  *****************************************************************************
  */
 
@@ -151,15 +151,6 @@ footer, header, hgroup, menu, nav, section {
 
 }
 
-.mbc_container * {
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.mbc_container * :focus {
-  outline: 0;
-}
-
 .mbc_container {
   visibility: hidden;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
@@ -167,6 +158,7 @@ footer, header, hgroup, menu, nav, section {
   font-family: 'Lekton', sans-serif;
   font-size: 16px;
   overflow: inherit;
+  visibility: hidden;
 
   background: #ffffff; /* Old browsers */
   background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
@@ -181,6 +173,16 @@ footer, header, hgroup, menu, nav, section {
   border-radius: 10px;
 }
 
+
+.mbc_container * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.mbc_container * :focus {
+  outline: 0;
+}
+
 .mbc_container.dragging {
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.5);
 }
@@ -189,10 +191,19 @@ footer, header, hgroup, menu, nav, section {
   width:35px;
 }
 
-.container .icon{
+.mbc_container .icon{
   position: absolute;
   left:0px;
   top:-5px;
+}
+
+.mbc_container > .mbc_content button{
+  border: 1px solid gray;
+  border-radius: 8px;
+  background: #3a3a3a;
+  color:white;
+  padding: 8px;
+  margin-bottom: 15px;
 }
 
 
