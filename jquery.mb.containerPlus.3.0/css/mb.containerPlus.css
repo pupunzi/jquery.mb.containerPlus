@@ -14,11 +14,13 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 28/04/13 0.26
+ *  last modified: 28/04/13 0.33
  *  *****************************************************************************
  */
 
 @charset "UTF-8";
+
+@import url(http://fonts.googleapis.com/css?family=Lekton);
 
 @font-face {
   font-family: 'IconicStroke';
@@ -154,7 +156,6 @@ footer, header, hgroup, menu, nav, section {
 .mbc_container {
   visibility: hidden;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  /*overflow: hidden;*/
   font-family: 'Lekton', sans-serif;
   font-size: 16px;
   overflow: inherit;
