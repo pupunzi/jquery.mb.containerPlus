@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 28/04/13 0.35
+  ~  last modified: 02/06/13 22.24
   ~  ******************************************************************************/
   -->
 
@@ -117,7 +117,7 @@
        <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
     </div>
 
-    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto" data-icon="css/icons/browser.png" data-drag=true  data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
+    <div id="cont1" class="container" style=" top:130px; left: 300px; height: auto; opacity:1" data-icon="css/icons/browser.png" data-drag=true  data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close">
         <h2>Container 1</h2>
         <p>This is a modal window and it is created adding data-modal=true to the element constructor. It can't be resized, it's centered on window, it's white skinned.</p>
         <br>
@@ -127,7 +127,7 @@
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
+    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
         <h2>Container 2</h2>
         <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
         <br>
@@ -196,7 +196,9 @@
 
         /***********************************************/
 
-        $(".container").containerize();
+        $(".container").containerize({
+            onLoad: function(el){} //$(el).css({opacity:.7})
+        });
 
         /*
          * Example of custom Buttons for the toolbar

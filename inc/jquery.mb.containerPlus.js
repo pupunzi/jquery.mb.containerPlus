@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 28/04/13 0.33
+ *  last modified: 02/06/13 22.25
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	$.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.5.0",
+		version:"3.5.1",
 		defaults:{
 			containment:"document",
 			mantainOnWindow:true,
@@ -112,6 +112,9 @@
 		},
 
 		build:function(el){
+
+			var opacity = el.$.css("opacity");
+
 			el.$.css({opacity:0});
 			el.id = el.id ? el.id : "mbc_" + new Date().getTime();
 			var titleText = el.$.find("h2:first");
@@ -173,17 +176,17 @@
 				$.containerize.applyMethods(el).addTouch();
 
 				if(!el.isClosed)
-					el.$.fadeTo(300,1);
+					el.$.fadeTo(300,opacity, function(){
+						if(typeof el.opt.onLoad === "function")
+							el.opt.onLoad(el);
+					});
 				else
-					el.$.css({opacity:1});
+					el.$.css({opacity:opacity});
 
 				el.$.trigger("ready");
 
 				$(window).trigger("resize");
-			},500);
-
-			if(typeof el.opt.onLoad === "function")
-				el.opt.onLoad(el);
+			},100);
 		},
 
 		applyMethods:function(el, data){
@@ -332,10 +335,11 @@
 				if(el.isClosed)
 					el.$.fadeIn(time, function(){});
 
-				el.isClosed=false;
-
 				if(typeof el.opt.onRestore === "function")
 					el.opt.onRestore(el);
+
+				el.isClosed=false;
+
 
 				if(btf)
 					el.$.mb_bringToFront(el.opt.zIndexContext);
