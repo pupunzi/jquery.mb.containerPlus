@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 10/06/13 23.43
+ *  last modified: 11/06/13 0.06
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	jQuery.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.5.1",
+		version:"3.5.2",
 		defaults:{
 			containment:"document",
 			mantainOnWindow:true,
