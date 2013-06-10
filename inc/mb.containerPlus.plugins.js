@@ -14,13 +14,13 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 27/04/13 19.38
+ *  last modified: 10/06/13 22.51
  *  *****************************************************************************
  */
 
 
-$.containerize.addMethod("modal",function(){
-	$.cMethods.modal = {name: "modal", author:"pupunzi", type:"plug-in", version:"1.0"};
+jQuery.containerize.addMethod("modal",function(){
+	jQuery.cMethods.modal = {name: "modal", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 
 	function openModal(o){
@@ -47,21 +47,21 @@ $.containerize.addMethod("modal",function(){
 		onClose: function(o){closeModal(o.$)}
 	};
 
-	$.extend (el.opt,opt);
+	jQuery.extend (el.opt,opt);
 
 	return el.$;
 
 });
 
-$.containerize.addMethod("changecontent", function(ajaxURL, data){
-	$.cMethods.changecontent = {name: "changecontent", author:"pupunzi", type:"plug-in", version:"1.0"};
+jQuery.containerize.addMethod("changecontent", function(ajaxURL, data){
+	jQuery.cMethods.changecontent = {name: "changecontent", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 	var contentPlaceHolder = el.content;
 
 //	if data is a string convert it to object
 	data = data!=null && typeof data == "string" ? eval("("+data+")") : data;
 
-	var request = $.ajax({
+	var request = jQuery.ajax({
 		url     : ajaxURL,
 		type    : "GET",
 		data    : data,

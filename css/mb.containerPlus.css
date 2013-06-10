@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 28/04/13 0.35
+ *  last modified: 10/06/13 23.11
  *  *****************************************************************************
  */
 
@@ -151,6 +151,27 @@ footer, header, hgroup, menu, nav, section {
 
   -webkit-user-select: none;
 
+}
+
+.containerIcon{
+  max-width: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+}
+.containerIcon:hover{
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+}
+
+.containerIcon h2{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  text-align: right;
 }
 
 .mbc_container {
@@ -355,6 +376,15 @@ footer, header, hgroup, menu, nav, section {
   padding: 5px;
 }
 
+.containerIcon{
+  padding: 10px;
+  color:#000;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+
 
 /*SKIN BLACK*/
 
@@ -483,4 +513,12 @@ footer, header, hgroup, menu, nav, section {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border-top: 1px solid #3b3b3a;
+}
+
+.containerIcon.black{
+  padding: 10px;
+  color:#fff;
+  background: #000;
+  cursor: pointer;
+  border-radius: 8px;
 }

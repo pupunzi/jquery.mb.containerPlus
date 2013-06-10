@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 02/06/13 22.24
+  ~  last modified: 10/06/13 23.17
   ~  ******************************************************************************/
   -->
 
@@ -210,7 +210,7 @@
             className:"",
             action: function(el, btn){
                 if(!$(el).hasClass('black'))
-                    $(el).containerize('skin','black');
+                    $(el).containerize('skin','black', el.$.data("skin"));
                 else
                     $(el).containerize('skin');
             }
