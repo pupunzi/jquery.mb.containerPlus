@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 10/06/13 23.17
+  ~  last modified: 12/06/13 0.22
   ~  ******************************************************************************/
   -->
 
@@ -188,7 +188,7 @@
                 idx:"changecontent",
                 label:"&#xe044;",
                 className:"",
-                action: function(container,btn){$(container).containerize("changecontent","/newContent.php",{id:01, temp:'simple'})}
+                action: function(container,btn){$(container).containerize("changecontent","test_content.html",{id:01, temp:'simple'})}
             }
         }
         $.extend($.containerize.defaultButtons, newBtns);

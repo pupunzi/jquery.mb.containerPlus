@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 10/06/13 23.11
+ *  last modified: 12/06/13 0.26
  *  *****************************************************************************
  */
 
@@ -369,6 +369,11 @@ footer, header, hgroup, menu, nav, section {
   border-top: 1px solid #c2c2bd;
 }
 
+.mbc_container > .mbc_content h2{
+  font-size: 130%;
+  margin-bottom: 20px;
+}
+
 .containerDocked{
   display: inline-block;
   color: white;
@@ -384,9 +389,7 @@ footer, header, hgroup, menu, nav, section {
   border-radius: 8px;
 }
 
-
-
-/*SKIN BLACK*/
+/*SKIN BLACK*********************************************************************************/
 
 .mbc_container.black {
 
