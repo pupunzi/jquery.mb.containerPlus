@@ -15,17 +15,16 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 12/06/13 0.22
+  ~  last modified: 04/10/13 17.39
   ~  ******************************************************************************/
   -->
-
 <html>
 <head>
     <meta charset="utf-8" />
     <title>jquery.mb.containerPlus 3.x - demo page</title>
     <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.containerPlus.js"></script>
     <script type="text/javascript" src="inc/mb.containerPlus.plugins.js"></script>
@@ -175,6 +174,7 @@
             }
             txt += "<hr><br>"
             el.content.prepend(txt);
+            return txt;
         });
 
 
@@ -193,26 +193,26 @@
         }
         $.extend($.containerize.defaultButtons, newBtns);
 
-
         /***********************************************/
 
         $(".container").containerize({
-            onLoad: function(el){} //$(el).css({opacity:.7})
+            onLoad: function(el){}
         });
 
         /*
          * Example of custom Buttons for the toolbar
          *
          * */
-        var changeSkinBtn = {
+
+         var changeSkinBtn = {
             idx: "changeSkinBtn",
             label: "change skin",
             className:"",
-            action: function(el, btn){
-                if(!$(el).hasClass('black'))
-                    $(el).containerize('skin','black', el.$.data("skin"));
+            action: function(container, btn){
+                if(!$(container).hasClass('black'))
+                    $(container).containerize('skin','black', container.$.data("skin"));
                 else
-                    $(el).containerize('skin');
+                    $(container).containerize('skin');
             }
         }
 
@@ -220,8 +220,8 @@
             idx: "iconizeBtn",
             label: "iconize",
             className:"",
-            action: function(el, btn){
-                $(el).containerize("iconize");
+            action: function(container, btn){
+                $(container).containerize("iconize");
             }
         }
 
@@ -229,8 +229,8 @@
             idx: "dockBtn",
             label: "dock",
             className:"",
-            action: function(el, btn){
-                $(el).containerize("iconize","dock");
+            action: function(container, btn){
+                $(container).containerize("iconize","dock");
             }
         }
 
@@ -238,8 +238,8 @@
             idx: "closeBtn",
             label: "close",
             className:"",
-            action: function(el, btn){
-                $(el).containerize("close");
+            action: function(container, btn){
+                $(container).containerize("close");
             }
         }
 

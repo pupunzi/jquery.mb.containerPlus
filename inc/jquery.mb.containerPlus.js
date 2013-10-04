@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 11/06/13 0.06
+ *  last modified: 02/10/13 22.42
  *  *****************************************************************************
  */
 
@@ -87,10 +87,13 @@
 						params.push(arguments[i]);
 				}
 
-				if(jQuery.containerize.methods[method])
+				if(jQuery.containerize.methods[method]){
 					this.each(function(){
-						jQuery.containerize.methods[method].apply(this, params);
+						var r = jQuery.containerize.methods[method].apply(this, params);
+
+						return r;
 					});
+				}
 				return false;
 			}
 
@@ -173,7 +176,8 @@
 
 			setTimeout(function(){
 				el.$.containerize("adjust");
-				jQuery.containerize.applyMethods(el).addTouch();
+				jQuery.containerize.applyMethods(el);
+						$(el).addTouch();
 
 				if(!el.isClosed)
 					el.$.fadeTo(300,opacity, function(){
@@ -198,7 +202,6 @@
 					var params=[];
 					if(typeof properties[els] != "boolean")
 						params = properties[els].split(",");
-
 					jQuery.containerize.methods[els].apply(el,params);
 				}
 			}
@@ -700,9 +703,7 @@
 				});
 
 				el.$.on("changeSkin",function(){
-
 					jQuery.mbCookie.set(el.id+"_skin", el.$.data("skin"),7);
-					console.debug(jQuery.mbCookie.get(el.id + "_skin"))
 				});
 
 				var w = jQuery.mbCookie.get(el.id+"_w") ? jQuery.mbCookie.get(el.id+"_w") : el.$.css("width");
