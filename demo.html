@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/10/13 17.40
+  ~  last modified: 24/11/13 14.45
   ~  ******************************************************************************/
   -->
 <html>
@@ -127,7 +127,7 @@
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
+    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-iconize="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
         <h2>Container 2</h2>
         <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
         <br>
@@ -246,7 +246,7 @@
 
         $("#cont1").containerize("addtotoolbar", [closeBtn]);
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
-        $("#cont3").containerize("addtotoolbar", [iconizeBtn,changeSkinBtn,dockBtn]);
+        $("#cont3").containerize("addtotoolbar", [changeSkinBtn,dockBtn]);
 
     })
 

@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 02/10/13 22.42
+ *  last modified: 24/11/13 18.39
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	jQuery.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.5.2",
+		version:"3.5.4",
 		defaults:{
 			containment:"document",
 			mantainOnWindow:true,
@@ -177,7 +177,7 @@
 			setTimeout(function(){
 				el.$.containerize("adjust");
 				jQuery.containerize.applyMethods(el);
-						$(el).addTouch();
+				$(el).addTouch();
 
 				if(!el.isClosed)
 					el.$.fadeTo(300,opacity, function(){
@@ -568,24 +568,29 @@
 				jQuery.cMethods.iconize = {name: "iconize", author:"pupunzi", type:"built-in"};
 				var el = this;
 
-				if(el.fullscreen)
+				if(el.fullscreen){
+					el.$.containerize("fullScreen");
+					setTimeout(function(){
+						el.$.containerize("iconize", dockId);
+					},el.opt.effectDuration);
 					return;
+				}
 
 				var skin = el.$.data("skin");
-
 				el.$.containerize("storeView");
 
 				if(typeof el.opt.onBeforeIconize === "function")
 					el.opt.onBeforeIconize(el);
 
 				var existDock = jQuery("#"+dockId).length>0;
-
+				var isAtInit = el.$.data("iconize");
+				el.$.data("iconize", false);
 
 				var t = existDock ? jQuery("#"+dockId).offset().top : el.$.css("top");
 				var l = existDock ? jQuery("#"+dockId).offset().left : -10;
 
 				el.content.css({overflow:"hidden"});
-				el.$.animate({top:t,left:l,width:0,height:0,opacity:0},el.opt.effectDuration, function(){
+				el.$.animate({top:t,left:l,width:0,height:0,opacity:0},isAtInit ? 0 :el.opt.effectDuration, function(){
 					jQuery(this).containerize("close");
 
 					var text = el.containerTitle.html();
@@ -631,11 +636,14 @@
 			fullScreen:function(){
 				jQuery.cMethods.fullScreen = {name: "fullScreen", author:"pupunzi", type:"built-in"};
 				var el = this;
+
 				if(!el.fullscreen){
 					if(el.isResizable)
 						el.$.resizable("disable");
+
 					if(el.$.data("drag"))
 						el.$.draggable("disable");
+
 					el.oWidth= el.$.outerWidth();
 					el.oHeight= el.$.outerHeight();
 					el.oTop= el.$.position().top;
@@ -649,13 +657,17 @@
 						el.opt.onFullScreen(el);
 
 				}else{
+
 					if(el.isResizable)
 						el.$.resizable("enable");
+
 					if(el.$.data("drag"))
 						el.$.draggable("enable");
+
 					el.$.css({top:el.oTop,left:el.oLeft, width:el.oWidth, height:el.oHeight, position: el.oPos});
 					el.$.containerize("adjust");
 					el.fullscreen=false;
+
 				}
 				return el.$;
 			},
@@ -675,7 +687,6 @@
 				});
 
 				el.$.on("iconized",function(e){
-
 					var dock = e.dock ? e.dock : 0;
 					jQuery.mbCookie.set(el.id+"_iconized", dock,7);
 
