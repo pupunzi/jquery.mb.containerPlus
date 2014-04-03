@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 04/04/14 0.22
+  ~  last modified: 04/04/14 0.32
   ~  ******************************************************************************/
   -->
 <html>
@@ -130,35 +130,13 @@
             $("#logo").fadeIn();
         }
 
-
-        /**
-         *
-         * AUTORESIZE BEHAVIOR WHEN THE CONTENT CHANGES ***************************************************************
-         *
-         * */
-
-        jQuery.containerize.addMethod("autoresize", function(){
-            jQuery.cMethods.changecontent = {name: "autoresize", author:"pupunzi", type:"plug-in", version:"1.0"};
-            var el = this;
-            var contentPlaceHolder = el.content;
-            contentPlaceHolder.on("DOMSubtreeModified",function(){
-                if(el.fullscreen)
-                    return;
-                contentPlaceHolder.css({height:"auto"});
-                var h = (contentPlaceHolder.get(0).scrollHeight) + el.header.height() + el.footer.height() + el.footer.height();
-                contentPlaceHolder.parent("div").css({height:h});
-                el.$.containerize("adjust");
-            });
-
-            return el.$;
-        });
-
-        /***********************************************/
         $(".container").containerize({
             onLoad: function(){
+/*
                 setInterval(function(){
-                    // $("#cont").containerize("loremipsum");
+                     $("#cont").containerize("loremipsum");
                 },1000)
+*/
             }
         });
         /***********************************************/
