@@ -14,10 +14,15 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/01/14 22.50
+ *  last modified: 04/04/14 0.24
  *  *****************************************************************************
  */
 
+/**
+ *
+ * MODAL BEHAVIOR ***************************************************************
+ *
+ * */
 
 jQuery.containerize.addMethod("modal",function(){
 	jQuery.cMethods.modal = {name: "modal", author:"pupunzi", type:"plug-in", version:"1.0"};
@@ -53,6 +58,15 @@ jQuery.containerize.addMethod("modal",function(){
 
 });
 
+/**
+ *
+ * CHANGE CONTENT VIA AJAX ***************************************************************
+ *
+ * @ajaxURL : the path to the file containing the HTML to be injected
+ * @data : the parameter object to be sent in the request
+ *
+ * */
+
 jQuery.containerize.addMethod("changecontent", function(ajaxURL, data){
 	jQuery.cMethods.changecontent = {name: "changecontent", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
@@ -77,6 +91,29 @@ jQuery.containerize.addMethod("changecontent", function(ajaxURL, data){
 
 	return el.$;
 
-})
+});
+
+/**
+ *
+ * AUTORESIZE BEHAVIOR IF THE CONTENT CHANGES ***************************************************************
+ *
+ * */
+
+jQuery.containerize.addMethod("autoresize", function(){
+	jQuery.cMethods.changecontent = {name: "autoresize", author:"pupunzi", type:"plug-in", version:"1.0"};
+	var el = this;
+	var contentPlaceHolder = el.content;
+	contentPlaceHolder.on("DOMSubtreeModified",function(){
+		if(el.fullscreen)
+			return;
+		contentPlaceHolder.css({height:"auto"});
+		var h = (contentPlaceHolder.get(0).scrollHeight) + el.header.height() + el.footer.height() + el.footer.height();
+		contentPlaceHolder.parent("div").css({height:h});
+		el.$.containerize("adjust");
+	});
+
+	return el.$;
+});
+
 
 

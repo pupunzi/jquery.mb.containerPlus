@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/01/14 22.50
+ *  last modified: 04/04/14 0.24
  *  *****************************************************************************
  */
 
@@ -25,7 +25,7 @@
 
 	jQuery.containerize={
 		author:"Matteo Bicocchi",
-		version:"3.5.4",
+		version:"3.5.5",
 		defaults:{
 			containment:"document",
 			mantainOnWindow:true,
@@ -195,13 +195,18 @@
 
 		applyMethods:function(el, data){
 			var properties = el.$.data();
+
 			if(data)
 				properties = properties[data];
+
 			for (var els in properties){
 				if(typeof jQuery.containerize.methods[els] == "function" && properties[els]){
 					var params=[];
 					if(typeof properties[els] != "boolean")
 						params = properties[els].split(",");
+					else
+						params.push(properties[els].toString());
+
 					jQuery.containerize.methods[els].apply(el,params);
 				}
 			}
@@ -461,7 +466,6 @@
 			windowResize:function(){
 				jQuery.cMethods.windowResize = {name: "windowResize", author:"pupunzi", type:"built-in"};
 				var el = this;
-
 				el.$.containerize("setContainment", el.$.data("containment"))
 				return el.$;
 			},
