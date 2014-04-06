@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/04/14 16.32
+ *  last modified: 06/04/14 16.56
  *  *****************************************************************************
  */
 
@@ -38,6 +38,7 @@ jQuery.containerize.addMethod("modal",function(){
 		$overlay.mb_bringToFront();
 		o.css("position","fixed");
 		o.mb_bringToFront();
+		o.css({opacity:1});
 
 		o.containerize("centeronwindow",false);
 		$overlay.fadeIn(300);

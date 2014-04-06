@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/04/14 14.49
+ *  last modified: 06/04/14 17.00
  *  *****************************************************************************
  */
 
@@ -117,6 +117,8 @@
 		build:function(el){
 
 			var opacity = el.$.css("opacity");
+
+			el.opacity = opacity;
 
 			el.$.css({opacity:0});
 			el.id = el.id ? el.id : "mbc_" + new Date().getTime();
@@ -341,7 +343,7 @@
 				var time= animate ? animate : 0;
 
 				if(el.isClosed)
-					el.$.fadeIn(time, function(){});
+					el.$.fadeTo(time, el.opacity);
 
 				if(typeof el.opt.onRestore === "function")
 					el.opt.onRestore(el);
