@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/04/14 14.49
+ *  last modified: 06/04/14 16.32
  *  *****************************************************************************
  */
 
@@ -103,7 +103,7 @@ jQuery.containerize.addMethod("autoresize", function(){
 	jQuery.cMethods.autoresize = {name: "autoresize", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 	var contentPlaceHolder = el.content;
-	contentPlaceHolder.on("DOMSubtreeModified",function(){
+	contentPlaceHolder.on("DOMNodeInserted DOMNodeRemoved",function(){
 		if(el.fullscreen)
 			return;
 		contentPlaceHolder.css({height:"auto"});
@@ -111,6 +111,7 @@ jQuery.containerize.addMethod("autoresize", function(){
 		var w = (contentPlaceHolder.get(0).scrollWidth) ;
 		contentPlaceHolder.parent("div").css({height: h, width: w});
 		el.$.containerize("adjust");
+		el.$.containerize("setContainment", el.$.data("containment"));
 	});
 
 	return el.$;
