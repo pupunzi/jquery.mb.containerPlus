@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 04/04/14 0.24
+ *  last modified: 06/04/14 14.49
  *  *****************************************************************************
  */
 
@@ -670,6 +670,7 @@
 
 					el.$.css({top:el.oTop,left:el.oLeft, width:el.oWidth, height:el.oHeight, position: el.oPos});
 					el.$.containerize("adjust");
+					el.$.containerize("setContainment", el.$.data("containment"));
 					el.fullscreen=false;
 
 				}
