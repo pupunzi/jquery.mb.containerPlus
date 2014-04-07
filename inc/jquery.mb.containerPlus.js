@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/04/14 17.00
+ *  last modified: 08/04/14 0.43
  *  *****************************************************************************
  */
 
@@ -41,6 +41,15 @@
 			onDrag: function(o,x,y){},
 			onRestore:function(o){},
 			onFullScreen:function(o){}
+		},
+		OS: function(){
+			var OSName="Unknown OS";
+			if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+			if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+			if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+			if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+			return OSName;
+
 		},
 		defaultButtons: {
 			close : {
@@ -97,7 +106,7 @@
 				return false;
 			}
 
-			jQuery(window).on("resize",function(){
+			jQuery(window).off("resize.mbc").on("resize.mbc",function(){
 				jQuery(".mbc_container").each(function(){
 					var el = this;
 					el.$.containerize("windowResize");
@@ -154,6 +163,19 @@
 
 			el.$.on("mousedown",function(){
 				jQuery(this).mb_bringToFront(el.opt.zIndexContext);
+			});
+
+			/*Prevent document scroll if the container content scrolls*/
+			el.content.on( 'mousewheel DOMMouseScroll', function ( e ) {
+				var e0 = e.originalEvent,
+						delta = e0.wheelDelta || -e0.detail;
+				var deltaVal = ( delta < 0 ? 1 : -1 ) * 5;
+				if (this.scrollHeight <= (el.$.height()+ el.header.height() - el.footer.height()-80))
+					return;
+				if(jQuery.containerize.OS() === "MacOS")
+					deltaVal = delta;
+				this.scrollTop += deltaVal;
+				e.preventDefault();
 			});
 
 			el.content.on("touchmove",function(e){
@@ -342,8 +364,15 @@
 
 				var time= animate ? animate : 0;
 
-				if(el.isClosed)
-					el.$.fadeTo(time, el.opacity);
+				if(!el.isClosed)
+					return;
+
+				if(el.isIconized){
+					el.$.containerize("iconize");
+					return;
+				}
+
+				el.$.fadeTo(time, el.opacity);
 
 				if(typeof el.opt.onRestore === "function")
 					el.opt.onRestore(el);
@@ -461,7 +490,12 @@
 				el.$.animate({top:el.oTop, left:el.oLeft, width:el.oWidth, height: el.oHeight, opacity:1}, animate ? el.opt.effectDuration : 0, function(){
 					el.content.css({overflow:"auto"});
 					el.$.containerize("adjust");
-				})
+
+
+					if(typeof el.opt.onRestore === "function")
+						el.opt.onRestore(el);
+
+				});
 				return el.$;
 			},
 
@@ -582,6 +616,17 @@
 					return;
 				}
 
+				if(el.isIconized){
+					el.iconElement.remove();
+					el.isIconized = false;
+					el.$.containerize("restoreView",true);
+					el.$.mb_bringToFront(el.opt.zIndexContext);
+					el.$.trigger("restored");
+
+					return;
+
+				}
+
 				var skin = el.$.data("skin");
 				el.$.containerize("storeView");
 
@@ -600,6 +645,7 @@
 					jQuery(this).containerize("close");
 
 					var text = el.containerTitle.html();
+
 					if(el.$.data("icon")){
 						var imgIco = jQuery("<img/>").attr("src", el.$.data("icon")).addClass("icon");
 						text = imgIco;
@@ -625,15 +671,18 @@
 
 					if(typeof el.opt.onIconize === "function")
 						el.opt.onIconize(el);
+					el.isIconized = true;
 
 					el.iconElement.on("click",function(){
+						el.$.containerize("iconize", dockId);
+/*
 						jQuery(this).remove();
 						el.$.containerize("restoreView",true);
 						el.$.mb_bringToFront(el.opt.zIndexContext);
 						el.$.trigger("restored");
 
-						if(typeof el.opt.onRestore === "function")
-							el.opt.onRestore(el);
+						el.isIconized = false;
+*/
 					})
 				});
 				return el.$;

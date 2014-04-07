@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 06/04/14 16.56
+ *  last modified: 08/04/14 0.32
  *  *****************************************************************************
  */
 
@@ -108,7 +108,7 @@ jQuery.containerize.addMethod("autoresize", function(){
 		if(el.fullscreen)
 			return;
 		contentPlaceHolder.css({height:"auto"});
-		var h = (contentPlaceHolder.get(0).scrollHeight) + el.header.height() + el.footer.height();
+		var h = (contentPlaceHolder.get(0).scrollHeight) + el.header.height() + el.footer.height()+20;
 		var w = (contentPlaceHolder.get(0).scrollWidth) ;
 		contentPlaceHolder.parent("div").css({height: h, width: w});
 		el.$.containerize("adjust");

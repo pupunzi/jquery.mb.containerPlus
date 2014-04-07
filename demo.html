@@ -15,7 +15,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 03/04/14 23.03
+  ~  last modified: 07/04/14 22.40
   ~  ******************************************************************************/
   -->
 <html>
@@ -114,7 +114,7 @@
         </div>
 
         <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
-        <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",500); else $("#cont3").containerize("close",500);'>open/close container 3</button>
+        <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",100); else $("#cont3").containerize("close",100);'>open/close container 3</button>
     </div>
 
     <div id="cont1" class="container" style="position: absolute; top:130px; left: 300px; height: auto; opacity:1" data-icon="css/icons/browser.png" data-drag=true data-resize=false data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close" data-autoresize="true">
@@ -173,7 +173,7 @@
             var txt = "container properties:<br><br>";
             var data = el.$.data();
             for (var i in data){
-                txt += i+"= "+ data[i]+"<br>";
+                txt += i+"= "+ data[i]+" ("+typeof data[i]+")<br>";
             }
             txt += "<hr><br>"
             el.content.prepend(txt);
