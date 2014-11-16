@@ -1,8 +1,9 @@
 {
-	"name": "jquery.mb.containerPlus",
+	"name": "jquery.mb.containerplus",
 	"title": "jQuery mb.containerPlus",
 	"description": "This is a useful plug in to build full featured and fully skinnable containers. The container can be set to draggable, resizable, collapsable and minimizable.",
 	"keywords": [
+		"jquery-plugin",
 		"window",
 		"ajax",
 		"container",
@@ -10,17 +11,9 @@
 		"ui"
 	],
 	"version": "3.5.5",
-	"author": {
-		"name": "Pupunzi (Matteo Bicocchi)",
-		"email": "matteo@open-lab.com",
-		"url": "http://pupunzi.com"
-	},
+	"author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
 	"maintainers": [
-		{
-			"name": "Pupunzi (Matteo Bicocchi)",
-			"email": "matteo@open-lab.com",
-			"url": "http://pupunzi.open-lab.com"
-		}
+		"Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
 	],
 	"licenses": [
 		{
@@ -32,12 +25,22 @@
 			"url": "https://github.com/pupunzi/jquery.mb.containerPlus/blob/master/licenses/GPL-LICENSE.txt"
 		}
 	],
-	"bugs": "https://github.com/pupunzi/jquery.mb.containerPlus/issues",
+	"bugs": {
+		"url": "https://github.com/pupunzi/jquery.mb.containerPlus/issues"
+	},
 	"homepage": "http://pupunzi.open-lab.com/mb-jquery-components/mb-containerplus/",
 	"demo": "http://pupunzi.com/#mb.components/mb.containerPlus/containerPlus.html",
 	"docs": "https://github.com/pupunzi/jquery.mb.containerPlus/wiki",
 	"download": "http://pupunzi.open-lab.com/mb-jquery-components/mb-containerplus/",
 	"dependencies": {
 		"jquery": ">=1.8"
+	},
+	"main": "inc/mb.bgndGallery.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pupunzi/jquery.mb.containerPlus"
 	}
 }
