@@ -24,8 +24,7 @@
     <title>jquery.mb.containerPlus 3.x - demo page</title>
     <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.js"></script>-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
     <script type="text/javascript" src="inc/jquery.mb.containerPlus.js"></script>
     <script type="text/javascript" src="inc/mb.containerPlus.plugins.js"></script>
@@ -89,7 +88,6 @@
         #actions button:hover{
             background: #ffc000;
         }
-
 
     </style>
 
@@ -199,7 +197,14 @@
         /***********************************************/
 
         $(".container").containerize({
-            onLoad: function(el){}
+            onLoad: function(el){},
+            onResize: function(el){
+                console.debug("top: "+ el.style.top, "left: "+ el.style.left,"width: "+ el.style.width, "height: "+ el.style.height);
+            }
+        });
+
+        $(".container").on("resized",function(){
+            console.debug("top: "+ this.style.top, "left: "+ this.style.left,"width: "+ this.style.width, "height: "+ this.style.height);
         });
 
         /*
@@ -217,7 +222,7 @@
                 else
                     $(container).containerize('skin');
             }
-        }
+        };
 
         var iconizeBtn = {
             idx: "iconizeBtn",
@@ -226,7 +231,7 @@
             action: function(container, btn){
                 $(container).containerize("iconize");
             }
-        }
+        };
 
         var dockBtn = {
             idx: "dockBtn",
@@ -235,7 +240,7 @@
             action: function(container, btn){
                 $(container).containerize("iconize","dock");
             }
-        }
+        };
 
         var closeBtn = {
             idx: "closeBtn",
@@ -244,7 +249,7 @@
             action: function(container, btn){
                 $(container).containerize("close");
             }
-        }
+        };
 
         $("#cont1").containerize("addtotoolbar", [closeBtn]);
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
