@@ -128,6 +128,8 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 	jQuery.cMethods.autoresize = {name: "makeResponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 
+	el.$.css({opacity:0});
+
 	el.origResponsiveW = el.origResponsiveW || el.$.width();
 	el.origResponsiveH = el.origResponsiveH || el.$.height();
 	el.origResponsiveT = el.origResponsiveT || el.$.css("top");
@@ -167,6 +169,9 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 			el.$.containerize("adjust", true);
 
 		}
+
+		el.$.css({opacity:1});
+
 
 	});
 

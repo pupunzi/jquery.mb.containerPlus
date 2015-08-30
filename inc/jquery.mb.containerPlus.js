@@ -205,8 +205,8 @@
 				jQuery.containerize.applyMethods(el);
 				$(el).addTouch();
 
-				if(!el.isClosed)
-					el.$.fadeTo(300,opacity, function(){
+				if(!el.isClosed || !el.isIconized)
+					el.$.fadeTo(10,opacity, function(){
 						if(typeof el.opt.onLoad === "function")
 							el.opt.onLoad(el);
 					});
