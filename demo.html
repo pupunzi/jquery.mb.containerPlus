@@ -179,6 +179,7 @@
         });
 
 
+
         /*
          * Example of how to add a new button for the button bar:
          *
@@ -191,7 +192,7 @@
                 className:"",
                 action: function(container,btn){$(container).containerize("changecontent","test_content.html",{id:01, temp:'simple'})}
             }
-        }
+        };
         $.extend($.containerize.defaultButtons, newBtns);
 
         /***********************************************/
@@ -254,6 +255,8 @@
         $("#cont1").containerize("addtotoolbar", [closeBtn]);
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
         $("#cont3").containerize("addtotoolbar", [changeSkinBtn,dockBtn]);
+
+        $(".container").containerize("makeResponsive");
 
     })
 

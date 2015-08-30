@@ -286,18 +286,22 @@
 					el.$.resizable({
 						helper: "mbproxy",
 						start:function(e,ui){
+
 							el.$.css("position",el.position);
 							var elH= el.$.data("containment")?el.$.parents().height():jQuery(window).height()+jQuery(window).scrollTop();
 							var elW= el.$.data("containment")?el.$.parents().width():jQuery(window).width()+jQuery(window).scrollLeft();
-							var elPos= el.$.data("containment")? el.$.position():el.$.offset();
+							var elPos= el.$.data("containment")? el.$.position() : el.$.offset();
 							el.$.resizable('option', 'maxHeight',elH-(elPos.top+20));
 							el.$.resizable('option', 'maxWidth',elW-(elPos.left+20));
 							ui.helper.mb_bringToFront();
 						},
 						resize:function(){
+
 							if(typeof el.opt.onResize === "function")
 								el.opt.onResize(el);
+
 							el.$.trigger("resize");
+
 						},
 						stop:function(e,ui){
 							var container= ui.element;
@@ -306,7 +310,10 @@
 							ui.helper.mb_bringToFront();
 							el.$.trigger("resized");
 						}
+					}).on('resize', function (e) {
+						e.stopPropagation();
 					});
+
 					el.isResizable=true;
 				}
 				return el.$;
@@ -502,7 +509,9 @@
 			windowResize:function(){
 				jQuery.cMethods.windowResize = {name: "windowResize", author:"pupunzi", type:"built-in"};
 				var el = this;
-				el.$.containerize("setContainment", el.$.data("containment"))
+				el.$.containerize("setContainment", el.$.data("containment"));
+				el.$.trigger("windowResize");
+
 				return el.$;
 			},
 
@@ -675,14 +684,6 @@
 
 					el.iconElement.on("click",function(){
 						el.$.containerize("iconize", dockId);
-/*
-						jQuery(this).remove();
-						el.$.containerize("restoreView",true);
-						el.$.mb_bringToFront(el.opt.zIndexContext);
-						el.$.trigger("restored");
-
-						el.isIconized = false;
-*/
 					})
 				});
 				return el.$;
@@ -868,7 +869,7 @@
 	/*COOKIES
 	 * -----------------------------------------------------------------*/
 	jQuery.mbCookie = {
-		set: function(name,value,days, domain) {
+		set: function(name,value, days, domain) {
 			if (!days) days=7;
 			domain= domain ?  "; domain="+domain : "";
 			var date = new Date(), expires;

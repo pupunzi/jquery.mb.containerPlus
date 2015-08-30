@@ -105,6 +105,7 @@ jQuery.containerize.addMethod("autoresize", function(){
 	var el = this;
 	var contentPlaceHolder = el.content;
 	contentPlaceHolder.on("DOMNodeInserted DOMNodeRemoved",function(){
+
 		if(el.fullscreen)
 			return;
 		contentPlaceHolder.css({height:"auto"});
@@ -114,6 +115,56 @@ jQuery.containerize.addMethod("autoresize", function(){
 		el.$.containerize("adjust");
 		el.$.containerize("setContainment", el.$.data("containment"));
 	});
+
+	return el.$;
+});
+
+/**
+ *
+ * RESPONSIVE BEHAVIOR  ***************************************************************
+ *
+ * */
+jQuery.containerize.addMethod("makeResponsive", function(){
+	jQuery.cMethods.autoresize = {name: "makeResponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
+	var el = this;
+
+	el.origResponsiveW = el.origResponsiveW || el.$.width();
+	el.origResponsiveH = el.origResponsiveH || el.$.height();
+	el.origResponsiveT = el.origResponsiveT || el.$.css("top");
+	el.origResponsiveL = el.origResponsiveL || el.$.css("left");
+
+
+	var win = el.$.data("containment")? el.$.parent() : jQuery(window);
+	jQuery(window).on("windowResize.responsive",function(){
+
+		if(el.fullscreen)
+			return;
+
+		if(win.width() < el.$.width()){
+			el.$.css({ left:0, width:win.width()});
+			el.$.containerize("adjust");
+
+		} else if(win.width() > el.$.width()){
+
+			el.$.css({ left:el.origResponsiveL, width:el.origResponsiveW});
+			el.$.containerize("adjust");
+
+		}
+
+		if(win.height() < el.$.height()){
+			el.$.css({ top:0, height:win.height()});
+			el.$.containerize("adjust");
+
+		} else if(win.height() > el.$.height()){
+
+			el.$.css({ top:el.origResponsiveT, height:el.origResponsiveH});
+
+		}
+
+	});
+
+
+	jQuery(window).resize();
 
 	return el.$;
 });
