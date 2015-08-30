@@ -387,6 +387,8 @@
 				if(!el.isClosed)
 					return;
 
+				el.$.css({opacity:0});
+
 				if(el.isIconized){
 					el.$.containerize("iconize");
 					return;
@@ -404,8 +406,6 @@
 					el.$.mb_bringToFront(el.opt.zIndexContext);
 
 				el.$.trigger("opened");
-
-				el.$.containerize("setstate");
 
 				return el.$;
 			},
@@ -727,19 +727,23 @@
 					if(el.$.data("drag"))
 						el.$.draggable("disable");
 
-					el.oWidth= el.$.outerWidth();
-					el.oHeight= el.$.outerHeight();
-					el.oTop= el.$.position().top;
-					el.oLeft= el.$.position().left;
-					el.oPos= el.$.css("position");
-					el.$.css({top:0,left:0, width:jQuery(window).width(), height:jQuery(window).height(), position:"fixed"});
-					el.$.containerize("adjust");
+					//el.$.containerize("setstate");
+
+					el.$.css({top:0,left:0, width: jQuery(window).width(), height: jQuery(window).height(), position:"fixed"});
+					el.$.containerize("adjust", true);
 					el.fullscreen=true;
 
 					if(typeof el.opt.onFullScreen === "function")
 						el.opt.onFullScreen(el);
 
+					jQuery(window).off("resize.fullScreen").on("resize.fullScreen", function(){
+						el.$.css({top:0,left:0, width: jQuery(window).width(), height: jQuery(window).height(), position:"fixed"});
+						el.$.containerize("adjust", true);
+					});
+
 				}else{
+
+					jQuery(window).off("resize.fullScreen");
 
 					if(el.isResizable)
 						el.$.resizable("enable");
@@ -747,10 +751,12 @@
 					if(el.$.data("drag"))
 						el.$.draggable("enable");
 
-					el.$.css({top:el.oTop,left:el.oLeft, width:el.oWidth, height:el.oHeight, position: el.oPos});
-					el.$.containerize("adjust");
+					el.$.css(el.state);
+					el.$.containerize("adjust", true);
 					el.$.containerize("setContainment", el.$.data("containment"));
 					el.fullscreen=false;
+
+					jQuery(window).resize();
 
 				}
 				return el.$;
@@ -762,8 +768,10 @@
 				el.state = {};
 				el.state.width= el.$.outerWidth();
 				el.state.height= el.$.outerHeight();
-				el.state.top= el.$.data("containment") ? el.$.position().top : el.$.offset().top;
-				el.state.left= el.$.data("containment") ? el.$.position().left : el.$.offset().left;
+
+				el.state.top = el.$.data("containment") ? el.$.position().top : el.$.offset().top;
+				el.state.left = el.$.data("containment") ? el.$.position().left : el.$.offset().left;
+
 				el.state.position= el.$.css("position");
 
 			},
@@ -845,6 +853,8 @@
 				jQuery.cMethods.centeronwindow = {name: "centeronwindow", author:"pupunzi", type:"built-in"};
 
 				var el=this;
+
+				el.isCenteronwindow = true;
 				var nww=jQuery(window).width();
 				var nwh=jQuery(window).height();
 				var ow=el.$.attr("w") ? el.$.attr("w") : el.$.outerWidth();
@@ -866,12 +876,20 @@
 					el.$.animate({top:t,left:l},300,function(){
 						el.$.trigger("centeredOnWindow")
 					});
+
 				else{
+
 					el.$.css({top:t,left:l});
 					el.$.trigger("centeredOnWindow")
 				}
+
 				el.$.attr("t",t);
 				el.$.attr("l",l);
+
+				jQuery(window).off("resize.centeronwindow").on("resize.centeronwindow", function(){
+					el.$.containerize("centeronwindow");
+				})
+
 				return el.$;
 			}
 		},

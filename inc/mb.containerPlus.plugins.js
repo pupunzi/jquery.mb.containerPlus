@@ -38,7 +38,6 @@ jQuery.containerize.addMethod("modal",function(){
 		$overlay.mb_bringToFront();
 		o.css("position","fixed");
 		o.mb_bringToFront();
-		o.css({opacity:1});
 
 		o.containerize("centeronwindow",false);
 		$overlay.fadeIn(300);
@@ -139,7 +138,6 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 
 		el.responsiveCheck = setTimeout(function(){
 
-
 			if(win.width() < el.$.width()){
 				el.$.css({ left:0, width:win.width()});
 				el.$.containerize("adjust", true);
@@ -149,25 +147,30 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 				if(el.state)
 					el.$.css( el.state );
 
-				el.$.containerize("adjust", true);
-			}
+				if(el.isCenteronwindow)
+					el.$.containerize("centeronwindow");
 
-			if(win.height() < el.$.height()){
+				el.$.containerize("adjust", true);
+
+			}else if(win.height() < el.$.height()){
+
 				el.$.css({ top:0, height:win.height()});
 				el.$.containerize("adjust", true);
 
 			} else if(win.height() > el.$.height()){
 
-				var state = el.$.containerize("getstate");
+				 if(el.state)
+					el.$.css( el.state );
 
-				if(state)
-					el.$.css( state );
+				if(el.isCenteronwindow)
+					el.$.containerize("centeronwindow");
+
 
 				el.$.containerize("adjust", true);
 
 			}
 
-			var isInWin = (el.$.offset().left + el.$.width() < jQuery(window).width()) && (el.$.offset().top + el.$.height() < jQuery(window).height());
+			var isInWin = (el.$.offset().left + el.$.width() < jQuery(window).width()) && (el.$.offset().top + el.$.height() < jQuery(window).height()) ;
 
 			if(!isInWin){
 
@@ -184,7 +187,7 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 
 			}
 
-		}, 100);
+		}, 50);
 
 
 	});
