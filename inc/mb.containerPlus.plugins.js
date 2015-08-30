@@ -123,8 +123,8 @@ jQuery.containerize.addMethod("autoresize", function(){
  * RESPONSIVE BEHAVIOR  ***************************************************************
  *
  * */
-jQuery.containerize.addMethod("makeResponsive", function(){
-	jQuery.cMethods.autoresize = {name: "makeResponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
+jQuery.containerize.addMethod("makeresponsive", function(){
+	jQuery.cMethods.autoresize = {name: "makeresponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 
 	var win = el.$.data("containment")? el.$.parent() : jQuery(window);
@@ -142,16 +142,6 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 				el.$.css({ left:0, width:win.width()});
 				el.$.containerize("adjust", true);
 
-			} else if(win.width() > el.$.width()){
-
-				if(el.state)
-					el.$.css( el.state );
-
-				if(el.isCenteronwindow)
-					el.$.containerize("centeronwindow");
-
-				el.$.containerize("adjust", true);
-
 			}else if(win.height() < el.$.height()){
 
 				el.$.css({ top:0, height:win.height()});
@@ -165,6 +155,16 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 				if(el.isCenteronwindow)
 					el.$.containerize("centeronwindow");
 
+
+				el.$.containerize("adjust", true);
+
+			} else if(win.width() > el.$.width()){
+
+				if(el.state)
+					el.$.css( el.state );
+
+				if(el.isCenteronwindow)
+					el.$.containerize("centeronwindow");
 
 				el.$.containerize("adjust", true);
 
@@ -187,7 +187,7 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 
 			}
 
-		}, 50);
+		}, 10);
 
 
 	});

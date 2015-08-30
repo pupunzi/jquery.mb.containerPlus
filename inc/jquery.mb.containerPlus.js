@@ -198,9 +198,9 @@
 				el.$.css("position","relative");
 			}
 
+			el.$.containerize("adjust");
+
 			setTimeout(function(){
-				el.$.containerize("adjust");
-				el.$.containerize("setstate");
 
 				jQuery.containerize.applyMethods(el);
 				$(el).addTouch();
@@ -318,7 +318,6 @@
 							container.containerize("setContainment");
 							ui.helper.mb_bringToFront();
 							el.$.trigger("resized");
-
 							el.$.containerize("setstate");
 
 						}
@@ -373,7 +372,7 @@
 				el.isClosed=true;
 
 				el.$.trigger("closed");
-				el.$.containerize("setstate");
+//				el.$.containerize("setstate");
 
 				return el.$;
 			},
@@ -439,7 +438,7 @@
 
 					el.$.trigger("collapsed");
 
-					el.$.containerize("setstate");
+//					el.$.containerize("setstate");
 
 				}else{
 					el.$.animate({height:el.h},el.opt.effectDuration,function(){
@@ -459,7 +458,7 @@
 					});
 					el.isCollapsed = false;
 
-					el.$.containerize("setstate");
+//					el.$.containerize("setstate");
 
 				}
 			},
@@ -727,8 +726,6 @@
 					if(el.$.data("drag"))
 						el.$.draggable("disable");
 
-					//el.$.containerize("setstate");
-
 					el.$.css({top:0,left:0, width: jQuery(window).width(), height: jQuery(window).height(), position:"fixed"});
 					el.$.containerize("adjust", true);
 					el.fullscreen=true;
@@ -766,13 +763,16 @@
 				jQuery.cMethods.fullScreen = {name: "setstate", author:"pupunzi", type:"built-in"};
 				var el = this;
 				el.state = {};
-				el.state.width= el.$.outerWidth();
-				el.state.height= el.$.outerHeight();
 
+				el.state.width = el.$.outerWidth();
+				el.state.height = el.$.outerHeight();
 				el.state.top = el.$.data("containment") ? el.$.position().top : el.$.offset().top;
 				el.state.left = el.$.data("containment") ? el.$.position().left : el.$.offset().left;
 
-				el.state.position= el.$.css("position");
+				el.state.position = el.$.css("position");
+
+				console.debug(el.id, el.state)
+
 
 			},
 
@@ -828,7 +828,6 @@
 				el.$.css({width:w, height:h, left:l, top:t});
 
 				el.$.containerize("adjust");
-
 
 				if(jQuery.mbCookie.get(el.id+"_skin")){
 					el.$.containerize("skin", jQuery.mbCookie.get(el.id+"_skin"));
