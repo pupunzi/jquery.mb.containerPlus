@@ -137,27 +137,34 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 	var win = el.$.data("containment")? el.$.parent() : jQuery(window);
 	jQuery(window).on("windowResize.responsive",function(){
 
-		if(el.fullscreen)
+		if(el.fullscreen || el.isIconized)
 			return;
 
 		if(win.width() < el.$.width()){
 			el.$.css({ left:0, width:win.width()});
-			el.$.containerize("adjust");
+			el.$.containerize("adjust", true);
 
 		} else if(win.width() > el.$.width()){
 
-			el.$.css({ left:el.origResponsiveL, width:el.origResponsiveW});
-			el.$.containerize("adjust");
+			if(el.state)
+				el.$.css( el.state );
 
+			el.$.containerize("adjust", true);
 		}
 
 		if(win.height() < el.$.height()){
 			el.$.css({ top:0, height:win.height()});
-			el.$.containerize("adjust");
+			el.$.containerize("adjust", true);
 
 		} else if(win.height() > el.$.height()){
 
-			el.$.css({ top:el.origResponsiveT, height:el.origResponsiveH});
+			var state = el.$.containerize("getstate");
+
+			if(state)
+				el.$.css( state );
+
+//			el.$.css({ top:el.origResponsiveT, height:el.origResponsiveH});
+			el.$.containerize("adjust", true);
 
 		}
 

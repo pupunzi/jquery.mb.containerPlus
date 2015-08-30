@@ -200,6 +200,8 @@
 
 			setTimeout(function(){
 				el.$.containerize("adjust");
+				el.$.containerize("setstate");
+
 				jQuery.containerize.applyMethods(el);
 				$(el).addTouch();
 
@@ -215,6 +217,8 @@
 
 				jQuery(window).trigger("resize");
 			},100);
+
+
 		},
 
 		applyMethods:function(el, data){
@@ -247,6 +251,7 @@
 		},
 
 		methods:{
+
 			drag:function(){
 				jQuery.cMethods.drag = {name: "drag", author:"pupunzi", type:"built-in"};
 				var el = this;
@@ -267,10 +272,14 @@
 						stop:function(e,ui){
 							ui.helper.removeClass("dragging");
 							el.$.trigger("dragged");
+							el.$.containerize("setstate");
 						},
 						containment: el.$.containerize("setContainment")
 					});
 					el.isDraggable=true;
+
+
+
 					return el.$;
 				}
 			},
@@ -309,6 +318,9 @@
 							container.containerize("setContainment");
 							ui.helper.mb_bringToFront();
 							el.$.trigger("resized");
+
+							el.$.containerize("setstate");
+
 						}
 					}).on('resize', function (e) {
 						e.stopPropagation();
@@ -361,6 +373,7 @@
 				el.isClosed=true;
 
 				el.$.trigger("closed");
+				el.$.containerize("setstate");
 
 				return el.$;
 			},
@@ -391,6 +404,8 @@
 					el.$.mb_bringToFront(el.opt.zIndexContext);
 
 				el.$.trigger("opened");
+
+				el.$.containerize("setstate");
 
 				return el.$;
 			},
@@ -423,6 +438,9 @@
 						el.opt.onCollapse(el);
 
 					el.$.trigger("collapsed");
+
+					el.$.containerize("setstate");
+
 				}else{
 					el.$.animate({height:el.h},el.opt.effectDuration,function(){
 						el.$.css("min-height",el.minH);
@@ -440,6 +458,9 @@
 						el.$.trigger("restored");
 					});
 					el.isCollapsed = false;
+
+					el.$.containerize("setstate");
+
 				}
 			},
 
@@ -470,12 +491,17 @@
 				return el.$;
 			},
 
-			adjust:function(){
+			adjust:function(doNotSetState){
+
 				jQuery.cMethods.adjust = {name: "adjust", author:"pupunzi", type:"built-in"};
 				var el = this;
 				var h= parseFloat(el.$.outerHeight()) - parseFloat(el.$.find(".mbc_header").outerHeight()) - parseFloat(el.$.find(".mbc_footer").outerHeight());
 				el.$.find(".mbc_content").css({height:h});
 				el.$.find(".mbc_content").css({marginTop:parseFloat(el.$.find(".mbc_header").outerHeight())});
+
+				if(!doNotSetState)
+					el.$.containerize("setstate");
+
 				return el.$;
 			},
 
@@ -486,6 +512,7 @@
 				el.oHeight= el.$.css("height");
 				el.oTop= el.$.css("top");
 				el.oLeft= el.$.css("left");
+
 				return el.$;
 			},
 
@@ -727,6 +754,18 @@
 
 				}
 				return el.$;
+			},
+
+			setstate: function(){
+				jQuery.cMethods.fullScreen = {name: "setstate", author:"pupunzi", type:"built-in"};
+				var el = this;
+				el.state = {};
+				el.state.width= el.$.outerWidth();
+				el.state.height= el.$.outerHeight();
+				el.state.top= el.$.data("containment") ? el.$.position().top : el.$.offset().top;
+				el.state.left= el.$.data("containment") ? el.$.position().left : el.$.offset().left;
+				el.state.position= el.$.css("position");
+
 			},
 
 			rememberme:function(){
