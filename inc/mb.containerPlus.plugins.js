@@ -128,53 +128,66 @@ jQuery.containerize.addMethod("makeResponsive", function(){
 	jQuery.cMethods.autoresize = {name: "makeResponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 
-	el.$.css({opacity:0});
-
-	el.origResponsiveW = el.origResponsiveW || el.$.width();
-	el.origResponsiveH = el.origResponsiveH || el.$.height();
-	el.origResponsiveT = el.origResponsiveT || el.$.css("top");
-	el.origResponsiveL = el.origResponsiveL || el.$.css("left");
-
-
 	var win = el.$.data("containment")? el.$.parent() : jQuery(window);
-	jQuery(window).on("windowResize.responsive",function(){
+
+	jQuery(window).on("resize.responsive",function(){
 
 		if(el.fullscreen || el.isIconized)
 			return;
 
-		if(win.width() < el.$.width()){
-			el.$.css({ left:0, width:win.width()});
-			el.$.containerize("adjust", true);
+		clearTimeout(el.responsiveCheck);
 
-		} else if(win.width() > el.$.width()){
+		el.responsiveCheck = setTimeout(function(){
 
-			if(el.state)
-				el.$.css( el.state );
 
-			el.$.containerize("adjust", true);
-		}
+			if(win.width() < el.$.width()){
+				el.$.css({ left:0, width:win.width()});
+				el.$.containerize("adjust", true);
 
-		if(win.height() < el.$.height()){
-			el.$.css({ top:0, height:win.height()});
-			el.$.containerize("adjust", true);
+			} else if(win.width() > el.$.width()){
 
-		} else if(win.height() > el.$.height()){
+				if(el.state)
+					el.$.css( el.state );
 
-			var state = el.$.containerize("getstate");
+				el.$.containerize("adjust", true);
+			}
 
-			if(state)
-				el.$.css( state );
+			if(win.height() < el.$.height()){
+				el.$.css({ top:0, height:win.height()});
+				el.$.containerize("adjust", true);
 
-//			el.$.css({ top:el.origResponsiveT, height:el.origResponsiveH});
-			el.$.containerize("adjust", true);
+			} else if(win.height() > el.$.height()){
 
-		}
+				var state = el.$.containerize("getstate");
 
-		el.$.css({opacity:1});
+				if(state)
+					el.$.css( state );
+
+				el.$.containerize("adjust", true);
+
+			}
+
+			var isInWin = (el.$.offset().left + el.$.width() < jQuery(window).width()) && (el.$.offset().top + el.$.height() < jQuery(window).height());
+
+			if(!isInWin){
+
+				var diffW = (el.$.offset().left + el.$.width()) - jQuery(window).width();
+				var diffH = (el.$.offset().top + el.$.height()) - jQuery(window).height();
+
+				var diffW = diffW < 0 ? 0 : diffW + 20;
+				var diffH = diffH < 0 ? 0 : diffH + 20;
+
+				var l = el.$.position().left - diffW;
+				var t = el.$.position().top - diffH;
+
+				el.$.css({ left: l, top: t});
+
+			}
+
+		}, 100);
 
 
 	});
-
 
 	jQuery(window).resize();
 
