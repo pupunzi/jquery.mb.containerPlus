@@ -406,6 +406,8 @@
 
 				el.$.trigger("opened");
 
+				jQuery(window).resize();
+
 				return el.$;
 			},
 
@@ -520,10 +522,13 @@
 				var el = this;
 
 				el.$.containerize("open");
+
+//				jQuery(window).resize();
+
 				el.$.animate({top:el.oTop, left:el.oLeft, width:el.oWidth, height: el.oHeight, opacity:1}, animate ? el.opt.effectDuration : 0, function(){
 					el.content.css({overflow:"auto"});
-					el.$.containerize("adjust");
 
+					el.$.containerize("adjust");
 
 					if(typeof el.opt.onRestore === "function")
 						el.opt.onRestore(el);
@@ -686,18 +691,20 @@
 						text = imgIco;
 					}
 
-					if(!existDock){
+					if(!existDock) {
 						el.iconElement = jQuery("<div/>").addClass("containerIcon "+ skin).css({position:"absolute", top:t, left:l});
 						var title = jQuery("<span/>").addClass("mbc_title").html(text);
 
 						el.iconElement.append(title);
 						jQuery("body").append(el.iconElement);
 
-					}else{
+					} else {
 
 						el.iconElement = jQuery("<span/>").addClass("containerDocked").html(text);
 						jQuery("#"+dockId).append(el.iconElement);
 					}
+
+
 
 					var event = jQuery.Event("iconized");
 					event.dock = existDock ? dockId : 0;
@@ -712,6 +719,7 @@
 						el.$.containerize("iconize", dockId);
 					})
 				});
+
 				return el.$;
 			},
 

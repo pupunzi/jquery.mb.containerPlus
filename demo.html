@@ -96,7 +96,6 @@
 
 <div id="wrapper">
 
-
     <div id="actions">
 
         <div style="margin-bottom: 80px">
@@ -127,7 +126,7 @@
         </div>
     </div>
 
-    <div id="cont2" class="container" style=" top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-iconize="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
+    <div id="cont2" class="container" style=" position:absolute; top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-iconize="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
         <h2>Container 2</h2>
         <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
         <br>
@@ -137,7 +136,7 @@
         <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
 
-    <div id="cont3" class="container" style=" top:230px; left: 500px;" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close">
+    <div id="cont3" class="container" style=" top:230px; left: 500px;" data-responsive="true" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close">
         <h2>Container 3</h2>
         <p>This can be dragged but only on a grid of 100x100, it's centered on window, it's black skinned, it has some tool bar buttons.</p>
         <br>
@@ -256,8 +255,11 @@
         $("#cont2").containerize("addtotoolbar", changeSkinBtn);
         $("#cont3").containerize("addtotoolbar", [changeSkinBtn,dockBtn]);
 
-        $("#cont1").containerize("makeresponsive");
-        $("#cont3").containerize("makeresponsive");
+/*
+        $("#cont1").containerize("responsive");
+        $("#cont2").containerize("responsive");
+        $("#cont3").containerize("responsive");
+*/
 
     })
 

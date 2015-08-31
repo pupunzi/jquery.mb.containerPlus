@@ -123,8 +123,8 @@ jQuery.containerize.addMethod("autoresize", function(){
  * RESPONSIVE BEHAVIOR  ***************************************************************
  *
  * */
-jQuery.containerize.addMethod("makeresponsive", function(){
-	jQuery.cMethods.autoresize = {name: "makeresponsive", author:"pupunzi", type:"plug-in", version:"1.0"};
+jQuery.containerize.addMethod("responsive", function(){
+	jQuery.cMethods.autoresize = {name: "responsive", author:"pupunzi", type:"plug-in", version:"1.0"};
 	var el = this;
 
 	var win = el.$.data("containment")? el.$.parent() : jQuery(window);
@@ -187,12 +187,12 @@ jQuery.containerize.addMethod("makeresponsive", function(){
 
 			}
 
-		}, 10);
+		}, 100);
 
 
 	});
 
-	jQuery(window).resize();
+//	jQuery(window).resize();
 
 	return el.$;
 });
