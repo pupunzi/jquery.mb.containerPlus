@@ -152,9 +152,6 @@ jQuery.containerize.addMethod("responsive", function(){
 				 if(el.state)
 					el.$.css( el.state );
 
-				if(el.isCenteronwindow)
-					el.$.containerize("centeronwindow");
-
 
 				el.$.containerize("adjust", true);
 
@@ -163,12 +160,12 @@ jQuery.containerize.addMethod("responsive", function(){
 				if(el.state)
 					el.$.css( el.state );
 
-				if(el.isCenteronwindow)
-					el.$.containerize("centeronwindow");
-
 				el.$.containerize("adjust", true);
 
 			}
+
+			if(el.isCenteronwindow)
+				el.$.containerize("centeronwindow");
 
 			var isInWin = (el.$.offset().left + el.$.width() < jQuery(window).width()) && (el.$.offset().top + el.$.height() < jQuery(window).height()) ;
 
@@ -187,7 +184,7 @@ jQuery.containerize.addMethod("responsive", function(){
 
 			}
 
-		}, 100);
+		}, 10);
 
 
 	});

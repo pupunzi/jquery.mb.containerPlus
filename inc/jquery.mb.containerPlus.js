@@ -894,8 +894,12 @@
 				el.$.attr("l",l);
 
 				jQuery(window).off("resize.centeronwindow").on("resize.centeronwindow", function(){
+
+					if(el.fullscreen)
+						return;
+
 					el.$.containerize("centeronwindow");
-				})
+				});
 
 				return el.$;
 			}
