@@ -28,9 +28,13 @@
 		version:"3.5.5",
 		defaults:{
 			containment:"document",
+
+			//todo: manage mantainOnWindow
 			mantainOnWindow:true,
+
 			effectDuration:100,
 			zIndexContext:"auto", // or your selector (ex: ".containerPlus")
+
 			onLoad:function(o){},
 			onCollapse:function(o){},
 			onBeforeIconize:function(o){},
@@ -42,6 +46,7 @@
 			onRestore:function(o){},
 			onFullScreen:function(o){}
 		},
+
 		OS: function(){
 			var OSName="Unknown OS";
 			if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
@@ -49,8 +54,8 @@
 			if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
 			if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
 			return OSName;
-
 		},
+
 		defaultButtons: {
 			close : {
 				idx:"close",
@@ -126,9 +131,7 @@
 		build:function(el){
 
 			var opacity = el.$.css("opacity");
-
 			el.opacity = opacity;
-
 			el.$.css({opacity:0});
 			el.id = el.id ? el.id : "mbc_" + new Date().getTime();
 			var titleText = el.$.find("h2:first");
@@ -517,13 +520,11 @@
 				return el.$;
 			},
 
-			restoreView:function(animate){
-				jQuery.cMethods.restoreView = {name: "restoreView", author:"pupunzi", type:"built-in"};
+			restore:function(animate){
+				jQuery.cMethods.restore = {name: "restore", author:"pupunzi", type:"built-in"};
 				var el = this;
 
 				el.$.containerize("open");
-
-//				jQuery(window).resize();
 
 				el.$.animate({top:el.oTop, left:el.oLeft, width:el.oWidth, height: el.oHeight, opacity:1}, animate ? el.opt.effectDuration : 0, function(){
 					el.content.css({overflow:"auto"});
@@ -648,6 +649,10 @@
 				jQuery.cMethods.iconize = {name: "iconize", author:"pupunzi", type:"built-in"};
 				var el = this;
 
+
+				if(el.$.data("dock"))
+					dockId = el.$.data("dock");
+
 				if(el.fullscreen){
 					el.$.containerize("fullScreen");
 					setTimeout(function(){
@@ -659,7 +664,7 @@
 				if(el.isIconized){
 					el.iconElement.remove();
 					el.isIconized = false;
-					el.$.containerize("restoreView",true);
+					el.$.containerize("restore",true);
 					el.$.mb_bringToFront(el.opt.zIndexContext);
 					el.$.trigger("restored");
 
@@ -998,14 +1003,15 @@
 
 	jQuery.fn.mb_bringToFront= function(zIndexContext){
 		var zi=1;
-		var els= zIndexContext && zIndexContext!="auto" ? jQuery(zIndexContext): jQuery("*");
+		var els= zIndexContext && zIndexContext != "auto" ? jQuery(zIndexContext): jQuery("body *");
 		els.not(".alwaysOnTop").each(function() {
 			if(jQuery(this).css("position")!="static"){
 				var cur = parseInt(jQuery(this).css('zIndex'));
 				zi = cur > zi ? parseInt(jQuery(this).css('zIndex')) : zi;
 			}
 		});
-		jQuery(this).not(".alwaysOnTop").css('zIndex',zi+=1);
+		jQuery(this).not(".alwaysOnTop").css('z-index',zi+=1);
+		jQuery(".alwaysOnTop").css('z-index',zi+=1);
 		return zi;
 	};
 

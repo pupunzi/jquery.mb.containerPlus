@@ -112,6 +112,7 @@
 
         <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
         <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",100); else $("#cont3").containerize("close",100);'>open/close container 3</button>
+        <button onclick='if($("#cont3").get(0).isIconized) $("#cont3").containerize("restore",100); else $("#cont3").containerize("iconize",100);'>open/iconize container 3</button>
     </div>
 
     <div id="cont1" class="container" style="position: absolute; top:130px; left: 300px; height: auto; opacity:1" data-icon="css/icons/browser.png" data-drag=true data-resize=false data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close" data-autoresize="true">
