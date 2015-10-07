@@ -1,0 +1,527 @@
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: mb.containerPlus.css
+ *
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 07/01/14 22.50
+ *  *****************************************************************************
+ */
+
+@charset "UTF-8";
+
+@import url(http://fonts.googleapis.com/css?family=Lekton);
+
+@font-face {
+  font-family: 'IconicStroke';
+  src: url('font/iconic_stroke.eot');
+  src: local('?'),
+  url('font/iconic_stroke.woff') format('woff'),
+  url('font/iconic_stroke.ttf') format('truetype'),
+  url('font/iconic_stroke.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ui-resizable {
+  position: relative;
+}
+
+.ui-resizable-handle {
+  position: absolute;
+  font-size: 0.1px;
+  z-index: 1;
+  display: block;
+}
+
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle {
+  display: none;
+}
+
+.ui-resizable-n {
+  cursor: n-resize;
+  height: 7px;
+  width: 100%;
+  top: -5px;
+  left: 0px;
+}
+
+.ui-resizable-s {
+  cursor: s-resize;
+  height: 7px;
+  width: 100%;
+  bottom: -5px;
+  left: 0px;
+}
+
+.ui-resizable-e {
+  cursor: e-resize;
+  width: 7px;
+  right: -5px;
+  top: 0px;
+  height: 100%;
+}
+
+.ui-resizable-w {
+  cursor: w-resize;
+  width: 7px;
+  left: -5px;
+  top: 0px;
+  height: 100%;
+}
+
+.ui-resizable-se {
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: 1px;
+  bottom: 1px;
+  z-index: 1 !important;
+}
+
+.ui-resizable-sw {
+  cursor: sw-resize;
+  width: 9px;
+  height: 9px;
+  left: -5px;
+  bottom: -5px;
+}
+
+.ui-resizable-nw {
+  cursor: nw-resize;
+  width: 9px;
+  height: 9px;
+  left: -5px;
+  top: -5px;
+}
+
+.ui-resizable-ne {
+  cursor: ne-resize;
+  width: 9px;
+  height: 9px;
+  right: -5px;
+  top: -5px;
+}
+
+.mbproxy {
+  border: 1px dotted gray;
+  background: rgba(0, 0, 0, 0.1);
+  min-height: 100px;
+  min-width: 100px;
+}
+
+/*CONTAINER SKIN DEFAULT*/
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+.mbc_container div, .mbc_container span, .mbc_container object, .mbc_container iframe,
+.mbc_container h1, .mbc_container  h2, .mbc_container h3, .mbc_container h4, .mbc_container h5, .mbc_container h6,
+.mbc_container p, .mbc_container blockquote, .mbc_container pre,.mbc_container a, .mbc_container code,
+.mbc_container img, .mbc_container strong, .mbc_container sub, .mbc_container sup, .mbc_container b, .mbc_container i,
+.mbc_container center, .mbc_container ol, .mbc_container ul, .mbc_container li,
+.mbc_container fieldset, .mbc_container form, .mbc_container label, .mbc_container legend,
+.mbc_container table, .mbc_container caption, .mbc_container tbody, .mbc_container tfoot, .mbc_container thead,
+.mbc_container tr, .mbc_container th, .mbc_container td, .mbc_container article, .mbc_container aside, .mbc_container canvas,
+.mbc_container embed,.mbc_container figure, .mbc_container figcaption, .mbc_container footer, .mbc_container header,
+.mbc_container hgroup, .mbc_container menu, .mbc_container  nav, .mbc_container output, .mbc_container section,
+.mbc_container summary, .mbc_container time, .mbc_container mark, .mbc_container audio, .mbc_container video, .containerIcon h2, .containerDocked h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  /*text-rendering:optimizeLegibility;*/
+
+  -webkit-user-select: none;
+
+}
+
+.containerIcon{
+  max-width: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+}
+.containerIcon:hover{
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+}
+
+.containerIcon h2{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  text-align: right;
+}
+
+.mbc_container {
+  visibility: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Lekton', sans-serif;
+  font-size: 16px;
+  overflow: inherit;
+  visibility: hidden;
+
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+  background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
+  min-height: 100px;
+  min-width: 100px;
+  border-radius: 10px;
+}
+
+
+.mbc_container * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.mbc_container * :focus {
+  outline: 0;
+}
+
+.mbc_container.dragging {
+  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.5);
+}
+
+.icon{
+  width:35px;
+}
+
+.mbc_container .icon{
+  position: absolute;
+  left:0px;
+  top:-5px;
+}
+
+.mbc_container > .mbc_content button{
+  border: 1px solid gray;
+  border-radius: 8px;
+  background: #3a3a3a;
+  color:white;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+
+.mbc_container > .mbc_header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid #c2c2bd;
+
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* IE10+ */
+  background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0); /* IE6-9 */
+  /*box-shadow: 0 0 4px 0 rgba(0,0,0,0.4);*/
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  border-radius: 9px 9px 0 0;
+
+}
+
+.mbc_container > .mbc_header h2 {
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.mbc_container.draggable > .mbc_header {
+  cursor: move
+}
+
+.mbc_container > .mbc_header > .mbc_buttonBar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  white-space: nowrap;
+}
+
+.mbc_container > .mbc_buttonBar div {
+  border-radius: 10px;
+  padding: 7px;
+  display: inline-block;
+  margin: 3px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #d4d4d4;
+}
+
+.mbc_container > .mbc_header > .mbc_buttonBar > button.mbc_button {
+
+  font-family: 'IconicStroke', sans-serif;
+  font-size: 16px;
+  position: relative;
+  color: #747474;
+  border: none;
+  padding: 5px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mbc_container > .mbc_header > .mbc_buttonBar > button.mbc_button:hover {
+  color: #3e3e3e;
+}
+
+
+.mbc_container > .mbc_header > .mbc_toolBar {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: normal;
+  cursor: move;
+  border-top: 1px solid #d4d4d4;
+  text-align: right;
+
+  background: #ffffff;
+  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
+}
+
+
+.mbc_container > .mbc_header > .mbc_toolBar > button.mbc_button {
+  position: relative;
+  color: #5e5e5e;
+  border: none;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  border-right: 1px solid rgba(99, 99, 99, 0.20);
+  padding: 3px;
+  margin: 0;
+  -moz-border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mbc_container > .mbc_header > .mbc_toolBar > button.mbc_button:hover {
+  background: rgba(0, 0, 0, .1);
+}
+
+.mbc_container > .mbc_content {
+  position: relative;
+  padding: 20px;
+  padding-bottom: 40px;
+  height: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.mbc_container > .mbc_footer {
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  background: #fff; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  background: linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
+
+  bottom: 0;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0 0 9px 9px;
+
+  border-top: 1px solid #c2c2bd;
+}
+
+.mbc_container > .mbc_content h2{
+  font-size: 130%;
+  margin-bottom: 20px;
+}
+
+.containerDocked{
+  display: inline-block;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.containerIcon{
+  padding: 10px;
+  color:#000;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/*SKIN BLACK*********************************************************************************/
+
+.mbc_container.black {
+
+  background: #45484d; /* Old browsers */
+  background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #45484d), color-stop(100%, #000000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #45484d 0%, #000000 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #45484d 0%, #000000 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #45484d 0%, #000000 100%); /* IE10+ */
+  background: linear-gradient(top, #45484d 0%, #000000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#45484d', endColorstr='#000000', GradientType=0); /* IE6-9 */
+
+  border-radius: 0;
+
+}
+
+.mbc_container.black > .mbc_header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: 1px solid #3b3b3a;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
+
+  background: #45484d; /* Old browsers */
+  background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #45484d), color-stop(100%, #000000)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #45484d 0%, #000000 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #45484d 0%, #000000 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #45484d 0%, #000000 100%); /* IE10+ */
+  background: linear-gradient(top, #45484d 0%, #000000 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#45484d', endColorstr='#000000', GradientType=0); /* IE6-9 */
+
+  border-radius: 0;
+
+}
+
+.mbc_container.black > .mbc_header h2 {
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+  font-weight: normal;
+  cursor: move;
+}
+
+.mbc_container.black > .mbc_buttonBar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.mbc_container.black > .mbc_buttonBar div {
+  border-radius: 10px;
+  padding: 7px;
+  display: inline-block;
+  margin: 3px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  background: #d4d4d4;
+}
+
+.mbc_container.black > .mbc_header > .mbc_buttonBar > button.mbc_button:hover {
+  color: #c3c3c3;
+}
+
+
+.mbc_container.black > .mbc_content {
+  position: relative;
+  padding-top: 20px;
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: auto;
+
+  color: white
+}
+
+.mbc_container.black > .mbc_header > .mbc_toolBar {
+
+  background: #2b2d30;
+  background: -moz-linear-gradient(top, #2b2d30 0%, #000000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b2d30), color-stop(100%, #000000));
+  background: -webkit-linear-gradient(top, #2b2d30 0%, #000000 100%);
+  background: -o-linear-gradient(top, #2b2d30 0%, #000000 100%);
+  background: -ms-linear-gradient(top, #2b2d30 0%, #000000 100%);
+  background: linear-gradient(top, #2b2d30 0%, #000000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2b2d30', endColorstr='#000000', GradientType=0);
+
+  border-top: 1px solid #525252;
+
+}
+
+.mbc_container.black > .mbc_header > .mbc_toolBar > button.mbc_button {
+  position: relative;
+  color: #999999;
+  border: none;
+  border-left: 1px solid rgba(69, 69, 69, 0.54);
+  border-right: 1px solid rgba(0, 0, 0, .7);
+  padding: 3px;
+  margin: 0;
+  -moz-border-radius: 0;
+  background: transparent;
+}
+
+.mbc_container.black > .mbc_header > .mbc_toolBar > button.mbc_button:hover {
+  background: rgba(0, 0, 0, .5);
+}
+
+.mbc_container.black > .mbc_footer {
+  position: absolute;
+  height: 20px;
+  width: 100%;
+
+  background: #13171c;
+
+  bottom: 0;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid #3b3b3a;
+}
+
+.containerIcon.black{
+  padding: 10px;
+  color:#fff;
+  background: #000;
+  cursor: pointer;
+  border-radius: 8px;
+}
