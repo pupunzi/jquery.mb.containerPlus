@@ -20,249 +20,251 @@
   -->
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>jquery.mb.containerPlus 3.x - demo page</title>
-    <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8" />
+  <title>jquery.mb.containerPlus 3.x - demo page</title>
+  <link href='css/mb.containerPlus.css' rel='stylesheet' type='text/css'>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"></script>
-    <script src="inc/jquery.mb.containerPlus.js"></script>
-    <script src="inc/mb.containerPlus.plugins.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="inc/jquery.mb.containerPlus.js"></script>
+  <script src="inc/mb.containerPlus.plugins.js"></script>
 
-    <style>
+  <style>
 
-        body{
-            margin: 0;
-            padding: 0;
-            font-family: Helvetica, Arial, sans-serif;
-            background: #ffc000;
-        }
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: Helvetica, Arial, sans-serif;
+      background: #ffc000;
+    }
 
-        #wrapper{
-            position: absolute;
-            width: 80%;
-            height: 100%;
-            margin-left: 10%;
+    #wrapper{
+      position: absolute;
+      width: 80%;
+      height: 100%;
+      margin-left: 10%;
 
-            font:normal 16px/20px Lekton, sans-serif;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      font:normal 16px/20px Lekton, sans-serif;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
-            background: #444e57;
-            background: #e8e8e8;
-        }
+      background: #444e57;
+      background: #e8e8e8;
+    }
 
-        .container{
-            width: 500px;
-            height: auto;
-        }
+    .container{
+      width: 500px;
+      height: auto;
+    }
 
-        #dock{
-            position: fixed;
-            top: 0;
-            left:0;
-            width: 100%;
-            background: rgba(0,0,0,0.5);
-        }
+    #dock{
+      position: fixed;
+      top: 0;
+      left:0;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+    }
 
-        #actions{
-            position: relative;
-            top:70px;
-            padding: 50px;
-        }
+    #actions{
+      position: relative;
+      top:70px;
+      padding: 50px;
+    }
 
-        #actions button{
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            border: 1px solid white;
-            padding: 7px;
-            display: inline-block;
-            margin: 3px;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            background: #d4d4d4;
-        }
+    #actions button{
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid white;
+      padding: 7px;
+      display: inline-block;
+      margin: 3px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      background: #d4d4d4;
+    }
 
-        #actions button:hover{
-            background: #ffc000;
-        }
+    #actions button:hover{
+      background: #ffc000;
+    }
 
-    </style>
+  </style>
 
 </head>
 <body>
 
 <div id="wrapper">
 
-    <div id="actions">
+  <div id="actions">
 
-        <div style="margin-bottom: 80px">
+    <div style="margin-bottom: 80px">
 
-            <h2>jquery.mb.containerPlus 3.x</h2>
+      <h2>jquery.mb.containerPlus 3.x</h2>
 
-            <p>If you were looking for an easy to use jquery plug and play plug-in to create overlayed windows on your HTML pages you are in the right place!</p>
-            <p>The new release of this plugin introduces new useful features to let you easily customize both behaviors and design.</p>
-            <p>The code has been completely rewritten to accomplish these needs.</p>
-            <hr>
-            <p>You can read more <a href="https://github.com/pupunzi/jquery.mb.containerPlus/wiki/jquery.mb.containerPlus-3.x" target="_blank">here</a>.</p>
+      <p>If you were looking for an easy to use jquery plug and play plug-in to create overlayed windows on your HTML pages you are in the right place!</p>
+      <p>The new release of this plugin introduces new useful features to let you easily customize both behaviors and design.</p>
+      <p>The code has been completely rewritten to accomplish these needs.</p>
+      <hr>
+      <p>You can read more <a href="https://github.com/pupunzi/jquery.mb.containerPlus/wiki/jquery.mb.containerPlus-3.x" target="_blank">here</a>.</p>
 
-        </div>
-
-        <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
-        <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",100); else $("#cont3").containerize("close",100);'>open/close container 3</button>
-        <button onclick='if($("#cont3").get(0).isIconized) $("#cont3").containerize("restore",100); else $("#cont3").containerize("iconize",100);'>open/iconize container 3</button>
     </div>
 
-    <div id="cont1" class="container" style="position: absolute; top:130px; left: 300px; height: auto; opacity:1" data-icon="css/icons/browser.png" data-drag=true data-resize=false data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close" data-autoresize="true">
-        <h2>Container 1</h2>
-        <div id="cont1Content">
-            <p>This is a modal window and it is created adding data-modal=true to the element constructor. It can't be resized, it's centered on window, it's white skinned.</p>
-            <br>
-            <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
-            <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
-        </div>
-    </div>
+    <button onclick='if($("#cont1").get(0).isClosed) $("#cont1").containerize("open",500); else $("#cont1").containerize("close",500);'>open modal container</button>
+    <button onclick='if($("#cont3").get(0).isClosed) $("#cont3").containerize("open",100); else $("#cont3").containerize("close",100);'>open/close container 3</button>
+    <button onclick='if($("#cont3").get(0).isIconized) $("#cont3").containerize("restore",100); else $("#cont3").containerize("iconize",100);'>open/iconize container 3</button>
+    <button onclick='$("#cont3").containerize("appendto", "body");'>append to body container 3</button>
+  </div>
 
-    <div id="cont2" class="container" style=" position:absolute; top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-iconize="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
-        <h2>Container 2</h2>
-        <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
-        <br>
-        <button onclick="$('#cont2').containerize('showdata');$(this).hide();">show properties</button>
-        <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  <div id="cont1" class="container" style="position: absolute; top:130px; left: 300px; height: auto; opacity:1" data-icon="css/icons/browser.png" data-drag=true data-resize=false data-collapsable=true data-close=true data-containment="document" data-modal=true data-buttons="fullscreen,close" data-autoresize="true">
+    <h2>Container 1</h2>
+    <div id="cont1Content">
+      <p>This is a modal window and it is created adding data-modal=true to the element constructor. It can't be resized, it's centered on window, it's white skinned.</p>
+      <br>
+      <button onclick="$('#cont1').containerize('showdata');$(this).hide();">show properties</button>
+      <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
     </div>
+  </div>
 
-    <div id="cont3" class="container" style=" top:230px; left: 500px;" data-responsive="true" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close">
-        <h2>Container 3</h2>
-        <p>This can be dragged but only on a grid of 100x100, it's centered on window, it's black skinned, it has some tool bar buttons.</p>
-        <br>
-        <button onclick="$('#cont3').containerize('showdata');$(this).hide();">show properties</button>
-        <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
-    </div>
+  <div id="cont2" class="container" style=" position:absolute; top:180px; left: 400px; height: 350px; opacity:1" data-centeronwindow=true data-icon="css/icons/chart.png" data-drag=true data-resize=true  data-dock="dock" data-iconize="dock" data-collapsable=true data-containment="document"  data-resizegrid="100,100" data-buttons="changecontent,dock,fullscreen,close">
+    <h2>Container 2</h2>
+    <p>This can be resized but only on a grid of 100x100, it's centered on window, it's white skinned, it has custom buttons and a custom icon.</p>
+    <br>
+    <button onclick="$('#cont2').containerize('showdata');$(this).hide();">show properties</button>
+    <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  </div>
 
-    <div id="dock"></div>
+  <div id="cont3" class="container" style=" top:230px; left: 500px;" data-responsive="true" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close" data-appendto="body">
+    <h2>Container 3</h2>
+    <p>This can be dragged but only on a grid of 100x100, it's centered on window, it's black skinned, it has some tool bar buttons.</p>
+    <br>
+    <button onclick="$('#cont3').containerize('showdata');$(this).hide();">show properties</button>
+    <p>Maecenas faucibus mollis interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+    <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. </p>
+    <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+  </div>
+
+  <div id="dock"></div>
 
 </div>
 
 <script>
-    $(function(){
+  $(function(){
 
-        if (self.location.href == top.location.href){
-            $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
-            var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
-            $("body").prepend(logo);
-            $("#logo").fadeIn();
-        }
+    if (self.location.href == top.location.href){
+      $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
+      var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+      $("body").prepend(logo);
+      $("#logo").fadeIn();
+    }
 
-        /*
-         * Example of custom method added to the component
-         *
-         * */
+    /*
+     * Example of custom method added to the component
+     *
+     * */
 
-        $.containerize.addMethod("showdata",function(){
-            var el = this;
-            var txt = "container properties:<br><br>";
-            var data = el.$.data();
-            for (var i in data){
-                txt += i+"= "+ data[i]+" ("+typeof data[i]+")<br>";
-            }
-            txt += "<hr><br>"
-            el.content.prepend(txt);
-            return txt;
-        });
+    $.containerize.addMethod("showdata",function(){
+      var el = this;
+      var txt = "container properties:<br><br>";
+      var data = el.$.data();
+      for (var i in data){
+        txt += i+"= "+ data[i]+" ("+typeof data[i]+")<br>";
+      }
+      txt += "<hr><br>";
+      el.content.prepend(txt);
+      return txt;
+    });
 
 
 
-        /*
-         * Example of how to add a new button for the button bar:
-         *
-         * */
+    /*
+     * Example of how to add a new button for the button bar:
+     *
+     * */
 
-        var newBtns = {
-            changecontent: {
-                idx:"changecontent",
-                label:"&#xe044;",
-                className:"",
-                action: function(container,btn){$(container).containerize("changecontent","test_content.html",{id:01, temp:'simple'})}
-            }
-        };
-        $.extend($.containerize.defaultButtons, newBtns);
+    var newBtns = {
+      changecontent: {
+        idx:"changecontent",
+        label:"&#xe044;",
+        className:"",
+        action: function(container,btn){$(container).containerize("changecontent","test_content.html",{id:01, temp:'simple'})}
+      }
+    };
+    $.extend($.containerize.defaultButtons, newBtns);
 
-        /***********************************************/
+    /***********************************************/
 
-        $(".container").containerize({
-            onLoad: function(el){},
-            onResize: function(el){
-                console.debug("top: "+ el.style.top, "left: "+ el.style.left,"width: "+ el.style.width, "height: "+ el.style.height);
-            }
-        });
+    $(".container").containerize({
+      onLoad: function(el){},
+      onResize: function(el){
+        console.debug("top: "+ el.style.top, "left: "+ el.style.left, "width: "+ el.style.width, "height: "+ el.style.height);
+      }
+    });
 
-        $(".container").on("resized",function(){
-            console.debug("top: "+ this.style.top, "left: "+ this.style.left,"width: "+ this.style.width, "height: "+ this.style.height);
-        });
+    $(".container").on("resized",function(){
+      console.debug("top: "+ this.style.top, "left: "+ this.style.left,"width: "+ this.style.width, "height: "+ this.style.height);
+    });
 
-        /*
-         * Example of custom Buttons for the toolbar
-         *
-         * */
+    /*
+     * Example of custom Buttons for the toolbar
+     *
+     * */
 
-        var changeSkinBtn = {
-            idx: "changeSkinBtn",
-            label: "change skin",
-            className:"",
-            action: function(container, btn){
-                if(!$(container).hasClass('black'))
-                    $(container).containerize('skin','black', container.$.data("skin"));
-                else
-                    $(container).containerize('skin');
-            }
-        };
+    var changeSkinBtn = {
+      idx: "changeSkinBtn",
+      label: "change skin",
+      className:"",
+      action: function(container, btn){
+        if(!$(container).hasClass('black'))
+          $(container).containerize('skin','black', container.$.data("skin"));
+        else
+          $(container).containerize('skin');
+      }
+    };
 
-        var iconizeBtn = {
-            idx: "iconizeBtn",
-            label: "iconize",
-            className:"",
-            action: function(container, btn){
-                $(container).containerize("iconize");
-            }
-        };
+    var iconizeBtn = {
+      idx: "iconizeBtn",
+      label: "iconize",
+      className:"",
+      action: function(container, btn){
+        $(container).containerize("iconize");
+      }
+    };
 
-        var dockBtn = {
-            idx: "dockBtn",
-            label: "dock",
-            className:"",
-            action: function(container, btn){
-                $(container).containerize("iconize","dock");
-            }
-        };
+    var dockBtn = {
+      idx: "dockBtn",
+      label: "dock",
+      className:"",
+      action: function(container, btn){
+        $(container).containerize("iconize","dock");
+      }
+    };
 
-        var closeBtn = {
-            idx: "closeBtn",
-            label: "close",
-            className:"",
-            action: function(container, btn){
-                $(container).containerize("close");
-            }
-        };
+    var closeBtn = {
+      idx: "closeBtn",
+      label: "close",
+      className:"",
+      action: function(container, btn){
+        $(container).containerize("close");
+      }
+    };
 
-        $("#cont1").containerize("addtotoolbar", [closeBtn]);
-        $("#cont2").containerize("addtotoolbar", changeSkinBtn);
-        $("#cont3").containerize("addtotoolbar", [changeSkinBtn,dockBtn]);
+    $("#cont1").containerize("addtotoolbar", [closeBtn]);
+    $("#cont2").containerize("addtotoolbar", changeSkinBtn);
+    $("#cont3").containerize("addtotoolbar", [changeSkinBtn,dockBtn]);
 
-/*
-        $("#cont1").containerize("responsive");
-        $("#cont2").containerize("responsive");
-        $("#cont3").containerize("responsive");
-*/
 
-    })
+    /*
+     $("#cont1").containerize("responsive");
+     $("#cont2").containerize("responsive");
+     $("#cont3").containerize("responsive");
+     */
+
+  })
 
 </script>
 </body>

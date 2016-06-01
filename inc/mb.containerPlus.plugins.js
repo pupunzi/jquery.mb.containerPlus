@@ -195,4 +195,18 @@ jQuery.containerize.addMethod("responsive", function(){
 });
 
 
+/**
+ *
+ * APPENDTO changes the current dom location of the container ***************************************************************
+ *
+ * */
+
+jQuery.containerize.addMethod("appendto", function(elementSelector){
+	jQuery.cMethods.autoresize = {name: "appendto", author:"pupunzi", type:"plug-in", version:"1.0"};
+	var el = this;
+	setTimeout(function(){el.$.appendTo(elementSelector);}, 10);
+	return el.$;
+});
+
+
 
