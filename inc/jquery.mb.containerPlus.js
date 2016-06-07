@@ -104,7 +104,6 @@
 				if(jQuery.containerize.methods[method]){
 					this.each(function(){
 						var r = jQuery.containerize.methods[method].apply(this, params);
-
 						return r;
 					});
 				}
@@ -122,10 +121,13 @@
 				var el= this;
 				el.$=jQuery(el);
 				el.opt = {};
+				el.originalEl = el.outerHTML;
 				jQuery.extend (el.opt, jQuery.containerize.defaults, opt);
 				jQuery.containerize.build(el);
 				el.$.css("visibility","visible");
 			});
+
+
 		},
 
 		build:function(el){
@@ -219,7 +221,7 @@
 				el.$.trigger("ready");
 
 				jQuery(window).trigger("resize");
-			},100);
+			},1);
 
 
 		},
@@ -239,6 +241,7 @@
 						params.push(properties[els].toString());
 
 					jQuery.containerize.methods[els].apply(el,params);
+					jQuery(window).trigger("resize");
 				}
 			}
 			return el.$;
@@ -281,8 +284,6 @@
 					});
 					el.isDraggable=true;
 
-
-
 					return el.$;
 				}
 			},
@@ -298,7 +299,6 @@
 					el.$.resizable({
 						helper: "mbproxy",
 						start:function(e,ui){
-
 							el.$.css("position",el.position);
 							var elH= el.$.data("containment")?el.$.parents().height():jQuery(window).height()+jQuery(window).scrollTop();
 							var elW= el.$.data("containment")?el.$.parents().width():jQuery(window).width()+jQuery(window).scrollLeft();
@@ -500,6 +500,9 @@
 				jQuery.cMethods.adjust = {name: "adjust", author:"pupunzi", type:"built-in"};
 				var el = this;
 				var h= parseFloat(el.$.outerHeight()) - parseFloat(el.$.find(".mbc_header").outerHeight()) - parseFloat(el.$.find(".mbc_footer").outerHeight());
+
+				console.debug("height :: ", h)
+
 				el.$.find(".mbc_content").css({height:h});
 				el.$.find(".mbc_content").css({marginTop:parseFloat(el.$.find(".mbc_header").outerHeight())});
 
@@ -784,7 +787,7 @@
 
 				el.state.position = el.$.css("position");
 
-				console.debug(el.id, el.state)
+				//console.debug(el.id, el.state)
 
 
 			},

@@ -138,7 +138,7 @@
     <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
   </div>
 
-  <div id="cont3" class="container" style=" top:230px; left: 500px;" data-responsive="true" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=true data-buttons="fullscreen,close" data-appendto="body">
+  <div id="cont3" class="container" style=" top:230px; left: 500px;" data-responsive="true" data-autoresize="true, false" data-skin="black" data-drag=true data-resize=true data-dock="dock" data-collapsable=true data-containment="document" data-draggrid="100,100" data-rememberme=false data-buttons="fullscreen,close" data-appendto="body">
     <h2>Container 3</h2>
     <p>This can be dragged but only on a grid of 100x100, it's centered on window, it's black skinned, it has some tool bar buttons.</p>
     <br>
@@ -156,7 +156,7 @@
   $(function(){
 
     if (self.location.href == top.location.href){
-      $("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
+        //$("body").css({font:"normal 13px/22px 'trebuchet MS', verdana, sans-serif"});
       var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:40px;left:10%;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
       $("body").prepend(logo);
       $("#logo").fadeIn();
